@@ -261,7 +261,7 @@
   /* ---------- Section rhythm: alternating backgrounds ---------- */
   section.sec { position: relative; padding: 88px 0; }
   .sec-light { background: var(--page-plane); }
-  .sec-lav { background: color-mix(in srgb, #18191f 10%, var(--page-plane)); }
+  .sec-lav { background: color-mix(in srgb, #18191f 6%, var(--page-plane)); }
   .sec-dark {
     background: #201061; color: #fff;
     --text-primary: #ffffff; --text-secondary: rgba(255,255,255,0.82); --text-muted: rgba(255,255,255,0.6);
@@ -269,7 +269,7 @@
   }
   .sec-dark .kicker { color: #ffffff; }
   @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) .sec-lav { background: color-mix(in srgb, #ffffff 7%, var(--page-plane)); }
+    :root:where(:not([data-theme="light"])) .sec-lav { background: color-mix(in srgb, #ffffff 4.2%, var(--page-plane)); }
   }
 
   @media (max-width: 720px) { section.sec { padding: 64px 0; } }
@@ -414,22 +414,22 @@
     <div class="kicker">02 · Componentes del PIB</div>
     <p class="section-text">Según el informe del BCE, el crecimiento de la economía en el primer trimestre de 2026 respondió principalmente al dinamismo del consumo de los hogares y de la inversión, a través de la demanda interna:</p>
     <div class="card-grid">
-      <div class="info-card" style="--c:#3673ef">
+      <div class="info-card" style="--c:#0077ff">
         <div class="card-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div>
         <div class="card-number">3,9%</div>
         <p>El consumo final de los hogares aumentó 3,9%, explicado por una mayor demanda de productos alimenticios y servicios.</p>
       </div>
-      <div class="info-card" style="--c:#967ef7">
+      <div class="info-card" style="--c:#cdb0ff;--fg:#18191f">
         <div class="card-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div>
         <div class="card-number">12,8%</div>
         <p>La formación bruta de capital fijo (FBKF) creció 12,8%, impulsada por la industria de la construcción y por mayores importaciones de maquinaria, vehículos y equipo de transporte.</p>
       </div>
-      <div class="info-card" style="--c:#7a26bc">
+      <div class="info-card" style="--c:#890abf">
         <div class="card-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div>
         <div class="card-number">1,7%</div>
         <p>Las exportaciones crecieron 1,7%, impulsadas por mayores ventas de camarón elaborado y minerales.</p>
       </div>
-      <div class="info-card" style="--c:#d9e783;--fg:#18191f">
+      <div class="info-card" style="--c:#ddf086;--fg:#18191f">
         <div class="card-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div>
         <div class="card-number">11,1%</div>
         <p>En contraste, las importaciones aumentaron 11,1%, principalmente por mayores compras externas de materias primas y bienes de capital, mientras que el gasto de consumo final del Gobierno General se contrajo 3,8%.</p>
