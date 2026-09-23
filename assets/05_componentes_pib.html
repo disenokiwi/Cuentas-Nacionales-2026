@@ -11,7 +11,7 @@
     --paper:#FFFFFF;
     --line:#E4E4E4;
     --gold:#8d61ff;
-    --coral:#ca43e9;
+    --coral:#890abf;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:transparent;}
@@ -26,7 +26,7 @@
     font-size:11px;
     letter-spacing:.14em;
     text-transform:uppercase;
-    color:var(--gold);
+    color:#890abf;
     font-weight:700;
     margin:0 0 6px;
   }
@@ -123,7 +123,7 @@
     <div class="tooltip" id="tooltip"></div>
     <div class="legend">
       <div class="legend-item"><span class="swatch" style="background:#8d61ff"></span> Crecimiento</div>
-      <div class="legend-item"><span class="swatch" style="background:#ca43e9"></span> Contracción</div>
+      <div class="legend-item"><span class="swatch" style="background:#890abf"></span> Contracción</div>
       <div class="legend-item" style="margin-left:auto;">Pasa el cursor sobre una barra</div>
     </div>
   </div>
@@ -199,7 +199,7 @@ function showTooltip(i, barEl){
   const px = svgRect.left - wrapRect.left + x*scale;
   const py = svgRect.top - wrapRect.top + yc*scale;
 
-  tooltip.innerHTML = `<div class="t-period">${name}</div><div class="t-val" style="color:${val>=0?'#dbc7ff':'#cd7fff'}">${val>=0?'+':''}${val.toFixed(1)}%</div>`;
+  tooltip.innerHTML = `<div class="t-period">${name}</div><div class="t-val" style="color:${val>=0?'#dbc7ff':'#c98aef'}">${val>=0?'+':''}${val.toFixed(1)}%</div>`;
   tooltip.style.left = px + 'px';
   tooltip.style.top = (py-14) + 'px';
   tooltip.style.opacity = 1;
