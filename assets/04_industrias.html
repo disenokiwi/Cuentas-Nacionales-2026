@@ -5,12 +5,12 @@
 <title>Crecimiento por industria - Ecuador 2026.I</title>
 <style>
   :root{
-    --ink:#1B2A4A;
+    --ink:#18191f;
     --ink-soft:#4A5876;
     --paper:#FFFFFF;
     --line:#E4E4E4;
-    --purple:#1375f6;
-    --coral:#9500c5;
+    --purple:#3673ef;
+    --coral:#620083;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:transparent;}
@@ -91,7 +91,7 @@
   .tooltip{
     position:absolute;
     pointer-events:none;
-    background:#1B2A4A;
+    background:#18191f;
     color:#fff;
     padding:7px 11px;
     border-radius:7px;
@@ -121,8 +121,8 @@
     </svg>
     <div class="tooltip" id="tooltip"></div>
     <div class="legend">
-      <div class="legend-item"><span class="swatch" style="background:#1375f6"></span> Crecimiento</div>
-      <div class="legend-item"><span class="swatch" style="background:#9500c5"></span> Contracción</div>
+      <div class="legend-item"><span class="swatch" style="background:#3673ef"></span> Crecimiento</div>
+      <div class="legend-item"><span class="swatch" style="background:#620083"></span> Contracción</div>
       <div class="legend-item" style="margin-left:auto;">Pasa el cursor sobre una barra</div>
     </div>
   </div>
@@ -215,7 +215,7 @@ function showTooltip(i, barEl){
   const px = svgRect.left - wrapRect.left + x*scale;
   const py = svgRect.top - wrapRect.top + yc*scale;
 
-  tooltip.innerHTML = `<div class="t-period">${name}</div><div class="t-val" style="color:${val>=0?'#7DB2FA':'#D68CF0'}">${val>=0?'+':''}${val.toFixed(1)}%</div>`;
+  tooltip.innerHTML = `<div class="t-period">${name}</div><div class="t-val" style="color:${val>=0?'#cdb0ff':'#cd7fff'}">${val>=0?'+':''}${val.toFixed(1)}%</div>`;
   tooltip.style.left = px + 'px';
   tooltip.style.top = (py-14) + 'px';
   tooltip.style.opacity = 1;
@@ -275,6 +275,27 @@ function reportHeight(){
 }
 window.addEventListener("load", reportHeight);
 window.addEventListener("resize", reportHeight);
+</script>
+<style id="anim">
+.bar-pos,.bar-neg{transform-box:fill-box;animation:growX .8s cubic-bezier(.2,.8,.2,1) both paused;}
+.bar-pos{transform-origin:left center}.bar-neg{transform-origin:right center}
+.val-label,.industry-label,.comp-label{animation:fadeIn .5s ease both paused;}
+body.play .bar-pos,body.play .bar-neg,body.play .val-label,body.play .industry-label,body.play .comp-label{animation-play-state:running;}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.bar-pos,.bar-neg,.val-label,.industry-label,.comp-label{animation:none}}
+</style>
+<script id="anim-js">
+(function(){
+  document.querySelectorAll('.bar-pos,.bar-neg').forEach(function(b,i){b.style.animationDelay=(i*55)+'ms';});
+  document.querySelectorAll('.val-label').forEach(function(l,i){l.style.animationDelay=(0.45+i*0.055)+'s';});
+  document.querySelectorAll('.industry-label').forEach(function(l,i){l.style.animationDelay=(i*55)+'ms';});
+  var go=function(){document.body.classList.add('play');};
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){go();io.disconnect();}},{threshold:0.3});
+    io.observe(document.body);
+  } else { go(); }
+})();
 </script>
 </body>
 </html>

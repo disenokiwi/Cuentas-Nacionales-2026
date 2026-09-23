@@ -5,12 +5,12 @@
 <title>PIB Nominal - Ecuador 2021-2026</title>
 <style>
   :root{
-    --ink:#1B2A4A;
+    --ink:#18191f;
     --ink-soft:#4A5876;
     --paper:#FFFFFF;
     --line:#E4E4E4;
-    --navy:#1E40AF;
-    --navy-light:#A9BEEC;
+    --navy:#ca43e9;
+    --navy-light:#ca43e9;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:transparent;}
@@ -52,9 +52,9 @@
   }
   svg{display:block;width:100%;height:auto;overflow:visible;}
   .gridline{stroke:var(--line);stroke-width:1;}
-  .bar{fill:var(--navy-light);transition:fill .12s ease;cursor:pointer;}
-  .bar.latest{fill:var(--navy);}
-  .bar.hovered{fill:var(--navy);}
+  .bar{fill-opacity:.3;fill:var(--navy-light);transition:fill .12s ease;cursor:pointer;}
+  .bar.latest{fill-opacity:1;fill:var(--navy);}
+  .bar.hovered{fill-opacity:1;fill:var(--navy);}
   .val-label{
     font-size:9.6px;
     font-weight:700;
@@ -64,7 +64,7 @@
   .val-label.latest{fill:var(--navy); font-size:11px;}
   .xtick{font-size:10px;fill:var(--ink-soft);text-anchor:middle;}
   .ytick{font-size:10px;fill:var(--ink-soft);text-anchor:end;}
-  .year-band{fill:var(--ink); opacity:0.03;}
+  .year-band{fill:#ca43e9; opacity:0.06;}
   .footer{
     display:flex;
     justify-content:space-between;
@@ -99,7 +99,7 @@
   .tooltip{
     position:absolute;
     pointer-events:none;
-    background:#1B2A4A;
+    background:#18191f;
     color:#fff;
     padding:7px 11px;
     border-radius:7px;
@@ -113,7 +113,7 @@
     box-shadow:0 4px 14px rgba(0,0,0,.18);
   }
   .tooltip .t-period{font-weight:700; font-size:11px; opacity:.75; text-transform:uppercase; letter-spacing:.04em;}
-  .tooltip .t-val{font-size:15px; font-weight:700; font-family:inherit; color:#8FA8E8;}
+  .tooltip .t-val{font-size:15px; font-weight:700; font-family:inherit; color:#cd7fff;}
 </style>
 <style>
 @media (max-width:640px){
@@ -278,7 +278,7 @@ years.forEach(yr=>{
   const t = document.createElementNS(svgns,'text');
   t.setAttribute('x', xc); t.setAttribute('y', H-padB+32);
   t.setAttribute('class','xtick');
-  t.setAttribute('style','font-weight:700; fill:#1B2A4A;');
+  t.setAttribute('style','font-weight:700; fill:#18191f;');
   t.textContent = yr;
   plot.appendChild(t);
 });
@@ -289,6 +289,26 @@ function reportHeight(){
 }
 window.addEventListener("load", reportHeight);
 window.addEventListener("resize", reportHeight);
+</script>
+<style id="anim">
+.bar{transform-box:fill-box;transform-origin:center bottom;animation:growBar .8s cubic-bezier(.2,.8,.2,1) both paused;}
+.val-label{animation:fadeIn .5s ease both paused;}
+body.play .bar,body.play .val-label{animation-play-state:running;}
+@keyframes growBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.bar,.val-label{animation:none}}
+</style>
+<script id="anim-js">
+(function(){
+  document.querySelectorAll('.bar').forEach(function(b,i){b.style.animationDelay=(i*45)+'ms';});
+  var n=document.querySelectorAll('.bar').length;
+  document.querySelectorAll('.val-label').forEach(function(l,i){l.style.animationDelay=(0.5+i*0.09)+'s';});
+  var go=function(){document.body.classList.add('play');};
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){go();io.disconnect();}},{threshold:0.3});
+    io.observe(document.body);
+  } else { go(); }
+})();
 </script>
 </body>
 </html>

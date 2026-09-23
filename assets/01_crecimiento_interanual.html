@@ -5,12 +5,12 @@
 <title>Crecimiento interanual del PIB - Ecuador 2021-2026</title>
 <style>
   :root{
-    --ink:#1B2A4A;
+    --ink:#18191f;
     --ink-soft:#4A5876;
     --paper:#FFFFFF;
     --line:#E4E4E4;
-    --teal:#2563EB;
-    --coral:#C8553D;
+    --teal:#3673ef;
+    --coral:#ca43e9;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:transparent;}
@@ -56,7 +56,7 @@
   .area-fill{fill:url(#areaGrad);}
   .line-path{
     fill:none;
-    stroke:var(--ink);
+    stroke:#542ab1;
     stroke-width:2.6;
     stroke-linecap:round;
     stroke-linejoin:round;
@@ -74,7 +74,7 @@
   .val-neg{fill:var(--coral);}
   .xtick{font-size:10px;fill:var(--ink-soft);text-anchor:middle;}
   .ytick{font-size:10px;fill:var(--ink-soft);text-anchor:end;}
-  .year-band{fill:var(--ink); opacity:0.03;}
+  .year-band{fill:#8d61ff; opacity:0.06;}
   .v-guide{stroke:var(--ink-soft);stroke-width:1;opacity:0;pointer-events:none;}
   .legend{
     display:flex;
@@ -99,7 +99,7 @@
   .tooltip{
     position:absolute;
     pointer-events:none;
-    background:#1B2A4A;
+    background:#18191f;
     color:#fff;
     padding:7px 11px;
     border-radius:7px;
@@ -126,8 +126,8 @@
     <svg viewBox="0 0 940 400" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2563EB" stop-opacity="0.14"/>
-          <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#8d61ff" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#cdb0ff" stop-opacity="0"/>
         </linearGradient>
       </defs>
       <g id="plot"></g>
@@ -135,8 +135,8 @@
     <div class="tooltip" id="tooltip"></div>
 
     <div class="legend">
-      <div class="legend-item"><span class="swatch" style="background:#2563EB"></span> Variación positiva</div>
-      <div class="legend-item"><span class="swatch" style="background:#C8553D"></span> Variación negativa</div>
+      <div class="legend-item"><span class="swatch" style="background:#3673ef"></span> Variación positiva</div>
+      <div class="legend-item"><span class="swatch" style="background:#ca43e9"></span> Variación negativa</div>
       <div class="legend-item" style="margin-left:auto;">Línea: tendencia suavizada (spline) · pasa el cursor sobre un punto</div>
     </div>
   </div>
@@ -223,7 +223,7 @@ years.forEach(yr=>{
   const t = document.createElementNS(svgns,'text');
   t.setAttribute('x', xc); t.setAttribute('y', H-padB+32);
   t.setAttribute('class','xtick');
-  t.setAttribute('style','font-weight:700; fill:#1B2A4A;');
+  t.setAttribute('style','font-weight:700; fill:#18191f;');
   t.textContent = yr;
   plot.appendChild(t);
 });
@@ -281,7 +281,7 @@ function showTooltip(i){
   const px = svgRect.left - wrapRect.left + x*scale;
   const py = svgRect.top - wrapRect.top + y*scale;
 
-  tooltip.innerHTML = `<div class="t-period">${d[0]}</div><div class="t-val" style="color:${d[1]>=0?'#7DA8F5':'#FF9B7E'}">${d[1]>=0?'+':''}${d[1].toFixed(1)}%</div>`;
+  tooltip.innerHTML = `<div class="t-period">${d[0]}</div><div class="t-val" style="color:${d[1]>=0?'#cdb0ff':'#cd7fff'}">${d[1]>=0?'+':''}${d[1].toFixed(1)}%</div>`;
   tooltip.style.left = px + 'px';
   tooltip.style.top = (py-12) + 'px';
   tooltip.style.opacity = 1;
@@ -337,6 +337,30 @@ function reportHeight(){
 }
 window.addEventListener("load", reportHeight);
 window.addEventListener("resize", reportHeight);
+</script>
+<style id="anim">
+.line-path{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.8s cubic-bezier(.4,0,.2,1) both paused;}
+.area-fill{opacity:0;animation:fadeIn 1s ease 1.1s both paused;}
+.dot{transform-box:fill-box;transform-origin:center;animation:pop .45s cubic-bezier(.3,1.6,.5,1) both paused;}
+.val-label{animation:fadeIn .5s ease both paused;}
+body.play .line-path,body.play .area-fill,body.play .dot,body.play .val-label{animation-play-state:running;}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.line-path,.area-fill,.dot,.val-label{animation:none;stroke-dashoffset:0;opacity:1}}
+</style>
+<script id="anim-js">
+(function(){
+  var line=document.querySelector('.line-path'); if(line) line.setAttribute('pathLength','1');
+  var n=document.querySelectorAll('.dot').length;
+  document.querySelectorAll('.dot').forEach(function(d,i){d.style.animationDelay=(0.15+i*(1.5/n))+'s';});
+  document.querySelectorAll('.val-label').forEach(function(l,i){l.style.animationDelay=(0.4+i*0.14)+'s';});
+  var go=function(){document.body.classList.add('play');};
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting;})){go();io.disconnect();}},{threshold:0.3});
+    io.observe(document.body);
+  } else { go(); }
+})();
 </script>
 </body>
 </html>
