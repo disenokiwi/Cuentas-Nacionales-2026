@@ -178,6 +178,11 @@
     -webkit-mask: url('assets/asterisco.svg') center / contain no-repeat;
     mask: url('assets/asterisco.svg') center / contain no-repeat;
   }
+  .asterisk-list li::before { animation: asteriskSpin 14s linear infinite; }
+  .asterisk-list li:nth-child(2)::before { animation-duration: 18s; }
+  .asterisk-list li:nth-child(3)::before { animation-duration: 16s; }
+  @keyframes asteriskSpin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .asterisk-list li::before { animation: none; } }
   .plain-list { margin: 0 0 36px; padding-left: 1.2em; max-width: 72ch; color: var(--text-secondary); font-size: 16px; line-height: 1.65; }
   .plain-list li { margin-bottom: 8px; }
 
