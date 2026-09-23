@@ -87,6 +87,10 @@
   }
   nav.links a:hover { background: rgba(255,255,255,0.10); color: #fff; }
   nav.links a.active { color: #fff; font-weight: 600; }
+  @media (min-width: 721px) and (max-width: 1040px) {
+    nav.links { gap: 0; }
+    nav.links a { font-size: 12px; padding: 8px 8px; }
+  }
   .menu-btn { display: none; }
 
   /* ---------- Hero (dark, branded background art) ---------- */
@@ -166,6 +170,14 @@
   .term summary:hover { background: var(--border); }
   .term p { margin: 0; padding: 0 18px 18px; font-size: 15.5px; line-height: 1.65; color: var(--text-secondary); }
   .term strong { color: var(--text-primary); }
+  .asterisk-list { list-style: none; margin: 0; padding: 0; max-width: 72ch; }
+  .asterisk-list li { position: relative; padding-left: 40px; margin-bottom: 22px; font-size: 16px; line-height: 1.65; color: var(--text-secondary); }
+  .asterisk-list li::before {
+    content: ""; position: absolute; left: 0; top: 0.28em; width: 24px; height: 24px;
+    background: var(--series-1);
+    -webkit-mask: url('assets/asterisco.svg') center / contain no-repeat;
+    mask: url('assets/asterisco.svg') center / contain no-repeat;
+  }
   .plain-list { margin: 0 0 36px; padding-left: 1.2em; max-width: 72ch; color: var(--text-secondary); font-size: 16px; line-height: 1.65; }
   .plain-list li { margin-bottom: 8px; }
 
@@ -284,7 +296,7 @@
       <a href="#evolucion">01 · Evolución del PIB</a>
       <a href="#componentes">02 · Componentes del PIB</a>
       <a href="#industrias">03 · Análisis del PIB por industria</a>
-      <a href="#conclusiones">04 · Conclusiones</a>
+      <a href="#conclusiones">04 · Conclusiones del BCE</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
       <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -363,10 +375,12 @@
 
 <section id="conclusiones">
   <div class="wrap">
-    <div class="kicker">04 · Conclusiones</div>
-    <p class="section-text">La economía ecuatoriana creció 2,1% en el primer trimestre de 2026 respecto al mismo período de 2025. El crecimiento se sustentó en el desempeño de 16 de las 20 industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</p>
-    <p class="section-text">Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p>
-    <p class="section-text">En términos trimestrales se registró una variación de 1,0%. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p>
+    <div class="kicker">04 · Conclusiones del BCE</div>
+    <ul class="asterisk-list">
+      <li>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026 respecto al mismo período de 2025. El crecimiento se sustentó en el desempeño de 16 de las 20 industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</li>
+      <li>Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</li>
+      <li>En términos trimestrales se registró una variación de 1,0%. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</li>
+    </ul>
   </div>
 </section>
 
