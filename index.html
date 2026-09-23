@@ -104,27 +104,13 @@
   }
   .hero-art {
     position: absolute; left: 0; right: 0; bottom: 0; width: 100%;
-    aspect-ratio: 1920 / 1080;
+    aspect-ratio: 2944 / 1248;
     overflow: hidden;
     pointer-events: none;
   }
-  .hero-art-svg { width: 100%; height: 100%; display: block; }
+  .hero-video { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
   .hero .wrap { position: relative; z-index: 1; }
 
-  /* Each little figure in the artwork animates on its own, instead of
-     the whole illustration moving as a single block. */
-  .hero-art .figure {
-    transform-box: fill-box;
-    transform-origin: center bottom;
-    animation: figureIdle var(--dur, 3.2s) ease-in-out var(--delay, 0s) infinite;
-  }
-  @keyframes figureIdle {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-4px) rotate(-0.6deg); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-art .figure { animation: none; }
-  }
   .eyebrow {
     display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em;
     text-transform: uppercase; color: #6fa8ee; margin-bottom: 18px;
@@ -163,11 +149,13 @@
     font-size: 11.5px; font-weight: 700; text-transform: uppercase;
     color: var(--text-muted); letter-spacing: 0.06em; margin-bottom: 10px;
   }
-  .section-text { font-size: 16px; line-height: 1.65; color: var(--text-secondary); max-width: 72ch; margin: 0 0 36px; }
+  .section-text { font-size: 16px; line-height: 1.65; color: var(--text-secondary); margin: 0 0 36px; }
   .section-text + .section-text { margin-top: -20px; }
   .embed-chart { display: block; width: 100%; height: 560px; border: 0; margin: 0 0 36px; background: transparent; }
-  .terms + .embed-chart { margin-top: 28px; }
-  .terms { display: flex; flex-direction: column; gap: 10px; max-width: 72ch; margin: 8px 0 0; }
+  .terms + .embed-row { margin-top: 28px; }
+  .embed-row { display: grid; grid-template-columns: 1fr; gap: 0 20px; align-items: start; }
+  @media (min-width: 1000px) { .embed-row { grid-template-columns: 1fr 1fr; } }
+  .terms { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 0; }
   .term { border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); overflow: hidden; }
   .term summary {
     list-style: none; cursor: pointer; padding: 14px 18px; font-weight: 800; font-size: 14px;
@@ -179,7 +167,7 @@
   .term summary:hover { background: var(--border); }
   .term p { margin: 0; padding: 0 18px 18px; font-size: 15.5px; line-height: 1.65; color: var(--text-secondary); }
   .term strong { color: var(--text-primary); }
-  .asterisk-list { list-style: none; margin: 0; padding: 0; max-width: 72ch; }
+  .asterisk-list { list-style: none; margin: 0; padding: 0; }
   .asterisk-list li { position: relative; padding-left: 40px; margin-bottom: 22px; font-size: 16px; line-height: 1.65; color: var(--text-secondary); }
   .asterisk-list li::before {
     content: ""; position: absolute; left: 0; top: 0.28em; width: 24px; height: 24px;
@@ -192,7 +180,7 @@
   .asterisk-list li:nth-child(3)::before { animation-duration: 16s; }
   @keyframes asteriskSpin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .asterisk-list li::before { animation: none; } }
-  .plain-list { margin: 0 0 36px; padding-left: 1.2em; max-width: 72ch; color: var(--text-secondary); font-size: 16px; line-height: 1.65; }
+  .plain-list { margin: 0 0 36px; padding-left: 1.2em; color: var(--text-secondary); font-size: 16px; line-height: 1.65; }
   .plain-list li { margin-bottom: 8px; }
 
   /* ---------- Stat tiles ---------- */
@@ -293,7 +281,7 @@
       cursor: pointer;
     }
     .hero { padding: 56px 0 200px; }
-    .hero-art { aspect-ratio: 960 / 1080; }
+    .hero-art { aspect-ratio: 1472 / 1248; }
     section { padding: 48px 0; }
     .industry-grid { grid-template-columns: 1fr; }
     .hero-stats { gap: 32px; }
@@ -320,7 +308,9 @@
 </header>
 
 <section class="hero">
-  <div class="hero-art" id="heroArt"></div>
+  <div class="hero-art" id="heroArt">
+    <video class="hero-video" src="assets/fondo%20animado.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+  </div>
   <div class="wrap">
     <img class="hero-logo" src="assets/LogoKeyeconomics2-blanco.svg" alt="KeyEconomics">
     <div class="report-tag">
@@ -364,8 +354,10 @@
         <p>Es el valor monetario total de los bienes y servicios finales producidos en el país durante un período determinado, calculado a <strong>precios corrientes del mismo año</strong>. Refleja el tamaño absoluto de la economía, incluyendo el efecto de la inflación o deflación sobre los precios. En consecuencia, un aumento del PIB nominal puede deberse tanto a un incremento en la producción real como a un aumento generalizado de precios.</p>
       </details>
     </div>
-    <iframe class="embed-chart" data-chart="02_pib_real" src="assets/02_pib_real.html" title="PIB Real" loading="lazy" scrolling="no"></iframe>
-    <iframe class="embed-chart" data-chart="03_pib_nominal" src="assets/03_pib_nominal.html" title="PIB Nominal" loading="lazy" scrolling="no"></iframe>
+    <div class="embed-row">
+      <iframe class="embed-chart" data-chart="02_pib_real" src="assets/02_pib_real.html" title="PIB Real" loading="lazy" scrolling="no"></iframe>
+      <iframe class="embed-chart" data-chart="03_pib_nominal" src="assets/03_pib_nominal.html" title="PIB Nominal" loading="lazy" scrolling="no"></iframe>
+    </div>
   </div>
 </section>
 
@@ -415,17 +407,6 @@
 <script>
 (function () {
   "use strict";
-
-  // Inject the hero illustration inline so each little figure (tagged
-  // with class="figure" inside the file) can be animated independently
-  // via CSS, instead of animating the whole image as one block.
-  var heroArt = document.getElementById("heroArt");
-  if (heroArt) {
-    fetch("assets/Fondos-art-02-live.svg")
-      .then(function (r) { return r.text(); })
-      .then(function (svg) { heroArt.innerHTML = svg; })
-      .catch(function () {});
-  }
 
   var tooltip = document.getElementById("tooltip");
 
