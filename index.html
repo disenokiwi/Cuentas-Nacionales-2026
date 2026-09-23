@@ -261,35 +261,18 @@
   /* ---------- Section rhythm: alternating backgrounds ---------- */
   section.sec { position: relative; padding: 88px 0; }
   .sec-light { background: var(--page-plane); }
-  .sec-lav { background: color-mix(in srgb, #dbc7ff 30%, #ffffff); }
+  .sec-lav { background: color-mix(in srgb, var(--series-1) 10%, var(--page-plane)); }
   .sec-dark {
     background: #201061; color: #fff;
     --text-primary: #ffffff; --text-secondary: rgba(255,255,255,0.82); --text-muted: rgba(255,255,255,0.6);
-    --border: rgba(255,255,255,0.16); --dot: #cdb0ff;
+    --border: rgba(255,255,255,0.16);
   }
   .sec-dark .kicker { color: #cdb0ff; }
   @media (prefers-color-scheme: dark) {
-    :root:where(:not([data-theme="light"])) .sec-lav { background: #1a1230; }
+    :root:where(:not([data-theme="light"])) .sec-lav { background: color-mix(in srgb, var(--series-1) 14%, var(--page-plane)); }
   }
 
-  /* dotted divider at the top of every section (echoes the floor pattern of the hero art) */
-  section.sec::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px;
-    background-image: radial-gradient(circle at 50% 50%, var(--dot, #8d61ff) 1.6px, transparent 2.1px);
-    background-size: 18px 10px; opacity: 0.65; pointer-events: none;
-  }
-
-  /* placeholder for section images */
-  .image-slot {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    min-height: 220px; margin: 0 0 36px; padding: 24px; text-align: center;
-    border: 2px dashed color-mix(in srgb, var(--text-primary) 28%, transparent);
-    border-radius: 18px;
-    background: color-mix(in srgb, var(--text-primary) 4%, transparent);
-    color: color-mix(in srgb, var(--text-primary) 50%, transparent);
-    font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  }
-  @media (max-width: 720px) { .image-slot { min-height: 150px; } section.sec { padding: 64px 0; } }
+  @media (max-width: 720px) { section.sec { padding: 64px 0; } }
 
   /* charts sit on a light panel so they read on any section background */
   .chart-panel {
@@ -314,7 +297,7 @@
 
   /* reading progress */
   .scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 100; pointer-events: none;
-    transform-origin: left center; transform: scaleX(0); background: linear-gradient(90deg, #3673ef, #8d61ff, #ca43e9); }
+    transform-origin: left center; transform: scaleX(0); background: var(--series-1); }
 
   /* ---------- Footer (dark, branded background art) ---------- */
   footer {
@@ -401,10 +384,6 @@
 <section id="evolucion" class="sec sec-light">
   <div class="wrap">
     <div class="kicker">01 · Evolución del PIB</div>
-    <figure class="image-slot" aria-label="Espacio reservado para una imagen">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5-5 4 4 3-3 4 4"/></svg>
-      <span>Espacio para imagen</span>
-    </figure>
     <p class="section-text">Entre el primer trimestre de 2025 y el mismo periodo de 2026, la economía ecuatoriana creció en 2,1%.</p>
     <div class="chart-panel">
       <iframe class="embed-chart" id="chartInteranual" data-chart="01_crecimiento_interanual" src="assets/01_crecimiento_interanual.html" title="Crecimiento interanual del PIB, por trimestre" loading="lazy" scrolling="no"></iframe>
@@ -434,10 +413,6 @@
 <section id="componentes" class="sec sec-lav">
   <div class="wrap">
     <div class="kicker">02 · Componentes del PIB</div>
-    <figure class="image-slot" aria-label="Espacio reservado para una imagen">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5-5 4 4 3-3 4 4"/></svg>
-      <span>Espacio para imagen</span>
-    </figure>
     <p class="section-text">Según el informe del BCE, el crecimiento de la economía en el primer trimestre de 2026 respondió principalmente al dinamismo del consumo de los hogares y de la inversión, a través de la demanda interna:</p>
     <div class="card-grid">
       <div class="info-card" style="--c:#3673ef">
@@ -471,10 +446,6 @@
 <section id="industrias" class="sec sec-dark">
   <div class="wrap">
     <div class="kicker">03 · Análisis del PIB por industria</div>
-    <figure class="image-slot" aria-label="Espacio reservado para una imagen">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5-5 4 4 3-3 4 4"/></svg>
-      <span>Espacio para imagen</span>
-    </figure>
     <p class="section-text">En el primer trimestre de 2026, 16 de las 20 actividades económicas registraron crecimiento frente al mismo período de 2025. Las mayores tasas de variación se observaron en actividades financieras y de seguros (+12,0%), alojamiento y comidas (+11,8%), refinados de petróleo (+9,4%), salud y asistencia social (+6,4%), información y comunicación (+4,9%) y actividades profesionales y técnicas (+4,5%).</p>
 
     <div class="chart-panel">
@@ -486,10 +457,6 @@
 <section id="conclusiones" class="sec sec-light">
   <div class="wrap">
     <div class="kicker">04 · Conclusiones del BCE</div>
-    <figure class="image-slot" aria-label="Espacio reservado para una imagen">
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="m4 18 5-5 4 4 3-3 4 4"/></svg>
-      <span>Espacio para imagen</span>
-    </figure>
     <ul class="asterisk-list">
       <li>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026 respecto al mismo período de 2025. El crecimiento se sustentó en el desempeño de 16 de las 20 industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</li>
       <li>Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</li>
@@ -691,7 +658,7 @@
 
   // ---------- Reveal blocks on scroll ----------
   (function () {
-    var groups = [".sec .kicker", ".image-slot", ".sec .section-text", ".terms", ".chart-panel", ".card-grid .info-card", ".asterisk-list li"];
+    var groups = [".sec .kicker", ".sec .section-text", ".terms", ".chart-panel", ".card-grid .info-card", ".asterisk-list li"];
     var items = [];
     groups.forEach(function (sel) {
       document.querySelectorAll(sel).forEach(function (el, i) {
