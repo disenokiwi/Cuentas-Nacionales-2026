@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Componentes del PIB por el gasto - Ecuador 2026.I</title>
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#4A5876;
+    --paper:#FFFFFF;
+    --line:#E4E4E4;
+    --gold:#1375f6;
+    --coral:#9500c5;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:transparent;}
+  body{
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color:var(--ink);
+    padding: 28px 32px 22px;
+    width: auto;
+    max-width: 980px;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing:-0.01em;
+    font-size:23px;
+    line-height:1.25;
+    margin:0 0 4px;
+    color:var(--ink);
+    font-weight:800;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .chart-wrap{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px 22px 16px;
+  }
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .gridline{stroke:var(--line);stroke-width:1;}
+  .zero-line{stroke:var(--ink-soft);stroke-width:1.1;}
+  .bar-pos{fill:var(--gold);cursor:pointer;transition:opacity .12s ease;}
+  .bar-neg{fill:var(--coral);cursor:pointer;transition:opacity .12s ease;}
+  .row-hit{fill:transparent;cursor:pointer;}
+  .comp-label{
+    font-size:13px;
+    fill:var(--ink);
+    text-anchor:end;
+    font-weight:500;
+  }
+  .val-label{
+    font-size:13px;
+    font-weight:700;
+  }
+  .val-pos{fill:var(--gold);}
+  .val-neg{fill:var(--coral);}
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .legend{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-top:2px;
+    padding: 0 4px;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .legend-item{display:flex;align-items:center;gap:6px;}
+  .swatch{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .tooltip{
+    position:absolute;
+    pointer-events:none;
+    background:#1B2A4A;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:7px;
+    font-size:12px;
+    line-height:1.4;
+    white-space:nowrap;
+    opacity:0;
+    transform:translate(-50%,-100%);
+    transition:opacity .1s ease;
+    z-index:10;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+    max-width:260px;
+  }
+  .tooltip .t-period{font-weight:700; font-size:10.5px; opacity:.8; white-space:normal;}
+  .tooltip .t-val{font-size:15px; font-weight:700; font-family:inherit;}
+</style>
+</head>
+<body>
+
+  <p class="eyebrow">Cuentas Nacionales Trimestrales · Banco Central del Ecuador</p>
+  <h1>Crecimiento interanual del PIB por componentes del gasto</h1>
+  <p class="sub">Variación porcentual frente al mismo trimestre del año anterior · 2026.I</p>
+
+  <div class="chart-wrap" id="chartWrap">
+    <svg id="svgChart" viewBox="0 0 940 280" xmlns="http://www.w3.org/2000/svg">
+      <g id="plot"></g>
+    </svg>
+    <div class="tooltip" id="tooltip"></div>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch" style="background:#1375f6"></span> Crecimiento</div>
+      <div class="legend-item"><span class="swatch" style="background:#9500c5"></span> Contracción</div>
+      <div class="legend-item" style="margin-left:auto;">Pasa el cursor sobre una barra</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Fuente: BCE, Cuentas Nacionales Trimestrales (publicación tou_135_202601)</span>
+    <span>Óptica del gasto · Excluye PIB</span>
+  </div>
+
+<script>
+const rawData = {
+"Formación Bruta de Capital Fijo (FBKF)": 12.795592402326484,
+"Importaciones de bienes y servicios": 11.089146836578468,
+"Gasto de Consumo Final · Hogares": 3.8665562388689123,
+"Exportaciones de bienes y servicios": 1.6597335464856977,
+"Gasto de Consumo Final · Gobierno General": -3.7802110977100734
+};
+
+let data = Object.entries(rawData);
+data.sort((a,b)=> b[1]-a[1]);
+
+const W = 940, H = 280;
+const padL = 330, padR = 60, padT = 14, padB = 36;
+const plotW = W - padL - padR;
+const plotH = H - padT - padB;
+const rowH = plotH / data.length;
+const barThickness = rowH * 0.52;
+
+const minV = Math.min(...data.map(d=>d[1]));
+const maxV = Math.max(...data.map(d=>d[1]));
+const xMin = Math.floor((minV-1)/2)*2;
+const xMax = Math.ceil((maxV+1)/2)*2;
+
+function xPos(v){ return padL + ((v - xMin)/(xMax-xMin)) * plotW; }
+function yCenter(i){ return padT + rowH*i + rowH/2; }
+
+const svgns = "http://www.w3.org/2000/svg";
+const plot = document.getElementById('plot');
+const wrap = document.getElementById('chartWrap');
+const tooltip = document.getElementById('tooltip');
+const svgEl = wrap.querySelector('svg');
+
+// vertical gridlines
+let gx = Math.ceil(xMin/2)*2;
+for(; gx<=xMax; gx+=2){
+  const x = xPos(gx);
+  const line = document.createElementNS(svgns,'line');
+  line.setAttribute('x1', x); line.setAttribute('x2', x);
+  line.setAttribute('y1', padT); line.setAttribute('y2', H-padB);
+  line.setAttribute('class', gx===0 ? 'zero-line' : 'gridline');
+  plot.appendChild(line);
+
+  if(gx % 4 === 0){
+    const label = document.createElementNS(svgns,'text');
+    label.setAttribute('x', x); label.setAttribute('y', H-padB+16);
+    label.setAttribute('text-anchor','middle');
+    label.setAttribute('style','font-size:10px; fill:#4A5876;');
+    label.textContent = gx + '%';
+    plot.appendChild(label);
+  }
+}
+
+const zeroX = xPos(0);
+
+function showTooltip(i, barEl){
+  const [name, val] = data[i];
+  const yc = yCenter(i);
+  const x = xPos(val);
+
+  const svgRect = svgEl.getBoundingClientRect();
+  const scale = svgRect.width / W;
+  const wrapRect = wrap.getBoundingClientRect();
+  const px = svgRect.left - wrapRect.left + x*scale;
+  const py = svgRect.top - wrapRect.top + yc*scale;
+
+  tooltip.innerHTML = `<div class="t-period">${name}</div><div class="t-val" style="color:${val>=0?'#7DB2FA':'#D68CF0'}">${val>=0?'+':''}${val.toFixed(1)}%</div>`;
+  tooltip.style.left = px + 'px';
+  tooltip.style.top = (py-14) + 'px';
+  tooltip.style.opacity = 1;
+}
+function hideTooltip(){
+  tooltip.style.opacity = 0;
+}
+
+data.forEach((d,i)=>{
+  const [name, val] = d;
+  const yc = yCenter(i);
+  const x = xPos(val);
+  const barX = Math.min(zeroX, x);
+  const barW = Math.abs(x - zeroX);
+
+  const lbl = document.createElementNS(svgns,'text');
+  lbl.setAttribute('x', padL - 14);
+  lbl.setAttribute('y', yc + 4.5);
+  lbl.setAttribute('class','comp-label');
+  lbl.textContent = name;
+  plot.appendChild(lbl);
+
+  const bar = document.createElementNS(svgns,'rect');
+  bar.setAttribute('x', barX);
+  bar.setAttribute('y', yc - barThickness/2);
+  bar.setAttribute('width', Math.max(barW,1));
+  bar.setAttribute('height', barThickness);
+  bar.setAttribute('rx', 3);
+  bar.setAttribute('class', val>=0 ? 'bar-pos' : 'bar-neg');
+  plot.appendChild(bar);
+
+  const valLbl = document.createElementNS(svgns,'text');
+  const onRight = val>=0;
+  valLbl.setAttribute('x', onRight ? x+10 : x-10);
+  valLbl.setAttribute('y', yc+4.5);
+  valLbl.setAttribute('text-anchor', onRight ? 'start':'end');
+  valLbl.setAttribute('class','val-label ' + (val>=0?'val-pos':'val-neg'));
+  valLbl.textContent = (val>=0?'+':'') + val.toFixed(1) + '%';
+  plot.appendChild(valLbl);
+
+  const rowHit = document.createElementNS(svgns,'rect');
+  rowHit.setAttribute('x', 0);
+  rowHit.setAttribute('y', yc - rowH/2);
+  rowHit.setAttribute('width', W);
+  rowHit.setAttribute('height', rowH);
+  rowHit.setAttribute('class','row-hit');
+  rowHit.addEventListener('mouseenter', ()=>showTooltip(i, bar));
+  rowHit.addEventListener('mouseleave', hideTooltip);
+  plot.appendChild(rowHit);
+});
+</script>
+<script>
+function reportHeight(){
+  parent.postMessage({ type: "chart-height", src: "05_componentes_pib", height: document.body.offsetHeight }, "*");
+}
+window.addEventListener("load", reportHeight);
+window.addEventListener("resize", reportHeight);
+</script>
+</body>
+</html>

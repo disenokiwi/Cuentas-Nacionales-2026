@@ -348,13 +348,7 @@
       <li>En contraste, las importaciones aumentaron 11,1%, principalmente por mayores compras externas de materias primas y bienes de capital, mientras que el gasto de consumo final del Gobierno General se contrajo 3,8%.</li>
     </ul>
 
-    <div class="chart-card">
-      <div class="chart-head">
-        <div class="chart-title"></div>
-        <div class="chart-unit">%</div>
-      </div>
-      <div class="chart-svg-wrap" id="chart-gasto"></div>
-    </div>
+    <iframe class="embed-chart" data-chart="05_componentes_pib" src="assets/05_componentes_pib.html" title="Crecimiento interanual del PIB por componentes del gasto" loading="lazy" scrolling="no"></iframe>
   </div>
 </section>
 
@@ -533,15 +527,6 @@
   }
 
   function renderAllCharts() {
-    // Componentes del gasto
-    renderBarChart("chart-gasto", [
-      { label: "Consumo hogares", values: [3.9] },
-      { label: "FBKF", values: [12.8] },
-      { label: "Exportaciones", values: [1.7] },
-      { label: "Importaciones", values: [11.1] },
-      { label: "Gasto Gobierno", values: [-3.8] }
-    ], { colors: ["var(--series-1)"] });
-
     // Actividades con mayor crecimiento
     renderBarChart("chart-industrias", [
       { label: "Financieras", values: [12.0] },
