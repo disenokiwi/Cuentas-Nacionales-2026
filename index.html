@@ -153,6 +153,18 @@
   .section-text { font-size: 16px; line-height: 1.65; color: var(--text-secondary); max-width: 72ch; margin: 0 0 36px; }
   .section-text + .section-text { margin-top: -20px; }
   .embed-chart { display: block; width: 100%; height: 560px; border: 0; margin: 0 0 36px; background: transparent; }
+  .terms { display: flex; flex-direction: column; gap: 10px; max-width: 72ch; margin: 8px 0 0; }
+  .term { border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); overflow: hidden; }
+  .term summary {
+    list-style: none; cursor: pointer; padding: 14px 18px; font-weight: 800; font-size: 14px;
+    letter-spacing: 0.03em; color: var(--series-1); display: flex; align-items: center; justify-content: space-between;
+  }
+  .term summary::-webkit-details-marker { display: none; }
+  .term summary::after { content: "+"; font-size: 20px; font-weight: 500; line-height: 1; transition: transform .2s; }
+  .term[open] summary::after { transform: rotate(45deg); }
+  .term summary:hover { background: var(--border); }
+  .term p { margin: 0; padding: 0 18px 18px; font-size: 15.5px; line-height: 1.65; color: var(--text-secondary); }
+  .term strong { color: var(--text-primary); }
   .plain-list { margin: 0 0 36px; padding-left: 1.2em; max-width: 72ch; color: var(--text-secondary); font-size: 16px; line-height: 1.65; }
   .plain-list li { margin-bottom: 8px; }
 
@@ -309,12 +321,15 @@
     <p class="section-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó USD 29.223 millones, mientras que, en términos nominales, totalizó USD 32.789 millones.</p>
     <p class="section-text">En términos trimestrales, el PIB registró un crecimiento del 1,0% frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó 12,8% en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
 
-    <div class="chart-card">
-      <div class="chart-head">
-        <div class="chart-title">PIB REAL / PIB NOMINAL</div>
-        <div class="chart-unit">USD millones</div>
-      </div>
-      <div class="chart-svg-wrap" id="chart-pib"></div>
+    <div class="terms">
+      <details class="term">
+        <summary>PIB REAL</summary>
+        <p>Mide el valor total de los bienes y servicios finales producidos en un período determinado, <strong>ajustado por inflación</strong>. En Ecuador, este cálculo se realiza utilizando <strong>precios constantes del año base 2018</strong>, lo que permite hacer comparaciones entre años y evaluar si ha habido crecimiento económico en términos reales (cantidad de producción), sin que los resultados estén influenciados por las variaciones en los precios.</p>
+      </details>
+      <details class="term">
+        <summary>PIB NOMINAL</summary>
+        <p>Es el valor monetario total de los bienes y servicios finales producidos en el país durante un período determinado, calculado a <strong>precios corrientes del mismo año</strong>. Refleja el tamaño absoluto de la economía, incluyendo el efecto de la inflación o deflación sobre los precios. En consecuencia, un aumento del PIB nominal puede deberse tanto a un incremento en la producción real como a un aumento generalizado de precios.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -515,12 +530,6 @@
   }
 
   function renderAllCharts() {
-    // PIB real vs nominal
-    renderBarChart("chart-pib", [
-      { label: "PIB real", values: [29223] },
-      { label: "PIB nominal", values: [32789] }
-    ], { colors: ["var(--series-1)"], valueLabel: function (v) { return "$" + Math.round(v).toLocaleString("es-EC") + "M"; } });
-
     // Componentes del gasto
     renderBarChart("chart-gasto", [
       { label: "Consumo hogares", values: [3.9] },
