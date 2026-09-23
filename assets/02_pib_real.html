@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>PIB Real - Ecuador 2021-2026</title>
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#4A5876;
+    --paper:#FFFFFF;
+    --line:#E4E4E4;
+    --teal:#2563EB;
+    --teal-light:#BFD3F7;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:transparent;}
+  body{
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color:var(--ink);
+    padding: 28px 32px 22px;
+    width: auto;
+    max-width: 980px;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing:-0.01em;
+    font-size:23px;
+    line-height:1.25;
+    margin:0 0 4px;
+    color:var(--ink);
+    font-weight:800;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .chart-wrap{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 22px 8px;
+  }
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .gridline{stroke:var(--line);stroke-width:1;}
+  .bar{fill:var(--teal-light);transition:fill .12s ease;cursor:pointer;}
+  .bar.latest{fill:var(--teal);}
+  .bar.hovered{fill:var(--teal);}
+  .val-label{
+    font-size:9.6px;
+    font-weight:700;
+    fill:var(--ink);
+    text-anchor:middle;
+  }
+  .val-label.latest{fill:var(--teal); font-size:11px;}
+  .xtick{font-size:10px;fill:var(--ink-soft);text-anchor:middle;}
+  .ytick{font-size:10px;fill:var(--ink-soft);text-anchor:end;}
+  .year-band{fill:var(--ink); opacity:0.03;}
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .callout{
+    position:absolute;
+    top:18px; right:24px;
+    text-align:right;
+    background:#fff;
+    padding:6px 14px 7px;
+    border-radius:8px;
+    border:1px solid var(--line);
+  }
+  .callout .big{
+    font-family: inherit;
+    font-size:19px;
+    font-weight:700;
+    color:var(--teal);
+    line-height:1.1;
+  }
+  .callout .small{
+    font-size:9.5px;
+    color:var(--ink-soft);
+    letter-spacing:.03em;
+    text-transform:uppercase;
+  }
+  .tooltip{
+    position:absolute;
+    pointer-events:none;
+    background:#1B2A4A;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:7px;
+    font-size:12px;
+    line-height:1.4;
+    white-space:nowrap;
+    opacity:0;
+    transform:translate(-50%,-100%);
+    transition:opacity .1s ease;
+    z-index:10;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  .tooltip .t-period{font-weight:700; font-size:11px; opacity:.75; text-transform:uppercase; letter-spacing:.04em;}
+  .tooltip .t-val{font-size:15px; font-weight:700; font-family:inherit; color:#7DA8F5;}
+</style>
+</head>
+<body>
+
+  <p class="eyebrow">Cuentas Nacionales Trimestrales · Banco Central del Ecuador</p>
+  <h1>Producto Interno Bruto Real, por trimestre</h1>
+  <p class="sub">Millones de USD, precios constantes de 2018 · 2021.I – 2026.I</p>
+
+  <div class="chart-wrap" id="chartWrap">
+    <div class="callout">
+      <div class="big">USD 29.223 M</div>
+      <div class="small">PIB Real · 2026.I</div>
+    </div>
+    <svg viewBox="0 0 940 400" xmlns="http://www.w3.org/2000/svg">
+      <g id="plot"></g>
+    </svg>
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+
+  <div class="footer">
+    <span>Fuente: BCE, Cuentas Nacionales Trimestrales (publicación tou_135_202601)</span>
+    <span>Cifras preliminares para el último trimestre disponible · pasa el cursor sobre una barra</span>
+  </div>
+
+<script>
+const data = [
+["2021.I", 24125743.914842036],["2021.II", 26797790.501809847],["2021.III", 26731371.36991737],["2021.IV", 29254405.500162046],
+["2022.I", 26310421.885387145],["2022.II", 28276975.511230066],["2022.III", 28237634.82835173],["2022.IV", 30358170.2436367],
+["2023.I", 27118361.453154884],["2023.II", 29731733.10759325],["2023.III", 28112296.86829789],["2023.IV", 30295278.734757707],
+["2024.I", 26894895.482129015],["2024.II", 28444229.701439098],["2024.III", 27626452.97416681],["2024.IV", 30051378.941721953],
+["2025.I", 28561563.775924522],["2025.II", 29021273.074739296],["2025.III", 28570991.373168938],["2025.IV", 31074082.57618738],
+["2026.I", 29223055.844216045]
+];
+
+const W = 940, H = 400;
+const padL = 56, padR = 18, padT = 18, padB = 46;
+const plotW = W - padL - padR;
+const plotH = H - padT - padB;
+
+const maxV = Math.max(...data.map(d=>d[1]/1000));
+const yMin = 0;
+const yMax = Math.ceil((maxV+1500)/2000)*2000;
+
+function xCenter(i){
+  const slot = plotW/data.length;
+  return padL + slot*i + slot/2;
+}
+function yPos(v){ return padT + plotH - ((v - yMin)/(yMax-yMin)) * plotH; }
+
+const svgns = "http://www.w3.org/2000/svg";
+const plot = document.getElementById('plot');
+const wrap = document.getElementById('chartWrap');
+const tooltip = document.getElementById('tooltip');
+const svgEl = wrap.querySelector('svg');
+
+// gridlines
+let gy = 0;
+for(; gy<=yMax; gy+=5000){
+  const y = yPos(gy);
+  const line = document.createElementNS(svgns,'line');
+  line.setAttribute('x1', padL); line.setAttribute('x2', W-padR);
+  line.setAttribute('y1', y); line.setAttribute('y2', y);
+  line.setAttribute('class', 'gridline');
+  plot.appendChild(line);
+
+  const label = document.createElementNS(svgns,'text');
+  label.setAttribute('x', padL-8); label.setAttribute('y', y+3.5);
+  label.setAttribute('class','ytick');
+  label.textContent = (gy/1000).toLocaleString('es-EC') + 'k';
+  plot.appendChild(label);
+}
+
+// year bands
+const years = [...new Set(data.map(d=>d[0].split('.')[0]))];
+years.forEach((yr, idx)=>{
+  if(idx % 2 === 1){
+    const idxs = data.map((d,i)=>d[0].startsWith(yr)?i:null).filter(v=>v!==null);
+    const slot = plotW/data.length;
+    const x0 = padL + slot*Math.min(...idxs);
+    const x1 = padL + slot*(Math.max(...idxs)+1);
+    const rect = document.createElementNS(svgns,'rect');
+    rect.setAttribute('x', x0); rect.setAttribute('y', padT);
+    rect.setAttribute('width', x1-x0); rect.setAttribute('height', plotH);
+    rect.setAttribute('class','year-band');
+    plot.appendChild(rect);
+  }
+});
+
+function showTooltip(i, barEl){
+  const d = data[i];
+  const xc = xCenter(i);
+  const y = yPos(d[1]/1000);
+
+  const svgRect = svgEl.getBoundingClientRect();
+  const scale = svgRect.width / W;
+  const wrapRect = wrap.getBoundingClientRect();
+  const px = svgRect.left - wrapRect.left + xc*scale;
+  const py = svgRect.top - wrapRect.top + y*scale;
+
+  tooltip.innerHTML = `<div class="t-period">${d[0]}</div><div class="t-val">USD ${Math.round(d[1]/1000).toLocaleString('es-EC')} M</div>`;
+  tooltip.style.left = px + 'px';
+  tooltip.style.top = (py-10) + 'px';
+  tooltip.style.opacity = 1;
+  barEl.classList.add('hovered');
+}
+function hideTooltip(barEl){
+  tooltip.style.opacity = 0;
+  barEl.classList.remove('hovered');
+}
+
+// bars
+const slot = plotW/data.length;
+const barW = slot*0.62;
+data.forEach((d,i)=>{
+  const isLast = i === data.length-1;
+  const xc = xCenter(i);
+  const v = d[1]/1000;
+  const y = yPos(v);
+  const bar = document.createElementNS(svgns,'rect');
+  bar.setAttribute('x', xc-barW/2);
+  bar.setAttribute('y', y);
+  bar.setAttribute('width', barW);
+  bar.setAttribute('height', yPos(0)-y);
+  bar.setAttribute('rx', 2.5);
+  bar.setAttribute('class', 'bar' + (isLast?' latest':''));
+  bar.addEventListener('mouseenter', ()=>showTooltip(i, bar));
+  bar.addEventListener('mouseleave', ()=>hideTooltip(bar));
+  plot.appendChild(bar);
+
+  if(isLast || i % 4 === 3){
+    const lbl = document.createElementNS(svgns,'text');
+    lbl.setAttribute('x', xc);
+    lbl.setAttribute('y', y-7);
+    lbl.setAttribute('class','val-label' + (isLast?' latest':''));
+    lbl.textContent = Math.round(v).toLocaleString('es-EC');
+    plot.appendChild(lbl);
+  }
+
+  const tick = document.createElementNS(svgns,'text');
+  tick.setAttribute('x', xc); tick.setAttribute('y', H-padB+16);
+  tick.setAttribute('class','xtick');
+  const [yr,q] = d[0].split('.');
+  tick.textContent = q;
+  plot.appendChild(tick);
+});
+
+years.forEach(yr=>{
+  const idxs = data.map((d,i)=>d[0].startsWith(yr)?i:null).filter(v=>v!==null);
+  const xc = (xCenter(Math.min(...idxs)) + xCenter(Math.max(...idxs)))/2;
+  const t = document.createElementNS(svgns,'text');
+  t.setAttribute('x', xc); t.setAttribute('y', H-padB+32);
+  t.setAttribute('class','xtick');
+  t.setAttribute('style','font-weight:700; fill:#1B2A4A;');
+  t.textContent = yr;
+  plot.appendChild(t);
+});
+</script>
+<script>
+function reportHeight(){
+  parent.postMessage({ type: "chart-height", src: "02_pib_real", height: document.body.offsetHeight }, "*");
+}
+window.addEventListener("load", reportHeight);
+window.addEventListener("resize", reportHeight);
+</script>
+</body>
+</html>

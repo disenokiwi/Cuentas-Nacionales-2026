@@ -153,6 +153,7 @@
   .section-text { font-size: 16px; line-height: 1.65; color: var(--text-secondary); max-width: 72ch; margin: 0 0 36px; }
   .section-text + .section-text { margin-top: -20px; }
   .embed-chart { display: block; width: 100%; height: 560px; border: 0; margin: 0 0 36px; background: transparent; }
+  .terms + .embed-chart { margin-top: 28px; }
   .terms { display: flex; flex-direction: column; gap: 10px; max-width: 72ch; margin: 8px 0 0; }
   .term { border: 1px solid var(--border); border-radius: 12px; background: var(--surface-1); overflow: hidden; }
   .term summary {
@@ -317,7 +318,7 @@
   <div class="wrap">
     <div class="kicker">01 · Evolución del PIB</div>
     <p class="section-text">Entre el primer trimestre de 2025 y el mismo periodo de 2026, la economía ecuatoriana creció en 2,1%.</p>
-    <iframe class="embed-chart" id="chartInteranual" src="assets/01_crecimiento_interanual.html" title="Crecimiento interanual del PIB, por trimestre" loading="lazy" scrolling="no"></iframe>
+    <iframe class="embed-chart" id="chartInteranual" data-chart="01_crecimiento_interanual" src="assets/01_crecimiento_interanual.html" title="Crecimiento interanual del PIB, por trimestre" loading="lazy" scrolling="no"></iframe>
     <p class="section-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó USD 29.223 millones, mientras que, en términos nominales, totalizó USD 32.789 millones.</p>
     <p class="section-text">En términos trimestrales, el PIB registró un crecimiento del 1,0% frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó 12,8% en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
 
@@ -331,6 +332,7 @@
         <p>Es el valor monetario total de los bienes y servicios finales producidos en el país durante un período determinado, calculado a <strong>precios corrientes del mismo año</strong>. Refleja el tamaño absoluto de la economía, incluyendo el efecto de la inflación o deflación sobre los precios. En consecuencia, un aumento del PIB nominal puede deberse tanto a un incremento en la producción real como a un aumento generalizado de precios.</p>
       </details>
     </div>
+    <iframe class="embed-chart" data-chart="02_pib_real" src="assets/02_pib_real.html" title="PIB Real" loading="lazy" scrolling="no"></iframe>
   </div>
 </section>
 
@@ -591,10 +593,12 @@
 
   window.addEventListener("message", function (e) {
     var d = e.data;
-    if (d && d.type === "chart-height" && d.src === "01_crecimiento_interanual") {
-      var f = document.getElementById("chartInteranual");
-      if (f && e.source === f.contentWindow) f.style.height = Math.ceil(d.height) + "px";
-    }
+    if (!d || d.type !== "chart-height") return;
+    document.querySelectorAll("iframe.embed-chart").forEach(function (f) {
+      if (f.getAttribute("data-chart") === d.src && e.source === f.contentWindow) {
+        f.style.height = Math.ceil(d.height) + "px";
+      }
+    });
   });
 
   // ---------- Nav: mobile toggle + scroll spy ----------
