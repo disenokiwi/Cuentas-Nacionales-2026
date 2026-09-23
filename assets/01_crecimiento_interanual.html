@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Crecimiento interanual del PIB - Ecuador 2021-2026</title>
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#4A5876;
+    --paper:#FFFFFF;
+    --line:#E4E4E4;
+    --teal:#2563EB;
+    --coral:#C8553D;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:transparent;}
+  body{
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color:var(--ink);
+    padding: 28px 32px 22px;
+    width: auto;
+    max-width: 980px;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size:23px;
+    line-height:1.25;
+    margin:0 0 4px;
+    color:var(--ink);
+    font-weight:700;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .chart-wrap{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 22px 8px;
+  }
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .gridline{stroke:var(--line);stroke-width:1;}
+  .zero-line{stroke:var(--ink-soft);stroke-width:1.1;stroke-dasharray:3 4;}
+  .area-fill{fill:url(#areaGrad);}
+  .line-path{
+    fill:none;
+    stroke:var(--ink);
+    stroke-width:2.6;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .dot{stroke:#fff;stroke-width:1.6;cursor:pointer;transition:r .12s ease;}
+  .dot-pos{fill:var(--teal);}
+  .dot-neg{fill:var(--coral);}
+  .hit{fill:transparent;cursor:pointer;}
+  .val-label{
+    font-size:10.5px;
+    font-weight:700;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  .val-pos{fill:var(--teal);}
+  .val-neg{fill:var(--coral);}
+  .xtick{font-size:10px;fill:var(--ink-soft);text-anchor:middle;}
+  .ytick{font-size:10px;fill:var(--ink-soft);text-anchor:end;}
+  .year-band{fill:var(--ink); opacity:0.03;}
+  .v-guide{stroke:var(--ink-soft);stroke-width:1;opacity:0;pointer-events:none;}
+  .legend{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-top:10px;
+    padding: 0 4px;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .legend-item{display:flex;align-items:center;gap:6px;}
+  .swatch{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .tooltip{
+    position:absolute;
+    pointer-events:none;
+    background:#1B2A4A;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:7px;
+    font-size:12px;
+    line-height:1.4;
+    white-space:nowrap;
+    opacity:0;
+    transform:translate(-50%,-100%);
+    transition:opacity .1s ease;
+    z-index:10;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+  }
+  .tooltip .t-period{font-weight:700; font-size:11px; opacity:.75; text-transform:uppercase; letter-spacing:.04em;}
+  .tooltip .t-val{font-size:15px; font-weight:700; font-family:Georgia,serif;}
+</style>
+</head>
+<body>
+
+  <p class="eyebrow">Cuentas Nacionales Trimestrales · Banco Central del Ecuador</p>
+  <h1>Crecimiento interanual del PIB, por trimestre</h1>
+  <p class="sub">Variación porcentual frente al mismo trimestre del año anterior · 2021.I – 2026.I</p>
+
+  <div class="chart-wrap" id="chartWrap">
+    <svg viewBox="0 0 940 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2563EB" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g id="plot"></g>
+    </svg>
+    <div class="tooltip" id="tooltip"></div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="swatch" style="background:#2563EB"></span> Variación positiva</div>
+      <div class="legend-item"><span class="swatch" style="background:#C8553D"></span> Variación negativa</div>
+      <div class="legend-item" style="margin-left:auto;">Línea: tendencia suavizada (spline) · pasa el cursor sobre un punto</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Fuente: BCE, Cuentas Nacionales Trimestrales (publicación tou_135_202601)</span>
+    <span>Precios constantes 2018 · Serie ajustada por estacionalidad</span>
+  </div>
+
+<script>
+const data = [
+["2021.I", -2.5398645859892377],["2021.II", 19.346945384136326],["2021.III", 12.395984742422872],["2021.IV", 10.360979300555773],
+["2022.I", 8.983731520121484],["2022.II", 5.246491105474793],["2022.III", 5.420167929952191],["2022.IV", 3.986561868857086],
+["2023.I", 2.088911180976316],["2023.II", 5.128180699086182],["2023.III", -0.2620389874608442],["2023.IV", 0.4469130543548028],
+["2024.I", -0.6015483073715244],["2024.II", -4.5130602577225565],["2024.III", -1.640985214963342],["2024.IV", -0.9502785870602937],
+["2025.I", 3.420330170377195],["2025.II", 3.5219972288117463],["2025.III", 2.9592500031820235],["2025.IV", 4.99399649415786],
+["2026.I", 2.0639903117922964]
+];
+
+const W = 940, H = 400;
+const padL = 46, padR = 18, padT = 18, padB = 46;
+const plotW = W - padL - padR;
+const plotH = H - padT - padB;
+
+const minV = Math.min(...data.map(d=>d[1]));
+const maxV = Math.max(...data.map(d=>d[1]));
+const yMin = Math.floor((minV-2)/5)*5;
+const yMax = Math.ceil((maxV+2)/5)*5;
+
+function xPos(i){ return padL + (i/(data.length-1)) * plotW; }
+function yPos(v){ return padT + plotH - ((v - yMin)/(yMax-yMin)) * plotH; }
+
+const svgns = "http://www.w3.org/2000/svg";
+const plot = document.getElementById('plot');
+const wrap = document.getElementById('chartWrap');
+const tooltip = document.getElementById('tooltip');
+const svgEl = wrap.querySelector('svg');
+
+// gridlines
+let gy = Math.ceil(yMin/5)*5;
+for(; gy<=yMax; gy+=5){
+  const y = yPos(gy);
+  const line = document.createElementNS(svgns,'line');
+  line.setAttribute('x1', padL); line.setAttribute('x2', W-padR);
+  line.setAttribute('y1', y); line.setAttribute('y2', y);
+  line.setAttribute('class', gy===0 ? 'zero-line' : 'gridline');
+  plot.appendChild(line);
+
+  const label = document.createElementNS(svgns,'text');
+  label.setAttribute('x', padL-8); label.setAttribute('y', y+3.5);
+  label.setAttribute('class','ytick');
+  label.textContent = gy + '%';
+  plot.appendChild(label);
+}
+
+// year bands
+const years = [...new Set(data.map(d=>d[0].split('.')[0]))];
+years.forEach((yr, idx)=>{
+  if(idx % 2 === 1){
+    const idxs = data.map((d,i)=>d[0].startsWith(yr)?i:null).filter(v=>v!==null);
+    const x0 = xPos(Math.min(...idxs)) - (plotW/(data.length-1))/2;
+    const x1 = xPos(Math.max(...idxs)) + (plotW/(data.length-1))/2;
+    const rect = document.createElementNS(svgns,'rect');
+    rect.setAttribute('x', x0); rect.setAttribute('y', padT);
+    rect.setAttribute('width', x1-x0); rect.setAttribute('height', plotH);
+    rect.setAttribute('class','year-band');
+    plot.appendChild(rect);
+  }
+});
+
+// x axis ticks
+data.forEach((d,i)=>{
+  const x = xPos(i);
+  const tick = document.createElementNS(svgns,'text');
+  tick.setAttribute('x', x); tick.setAttribute('y', H-padB+16);
+  tick.setAttribute('class','xtick');
+  const [yr,q] = d[0].split('.');
+  tick.textContent = q;
+  plot.appendChild(tick);
+});
+years.forEach(yr=>{
+  const idxs = data.map((d,i)=>d[0].startsWith(yr)?i:null).filter(v=>v!==null);
+  const xc = (xPos(Math.min(...idxs)) + xPos(Math.max(...idxs)))/2;
+  const t = document.createElementNS(svgns,'text');
+  t.setAttribute('x', xc); t.setAttribute('y', H-padB+32);
+  t.setAttribute('class','xtick');
+  t.setAttribute('style','font-weight:700; fill:#1B2A4A;');
+  t.textContent = yr;
+  plot.appendChild(t);
+});
+
+// catmull-rom -> bezier smoothing
+function smoothPath(pts){
+  if(pts.length<3) return 'M'+pts.map(p=>p.join(',')).join('L');
+  let d = `M ${pts[0][0]},${pts[0][1]}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0 = pts[i-1] || pts[i];
+    const p1 = pts[i];
+    const p2 = pts[i+1];
+    const p3 = pts[i+2] || p2;
+    const cp1x = p1[0] + (p2[0]-p0[0])/6;
+    const cp1y = p1[1] + (p2[1]-p0[1])/6;
+    const cp2x = p2[0] - (p3[0]-p1[0])/6;
+    const cp2y = p2[1] - (p3[1]-p1[1])/6;
+    d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2[0]},${p2[1]}`;
+  }
+  return d;
+}
+
+const points = data.map((d,i)=>[xPos(i), yPos(d[1])]);
+
+// area fill
+const zeroY = yPos(0);
+let areaD = smoothPath(points);
+areaD += ` L ${points[points.length-1][0]},${zeroY} L ${points[0][0]},${zeroY} Z`;
+const area = document.createElementNS(svgns,'path');
+area.setAttribute('d', areaD);
+area.setAttribute('class','area-fill');
+plot.appendChild(area);
+
+// line
+const line = document.createElementNS(svgns,'path');
+line.setAttribute('d', smoothPath(points));
+line.setAttribute('class','line-path');
+plot.appendChild(line);
+
+// vertical guide line (shown on hover)
+const vGuide = document.createElementNS(svgns,'line');
+vGuide.setAttribute('y1', padT); vGuide.setAttribute('y2', H-padB);
+vGuide.setAttribute('class','v-guide');
+plot.appendChild(vGuide);
+
+function showTooltip(i){
+  const [x,y] = points[i];
+  const d = data[i];
+  vGuide.setAttribute('x1', x); vGuide.setAttribute('x2', x);
+  vGuide.setAttribute('opacity', 1);
+
+  const svgRect = svgEl.getBoundingClientRect();
+  const scale = svgRect.width / W;
+  const wrapRect = wrap.getBoundingClientRect();
+  const px = svgRect.left - wrapRect.left + x*scale;
+  const py = svgRect.top - wrapRect.top + y*scale;
+
+  tooltip.innerHTML = `<div class="t-period">${d[0]}</div><div class="t-val" style="color:${d[1]>=0?'#7DA8F5':'#FF9B7E'}">${d[1]>=0?'+':''}${d[1].toFixed(1)}%</div>`;
+  tooltip.style.left = px + 'px';
+  tooltip.style.top = (py-12) + 'px';
+  tooltip.style.opacity = 1;
+
+  document.querySelectorAll('.dot').forEach((dot,j)=>{
+    dot.setAttribute('r', j===i ? 7 : (j===data.length-1?5.5:3.4));
+  });
+}
+function hideTooltip(){
+  vGuide.setAttribute('opacity', 0);
+  tooltip.style.opacity = 0;
+  document.querySelectorAll('.dot').forEach((dot,j)=>{
+    dot.setAttribute('r', j===data.length-1?5.5:3.4);
+  });
+}
+
+// dots + labels + hit areas
+data.forEach((d,i)=>{
+  const [x,y] = points[i];
+  const isLast = i === data.length-1;
+
+  const dot = document.createElementNS(svgns,'circle');
+  dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+  dot.setAttribute('r', isLast ? 5.5 : 3.4);
+  dot.setAttribute('class', 'dot ' + (d[1]>=0 ? 'dot-pos' : 'dot-neg'));
+  plot.appendChild(dot);
+
+  const showLabel = isLast || i===0 || i % 2 === 0;
+  if(showLabel){
+    const lbl = document.createElementNS(svgns,'text');
+    lbl.setAttribute('x', x);
+    lbl.setAttribute('y', d[1]>=0 ? y-12 : y+18);
+    lbl.setAttribute('text-anchor','middle');
+    lbl.setAttribute('class','val-label ' + (d[1]>=0 ? 'val-pos' : 'val-neg'));
+    lbl.textContent = (d[1]>=0?'+':'') + d[1].toFixed(1) + '%';
+    plot.appendChild(lbl);
+  }
+
+  // larger invisible hit target for easier hover
+  const hit = document.createElementNS(svgns,'circle');
+  hit.setAttribute('cx', x); hit.setAttribute('cy', y);
+  hit.setAttribute('r', 14);
+  hit.setAttribute('class','hit');
+  hit.addEventListener('mouseenter', ()=>showTooltip(i));
+  hit.addEventListener('mouseleave', hideTooltip);
+  plot.appendChild(hit);
+});
+</script>
+<script>
+// Tell the parent page how tall this chart is so the iframe can fit it.
+function reportHeight(){
+  parent.postMessage({ type: "chart-height", src: "01_crecimiento_interanual", height: document.body.offsetHeight }, "*");
+}
+window.addEventListener("load", reportHeight);
+window.addEventListener("resize", reportHeight);
+</script>
+</body>
+</html>
