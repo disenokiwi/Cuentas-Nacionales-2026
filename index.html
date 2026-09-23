@@ -357,13 +357,7 @@
     <div class="kicker">03 · Análisis del PIB por industria</div>
     <p class="section-text">En el primer trimestre de 2026, 16 de las 20 actividades económicas registraron crecimiento frente al mismo período de 2025. Las mayores tasas de variación se observaron en actividades financieras y de seguros (+12,0%), alojamiento y comidas (+11,8%), refinados de petróleo (+9,4%), salud y asistencia social (+6,4%), información y comunicación (+4,9%) y actividades profesionales y técnicas (+4,5%).</p>
 
-    <div class="chart-card">
-      <div class="chart-head">
-        <div class="chart-title"></div>
-        <div class="chart-unit">%</div>
-      </div>
-      <div class="chart-svg-wrap" id="chart-industrias"></div>
-    </div>
+    <iframe class="embed-chart" data-chart="04_industrias" src="assets/04_industrias.html" title="Crecimiento interanual del PIB por industria" loading="lazy" scrolling="no"></iframe>
   </div>
 </section>
 
@@ -527,15 +521,6 @@
   }
 
   function renderAllCharts() {
-    // Actividades con mayor crecimiento
-    renderBarChart("chart-industrias", [
-      { label: "Financieras", values: [12.0] },
-      { label: "Alojamiento", values: [11.8] },
-      { label: "Refinados", values: [9.4] },
-      { label: "Salud", values: [6.4] },
-      { label: "Información", values: [4.9] },
-      { label: "Profesionales", values: [4.5] }
-    ], { colors: ["var(--series-1)"] });
   }
 
   renderAllCharts();

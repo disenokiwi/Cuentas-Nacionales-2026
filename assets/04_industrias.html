@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Crecimiento por industria - Ecuador 2026.I</title>
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#4A5876;
+    --paper:#FFFFFF;
+    --line:#E4E4E4;
+    --purple:#1375f6;
+    --coral:#9500c5;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:transparent;}
+  body{
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color:var(--ink);
+    padding: 28px 32px 22px;
+    width: auto;
+    max-width: 980px;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--purple);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+  h1{
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing:-0.01em;
+    font-size:23px;
+    line-height:1.25;
+    margin:0 0 4px;
+    color:var(--ink);
+    font-weight:800;
+  }
+  .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .chart-wrap{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 22px 14px;
+  }
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .gridline{stroke:var(--line);stroke-width:1;}
+  .zero-line{stroke:var(--ink-soft);stroke-width:1.1;}
+  .bar-pos{fill:var(--purple);cursor:pointer;transition:opacity .12s ease;}
+  .bar-neg{fill:var(--coral);cursor:pointer;transition:opacity .12s ease;}
+  .bar-pos.dim, .bar-neg.dim{opacity:.45;}
+  .row-hit{fill:transparent;cursor:pointer;}
+  .industry-label{
+    font-size:11.5px;
+    fill:var(--ink);
+    text-anchor:end;
+  }
+  .val-label{
+    font-size:11px;
+    font-weight:700;
+  }
+  .val-pos{fill:var(--purple);}
+  .val-neg{fill:var(--coral);}
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:10px;
+  }
+  .legend{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-top:2px;
+    padding: 0 4px;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .legend-item{display:flex;align-items:center;gap:6px;}
+  .swatch{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .tooltip{
+    position:absolute;
+    pointer-events:none;
+    background:#1B2A4A;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:7px;
+    font-size:12px;
+    line-height:1.4;
+    white-space:nowrap;
+    opacity:0;
+    transform:translate(-50%,-100%);
+    transition:opacity .1s ease;
+    z-index:10;
+    box-shadow:0 4px 14px rgba(0,0,0,.18);
+    max-width:260px;
+  }
+  .tooltip .t-period{font-weight:700; font-size:10.5px; opacity:.8; white-space:normal;}
+  .tooltip .t-val{font-size:15px; font-weight:700; font-family:inherit;}
+</style>
+</head>
+<body>
+
+  <p class="eyebrow">Valor Agregado Bruto por industria · Banco Central del Ecuador</p>
+  <h1>Crecimiento interanual del PIB por industria</h1>
+  <p class="sub">Variación porcentual frente al mismo trimestre del año anterior · 2026.I</p>
+
+  <div class="chart-wrap" id="chartWrap">
+    <svg id="svgChart" viewBox="0 0 940 660" xmlns="http://www.w3.org/2000/svg">
+      <g id="plot"></g>
+    </svg>
+    <div class="tooltip" id="tooltip"></div>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch" style="background:#1375f6"></span> Crecimiento</div>
+      <div class="legend-item"><span class="swatch" style="background:#9500c5"></span> Contracción</div>
+      <div class="legend-item" style="margin-left:auto;">Pasa el cursor sobre una barra</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Fuente: BCE, Valor Agregado Bruto por industria (publicación vab_135_202601)</span>
+    <span>Excluye VAB Total, Otros Elementos del PIB y PIB</span>
+  </div>
+
+<script>
+const rawData = {
+"Agricultura  ganadería y silvicultura": -3.8263225496385944,
+"Pesca y acuicultura": 1.7993799474574024,
+"Petróleo y minas": 3.9766291050041147,
+"Manufactura de productos alimenticios": 3.1595340632313285,
+"Manufactura de productos no alimenticios": 2.747546546466384,
+"Refinados de petroleo": 9.381871770150507,
+"Suministro de electricidad y agua": 4.464308291407759,
+"Construcción": 4.222194595434692,
+"Comercio": 2.19524468746759,
+"Transporte y almacenamiento": 0.6171307450652641,
+"Alojamiento y comidas": 11.798814672517022,
+"Información y comunicación": 4.91486270081567,
+"Actividades financieras y de seguros": 12.014702106993314,
+"Actividades inmobiliarias": 0.10115829220276318,
+"Actividades profesionales  técnicas": 4.500717137003707,
+"Administración pública": -4.774794973391694,
+"Enseñanza": 1.0780782954499246,
+"Salud y asistencia social": 6.412264296943171,
+"Arte  entretenimiento y otras actividades de servicios": -9.381090753080612,
+"Actividades de los Hogares como empleadores": -4.337318690243808
+};
+
+const labelFix = (s)=> s.replace(/\\s+/g,' ').trim();
+
+let data = Object.entries(rawData).map(([k,v])=>[labelFix(k), v]);
+data.sort((a,b)=> b[1]-a[1]);
+
+const W = 940, H = 660;
+const padL = 300, padR = 50, padT = 10, padB = 10;
+const plotW = W - padL - padR;
+const plotH = H - padT - padB;
+const rowH = plotH / data.length;
+const barThickness = rowH * 0.6;
+
+const minV = Math.min(...data.map(d=>d[1]));
+const maxV = Math.max(...data.map(d=>d[1]));
+const xMin = Math.floor((minV-1)/2)*2;
+const xMax = Math.ceil((maxV+1)/2)*2;
+
+function xPos(v){ return padL + ((v - xMin)/(xMax-xMin)) * plotW; }
+function yCenter(i){ return padT + rowH*i + rowH/2; }
+
+const svgns = "http://www.w3.org/2000/svg";
+const plot = document.getElementById('plot');
+const wrap = document.getElementById('chartWrap');
+const tooltip = document.getElementById('tooltip');
+const svgEl = wrap.querySelector('svg');
+
+// vertical gridlines
+let gx = Math.ceil(xMin/2)*2;
+for(; gx<=xMax; gx+=2){
+  const x = xPos(gx);
+  const line = document.createElementNS(svgns,'line');
+  line.setAttribute('x1', x); line.setAttribute('x2', x);
+  line.setAttribute('y1', padT); line.setAttribute('y2', H-padB);
+  line.setAttribute('class', gx===0 ? 'zero-line' : 'gridline');
+  plot.appendChild(line);
+
+  if(gx % 4 === 0){
+    const label = document.createElementNS(svgns,'text');
+    label.setAttribute('x', x); label.setAttribute('y', H-padB+14);
+    label.setAttribute('text-anchor','middle');
+    label.setAttribute('style','font-size:10px; fill:#4A5876;');
+    label.textContent = gx + '%';
+    plot.appendChild(label);
+  }
+}
+
+const zeroX = xPos(0);
+
+function showTooltip(i, barEl){
+  const [name, val] = data[i];
+  const yc = yCenter(i);
+  const x = xPos(val);
+
+  const svgRect = svgEl.getBoundingClientRect();
+  const scale = svgRect.width / W;
+  const wrapRect = wrap.getBoundingClientRect();
+  const px = svgRect.left - wrapRect.left + x*scale;
+  const py = svgRect.top - wrapRect.top + yc*scale;
+
+  tooltip.innerHTML = `<div class="t-period">${name}</div><div class="t-val" style="color:${val>=0?'#7DB2FA':'#D68CF0'}">${val>=0?'+':''}${val.toFixed(1)}%</div>`;
+  tooltip.style.left = px + 'px';
+  tooltip.style.top = (py-14) + 'px';
+  tooltip.style.opacity = 1;
+  barEl.classList.remove('dim');
+}
+function hideTooltip(){
+  tooltip.style.opacity = 0;
+}
+
+data.forEach((d,i)=>{
+  const [name, val] = d;
+  const yc = yCenter(i);
+  const x = xPos(val);
+  const barX = Math.min(zeroX, x);
+  const barW = Math.abs(x - zeroX);
+
+  const lbl = document.createElementNS(svgns,'text');
+  lbl.setAttribute('x', padL - 14);
+  lbl.setAttribute('y', yc + 4);
+  lbl.setAttribute('class','industry-label');
+  lbl.textContent = name;
+  plot.appendChild(lbl);
+
+  const bar = document.createElementNS(svgns,'rect');
+  bar.setAttribute('x', barX);
+  bar.setAttribute('y', yc - barThickness/2);
+  bar.setAttribute('width', Math.max(barW,1));
+  bar.setAttribute('height', barThickness);
+  bar.setAttribute('rx', 2.5);
+  bar.setAttribute('class', val>=0 ? 'bar-pos' : 'bar-neg');
+  plot.appendChild(bar);
+
+  const valLbl = document.createElementNS(svgns,'text');
+  const onRight = val>=0;
+  valLbl.setAttribute('x', onRight ? x+8 : x-8);
+  valLbl.setAttribute('y', yc+4);
+  valLbl.setAttribute('text-anchor', onRight ? 'start':'end');
+  valLbl.setAttribute('class','val-label ' + (val>=0?'val-pos':'val-neg'));
+  valLbl.textContent = (val>=0?'+':'') + val.toFixed(1) + '%';
+  plot.appendChild(valLbl);
+
+  // full-width row hit area for easy hover (covers label + bar area)
+  const rowHit = document.createElementNS(svgns,'rect');
+  rowHit.setAttribute('x', 0);
+  rowHit.setAttribute('y', yc - rowH/2);
+  rowHit.setAttribute('width', W);
+  rowHit.setAttribute('height', rowH);
+  rowHit.setAttribute('class','row-hit');
+  rowHit.addEventListener('mouseenter', ()=>showTooltip(i, bar));
+  rowHit.addEventListener('mouseleave', hideTooltip);
+  plot.appendChild(rowHit);
+});
+</script>
+<script>
+function reportHeight(){
+  parent.postMessage({ type: "chart-height", src: "04_industrias", height: document.body.offsetHeight }, "*");
+}
+window.addEventListener("load", reportHeight);
+window.addEventListener("resize", reportHeight);
+</script>
+</body>
+</html>
