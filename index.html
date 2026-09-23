@@ -79,7 +79,7 @@
   .brand { display: flex; align-items: center; white-space: nowrap; }
   .brand-logo { height: 24px; width: auto; display: block; }
   .brand-logo-eco { height: 20px; }
-  .brand-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.25); margin: 0 14px; }
+  .brand-right { margin-right: 0; }
   nav.links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
   nav.links::-webkit-scrollbar { display: none; }
   nav.links a {
@@ -90,17 +90,13 @@
   nav.links a:hover { background: rgba(255,255,255,0.10); color: #fff; }
   nav.links a.active { color: #fff; font-weight: 600; }
   .brand { flex-shrink: 0; }
-  @media (max-width: 1040px) {
-    .nav-inner { height: 54px; }
-    nav.links { position: fixed; top: 54px; left: 0; right: 0; background: #0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.10);
-      flex-direction: column; padding: 8px; display: none; }
-    nav.links.open { display: flex; }
-    nav.links a { padding: 12px 14px; font-size: 13.5px; }
-    .nav-inner .menu-btn {
-      display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
-      border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); background: transparent; color: #fff;
-      cursor: pointer;
-    }
+  nav.links { margin-left: auto; margin-right: 20px; }
+  @media (min-width: 721px) and (max-width: 1040px) {
+    .nav-inner { padding: 0 16px; }
+    nav.links { margin-right: 10px; gap: 0; }
+    nav.links a { font-size: 11.5px; padding: 8px 5px; }
+    .brand-logo-eco { height: 16px; }
+    .brand-right .brand-logo { height: 20px; }
   }
   .menu-btn { display: none; }
 
@@ -139,11 +135,16 @@
     text-transform: uppercase; color: #6fa8ee; margin-bottom: 18px;
   }
   h1 {
-    font-size: clamp(40px, 7.5vw, 76px); line-height: 1.02; margin: 0 0 18px;
+    font-size: clamp(32px, 5.5vw, 56px); line-height: 1.05; margin: 0 0 20px;
     font-weight: 800; letter-spacing: -0.01em; max-width: 24ch;
     color: #fff;
   }
-  .hero .hero-headline { font-size: clamp(22px, 3.2vw, 34px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; color: #fff; max-width: 28ch; margin: 0 0 20px; }
+  .report-tag { position: absolute; top: -56px; right: 24px; text-align: right; }
+  .report-tag .eyebrow { display: block; margin-bottom: 4px; }
+  .report-name { font-size: clamp(22px, 2.6vw, 32px); font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; color: #fff; }
+  @media (max-width: 720px) {
+    .report-tag { position: static; margin-bottom: 20px; }
+  }
   .lede {
     font-size: clamp(16px, 2vw, 19px); color: rgba(255,255,255,0.78); max-width: 60ch;
     line-height: 1.55; margin: 0 0 40px;
@@ -285,6 +286,8 @@
 
   @media (max-width: 720px) {
     .nav-inner { height: 54px; }
+    nav.links { margin: 0; }
+    .brand-right { margin-left: auto; margin-right: 12px; }
     nav.links { position: fixed; top: 54px; left: 0; right: 0; background: #0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.10);
       flex-direction: column; padding: 8px; display: none; }
     nav.links.open { display: flex; }
@@ -306,10 +309,8 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="brand" href="#" aria-label="Cuentas Nacionales · Keyword">
+    <a class="brand" href="#" aria-label="KeyEconomics · Cuentas Nacionales">
       <img class="brand-logo brand-logo-eco" src="assets/LogoKeyeconomics2-blanco.svg" alt="KeyEconomics">
-      <span class="brand-divider" aria-hidden="true"></span>
-      <img class="brand-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
     </a>
     <nav class="links" id="navLinks">
       <a href="#evolucion">01 · Evolución del PIB</a>
@@ -317,6 +318,9 @@
       <a href="#industrias">03 · Análisis del PIB por industria</a>
       <a href="#conclusiones">04 · Conclusiones del BCE</a>
     </nav>
+    <a class="brand brand-right" href="#" aria-label="Keyword">
+      <img class="brand-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
+    </a>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
       <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </button>
@@ -326,9 +330,11 @@
 <section class="hero">
   <div class="hero-art" id="heroArt"></div>
   <div class="wrap">
-    <span class="eyebrow">Informe trimestral</span>
-    <h1>Cuentas Nacionales</h1>
-    <h2 class="hero-headline">La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h2>
+    <div class="report-tag">
+      <span class="eyebrow">Informe trimestral</span>
+      <div class="report-name">Cuentas Nacionales</div>
+    </div>
+    <h1>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h1>
     <p class="lede">El Banco Central del Ecuador (BCE) presentó las cifras preliminares del comportamiento económico del Ecuador del primer trimestre de 2026.</p>
     <div class="hero-stats">
       <div class="hero-stat">
