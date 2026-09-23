@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La economía ecuatoriana en el 1T 2026 · Ecuador</title>
+<meta name="description" content="La economía ecuatoriana creció 2,1% en el primer trimestre de 2026: cifras preliminares del Banco Central del Ecuador (BCE).">
+<link rel="icon" href="data:,">
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --success-text:   #006300;
+
+    --series-1: #1375f6; /* blue   */
+    --series-2: #eb6834; /* orange */
+    --series-3: #1baf7a; /* aqua   */
+    --series-4: #eda100; /* yellow */
+    --series-5: #9500c5; /* magenta */
+    --series-8: #e34948; /* red    */
+
+    --card-radius: 14px;
+    --max-w: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --success-text:   #0ca30c;
+
+      --series-1: #1375f6;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --series-4: #c98500;
+      --series-5: #9500c5;
+      --series-8: #e66767;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--page-plane);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav (permanently dark, brand band) ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+  }
+  .nav-inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .brand { display: flex; align-items: center; white-space: nowrap; }
+  .brand-logo { height: 24px; width: auto; display: block; }
+  nav.links { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  nav.links::-webkit-scrollbar { display: none; }
+  nav.links a {
+    text-decoration: none; color: rgba(255,255,255,0.72); font-size: 13.5px;
+    padding: 8px 12px; border-radius: 8px; white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+  nav.links a:hover { background: rgba(255,255,255,0.10); color: #fff; }
+  nav.links a.active { color: #fff; font-weight: 600; }
+  .menu-btn { display: none; }
+
+  /* ---------- Hero (dark, branded background art) ---------- */
+  .hero {
+    position: relative;
+    padding: 96px 0 340px;
+    background-color: #000;
+    overflow: hidden;
+  }
+  .hero-art {
+    position: absolute; left: 0; right: 0; bottom: 0; width: 100%;
+    aspect-ratio: 1920 / 1080;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .hero-art-svg { width: 100%; height: 100%; display: block; }
+  .hero .wrap { position: relative; z-index: 1; }
+
+  /* Each little figure in the artwork animates on its own, instead of
+     the whole illustration moving as a single block. */
+  .hero-art .figure {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: figureIdle var(--dur, 3.2s) ease-in-out var(--delay, 0s) infinite;
+  }
+  @keyframes figureIdle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-4px) rotate(-0.6deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-art .figure { animation: none; }
+  }
+  .eyebrow {
+    display: inline-block; font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; color: #6fa8ee; margin-bottom: 18px;
+  }
+  h1 {
+    font-size: clamp(32px, 5.5vw, 56px); line-height: 1.05; margin: 0 0 20px;
+    font-weight: 800; letter-spacing: -0.01em; max-width: 24ch;
+    color: #fff;
+  }
+  .lede {
+    font-size: clamp(16px, 2vw, 19px); color: rgba(255,255,255,0.78); max-width: 60ch;
+    line-height: 1.55; margin: 0 0 40px;
+  }
+  .hero-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+  .hero-stat .value { font-size: 44px; font-weight: 800; line-height: 1; color: #fff; }
+  .hero-stat .value small { font-size: 20px; font-weight: 700; }
+  .hero-stat .label { font-size: 13.5px; color: rgba(255,255,255,0.62); margin-top: 8px; max-width: 22ch; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 72px 0; border-bottom: 1px solid var(--border); scroll-margin-top: 72px; }
+  section:last-of-type { border-bottom: none; }
+  .kicker { font-size: clamp(30px, 5vw, 48px); font-weight: 800; letter-spacing: -0.01em; text-transform: none; color: var(--series-1); margin-bottom: 14px; line-height: 1.1; }
+  h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; letter-spacing: -0.01em; margin: 0 0 16px; }
+
+  .subsection { padding-top: 56px; }
+  .subsection + .subsection { border-top: 1px solid var(--border); }
+  .subsection h3.subhead { font-size: clamp(19px, 2.2vw, 24px); font-weight: 800; letter-spacing: -0.01em; margin: 0 0 14px; }
+  .subsection .kicker {
+    font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+    color: var(--text-muted); letter-spacing: 0.06em; margin-bottom: 10px;
+  }
+  .section-text { font-size: 16px; line-height: 1.65; color: var(--text-secondary); max-width: 72ch; margin: 0 0 36px; }
+  .section-text + .section-text { margin-top: -20px; }
+
+  /* ---------- Stat tiles ---------- */
+  .tiles { display: flex; flex-wrap: wrap; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--card-radius); overflow: hidden; margin-bottom: 40px; }
+  .tile { background: var(--surface-1); padding: 22px 20px; flex: 1 1 210px; }
+  .tile .tile-value { font-size: 28px; font-weight: 800; line-height: 1.1; }
+  .tile .tile-value .delta { font-size: 14px; font-weight: 700; margin-left: 6px; }
+  .tile .tile-value .delta.up { color: var(--success-text); }
+  .tile .tile-value .delta.down { color: var(--series-8); }
+  .tile .tile-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; line-height: 1.4; }
+
+  /* ---------- Chart card ---------- */
+  .chart-card {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--card-radius);
+    padding: 28px 24px 20px; margin-bottom: 28px;
+  }
+  .chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+  .chart-title { font-size: 15px; font-weight: 700; }
+  .chart-unit { font-size: 12.5px; color: var(--text-muted); }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--text-secondary); }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .chart-svg-wrap { position: relative; }
+  .bar-rect {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: growBar .7s cubic-bezier(.2,.8,.2,1) both paused;
+  }
+  .chart-svg-wrap.in-view .bar-rect { animation-play-state: running; }
+  @keyframes growBar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .bar-rect { animation: none; }
+  }
+  .bar-label { font-size: 11.5px; fill: var(--text-muted); }
+  .bar-value { font-size: 12.5px; font-weight: 700; fill: var(--text-primary); }
+  .bar-rect { cursor: pointer; }
+  .gridline { stroke: var(--gridline); stroke-width: 1; }
+  .baseline-l { stroke: var(--baseline); stroke-width: 1; }
+
+  .tooltip {
+    position: fixed; pointer-events: none; z-index: 500;
+    background: var(--text-primary); color: var(--surface-1);
+    font-size: 12.5px; font-weight: 600; padding: 6px 10px; border-radius: 8px;
+    transform: translate(-50%, -100%); white-space: nowrap; opacity: 0; transition: opacity 0.1s;
+  }
+  .tooltip.show { opacity: 1; }
+
+  .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+
+  /* ---------- Quotes ---------- */
+  .quote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  blockquote {
+    margin: 0; background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--card-radius);
+    padding: 26px 24px; font-size: 17px; line-height: 1.55; position: relative;
+  }
+  blockquote::before { content: "\201C"; font-size: 48px; color: var(--series-1); opacity: 0.35; line-height: 0; position: absolute; top: 30px; left: 20px; }
+  blockquote p { margin: 0 0 0 8px; }
+  .quote-attr { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+  .quote-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--series-1); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex: none; }
+  .quote-name { font-size: 13.5px; font-weight: 700; }
+  .quote-role { font-size: 12px; color: var(--text-muted); }
+
+  /* ---------- Industries ---------- */
+  .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .industry-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--card-radius); padding: 24px; }
+  .industry-card h3 { font-size: 14px; margin: 0 0 14px; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .dot.good { background: var(--series-3); }
+  .dot.bad { background: var(--series-8); }
+  .industry-card ul { margin: 0; padding: 0; list-style: none; }
+  .industry-card li { font-size: 14.5px; padding: 9px 0; border-top: 1px solid var(--border); color: var(--text-secondary); }
+  .industry-card li:first-child { border-top: none; }
+  .industry-card strong { color: var(--text-primary); }
+
+  /* ---------- Footer (dark, branded background art) ---------- */
+  footer {
+    padding: 56px 0 64px;
+    background-image: url('assets/Footer-edit.svg');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: left center;
+    background-color: #050505;
+  }
+  footer .wrap { display: flex; flex-direction: column; gap: 6px; }
+  footer .source { font-size: 13.5px; color: rgba(255,255,255,0.82); }
+  footer .fineprint { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 18px; }
+
+  @media (max-width: 720px) {
+    .nav-inner { height: 54px; }
+    nav.links { position: fixed; top: 54px; left: 0; right: 0; background: #0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.10);
+      flex-direction: column; padding: 8px; display: none; }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 12px 14px; }
+    .menu-btn {
+      display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.18); background: transparent; color: #fff;
+      cursor: pointer;
+    }
+    .hero { padding: 56px 0 200px; }
+    .hero-art { aspect-ratio: 960 / 1080; }
+    section { padding: 48px 0; }
+    .industry-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#" aria-label="La economía ecuatoriana 1T 2026">
+      <img class="brand-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#crecimiento">01 · Crecimiento general</a>
+      <a href="#factores">02 · Factores del crecimiento</a>
+      <a href="#industrias">03 · Crecimiento por industria</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-art" id="heroArt"></div>
+  <div class="wrap">
+    <span class="eyebrow">Banco Central del Ecuador · Primer trimestre de 2026</span>
+    <h1>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h1>
+    <p class="lede">El Banco Central del Ecuador (BCE) presentó las cifras preliminares del comportamiento económico del Ecuador del primer trimestre de 2026.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="value"><span class="count" data-target="2.1" data-decimals="1">0</span><small>%</small></div>
+        <div class="label">Crecimiento interanual frente al primer trimestre de 2025</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value"><span class="count" data-target="1.0" data-decimals="1">0</span><small>%</small></div>
+        <div class="label">Crecimiento trimestral frente al cuarto trimestre de 2025</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value">$<span class="count" data-target="29223" data-decimals="0">0</span><small>M</small></div>
+        <div class="label">PIB real del primer trimestre de 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="crecimiento">
+  <div class="wrap">
+    <div class="kicker">01 · Crecimiento general</div>
+    <h2>La economía creció 2,1% interanual y 1,0% trimestral</h2>
+    <p class="section-text">Entre el primer trimestre de 2025 y el mismo periodo de 2026, la economía ecuatoriana creció en 2,1%.</p>
+    <p class="section-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó USD 29.223 millones, mientras que, en términos nominales, totalizó USD 32.789 millones.</p>
+
+    <div class="tiles">
+      <div class="tile">
+        <div class="tile-value">2,1%</div>
+        <div class="tile-label">Crecimiento interanual — primer trimestre de 2026 frente al mismo periodo de 2025</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">1,0%</div>
+        <div class="tile-label">Crecimiento trimestral — frente al cuarto trimestre de 2025</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">$29.223M</div>
+        <div class="tile-label">PIB real — primer trimestre de 2026</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">$32.789M</div>
+        <div class="tile-label">PIB nominal — primer trimestre de 2026</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-title">PIB del primer trimestre de 2026</div>
+        <div class="chart-unit">USD millones</div>
+      </div>
+      <div class="chart-svg-wrap" id="chart-pib"></div>
+    </div>
+
+    <div class="subsection" id="trimestral">
+    <h3 class="subhead">Variación trimestral</h3>
+    <p class="section-text">En términos trimestrales, el PIB registró un crecimiento del 1,0% frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó 12,8% en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
+    </div>
+  </div>
+</section>
+
+<section id="factores">
+  <div class="wrap">
+    <div class="kicker">02 · Factores del crecimiento</div>
+    <h2>Consumo de los hogares e inversión impulsan la demanda interna</h2>
+    <p class="section-text">Según el informe del BCE, el crecimiento de la economía en el primer trimestre de 2026 respondió principalmente al dinamismo del consumo de los hogares y de la inversión, a través de la demanda interna:</p>
+
+    <div class="tiles">
+      <div class="tile">
+        <div class="tile-value">+3,9%</div>
+        <div class="tile-label">El consumo final de los hogares aumentó 3,9%, explicado por una mayor demanda de productos alimenticios y servicios.</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">+12,8%</div>
+        <div class="tile-label">La formación bruta de capital fijo (FBKF) creció 12,8%, impulsada por la industria de la construcción y por mayores importaciones de maquinaria, vehículos y equipo de transporte.</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">+1,7%</div>
+        <div class="tile-label">Las exportaciones crecieron 1,7%, impulsadas por mayores ventas de camarón elaborado y minerales.</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">+11,1%</div>
+        <div class="tile-label">En contraste, las importaciones aumentaron 11,1%, principalmente por mayores compras externas de materias primas y bienes de capital.</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value">-3,8%</div>
+        <div class="tile-label">El gasto de consumo final del Gobierno General se contrajo 3,8%.</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-title">Componentes del gasto, primer trimestre de 2026</div>
+        <div class="chart-unit">Variación interanual, %</div>
+      </div>
+      <div class="chart-svg-wrap" id="chart-gasto"></div>
+    </div>
+
+    <div class="subsection" id="perspectiva-gasto">
+    <h3 class="subhead">Perspectiva del gasto</h3>
+    <p class="section-text">Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p>
+    <p class="section-text">En términos trimestrales se registró una variación de 1,0%. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="industrias">
+  <div class="wrap">
+    <div class="kicker">03 · Crecimiento por industria</div>
+    <h2>16 de las 20 actividades económicas registraron crecimiento</h2>
+    <p class="section-text">En el primer trimestre de 2026, 16 de las 20 actividades económicas registraron crecimiento frente al mismo período de 2025. Las mayores tasas de variación se observaron en actividades financieras y de seguros (+12,0%), alojamiento y comidas (+11,8%), refinados de petróleo (+9,4%), salud y asistencia social (+6,4%), información y comunicación (+4,9%) y actividades profesionales y técnicas (+4,5%).</p>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="chart-title">Actividades con mayor crecimiento</div>
+        <div class="chart-unit">Variación interanual, %</div>
+      </div>
+      <div class="chart-svg-wrap" id="chart-industrias"></div>
+    </div>
+
+    <p class="section-text">La economía ecuatoriana creció 2,1% en el primer trimestre de 2026 respecto al mismo período de 2025. El crecimiento se sustentó en el desempeño de 16 de las 20 industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</p>
+  </div>
+</section>
+
+<footer id="fuente">
+  <div class="wrap">
+    <div class="source">Fuente: Banco Central del Ecuador (BCE), cifras preliminares del primer trimestre de 2026.</div>
+    <div class="fineprint">La economía ecuatoriana · Primer trimestre de 2026</div>
+  </div>
+</footer>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Inject the hero illustration inline so each little figure (tagged
+  // with class="figure" inside the file) can be animated independently
+  // via CSS, instead of animating the whole image as one block.
+  var heroArt = document.getElementById("heroArt");
+  if (heroArt) {
+    fetch("assets/Fondos-art-02-live.svg")
+      .then(function (r) { return r.text(); })
+      .then(function (svg) { heroArt.innerHTML = svg; })
+      .catch(function () {});
+  }
+
+  var tooltip = document.getElementById("tooltip");
+
+  function showTooltip(evt, wrap, text) {
+    tooltip.textContent = text;
+    tooltip.style.left = evt.clientX + "px";
+    tooltip.style.top = (evt.clientY - 12) + "px";
+    tooltip.classList.add("show");
+  }
+  function hideTooltip() { tooltip.classList.remove("show"); }
+
+  function fmt(v, unit) {
+    var s = (Math.round(v * 10) / 10).toFixed(1).replace(".", ",");
+    return unit === "$" ? "$" + s : s + (unit || "");
+  }
+
+  // ---- Text fitting for SVG labels (no DOM measurement needed) ----
+  function estWidth(text, fontSize) { return text.length * fontSize * 0.56; }
+  function fitFontSize(text, maxWidth, maxSize, minSize) {
+    var size = maxSize;
+    while (size > minSize && estWidth(text, size) > maxWidth) size -= 0.5;
+    return size;
+  }
+  function wrapLabel(text, maxWidth, fontSize) {
+    if (estWidth(text, fontSize) <= maxWidth || text.indexOf(" ") === -1) return [text];
+    var words = text.split(" ");
+    var best = [text], bestMax = Infinity;
+    for (var i = 1; i < words.length; i++) {
+      var l1 = words.slice(0, i).join(" ");
+      var l2 = words.slice(i).join(" ");
+      var m = Math.max(estWidth(l1, fontSize), estWidth(l2, fontSize));
+      if (m < bestMax) { bestMax = m; best = [l1, l2]; }
+    }
+    return best;
+  }
+
+  /**
+   * Minimal single/grouped bar chart renderer.
+   * data: [{ label, values: [n, n2?] }]
+   * opts: { unit, colors: [c1, c2], height, valueLabel(v) }
+   */
+  function renderBarChart(containerId, data, opts) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    opts = opts || {};
+    var unit = opts.unit || "%";
+    var colors = opts.colors || ["var(--series-1)"];
+    var height = opts.height || 220;
+    var seriesCount = data[0].values.length;
+    var width = Math.max(el.clientWidth || el.parentElement.clientWidth || 320, 240);
+    var groupGap = Math.max(16, width * 0.02);
+    var groupWidth = (width - groupGap * (data.length + 1)) / data.length;
+    var barGapInGroup = seriesCount > 1 ? 6 : 0;
+    var barThick = Math.min(24, (groupWidth - barGapInGroup * (seriesCount - 1)) / seriesCount);
+    groupWidth = seriesCount * barThick + (seriesCount - 1) * barGapInGroup;
+    // Redistribute any leftover space (from capping bar thickness) into the gaps
+    // so the chart still spans the full measured width instead of bunching left.
+    groupGap = (width - data.length * groupWidth) / (data.length + 1);
+    var hasNeg = data.some(function (d) { return d.values.some(function (v) { return v < 0; }); });
+    var padTop = 28, padBottom = hasNeg ? 48 : 34;
+    var plotH = height - padTop - padBottom;
+
+    var allVals = data.reduce(function (acc, d) { return acc.concat(d.values); }, []);
+    var maxVal = Math.max.apply(null, allVals.concat([0]));
+    var minVal = Math.min.apply(null, allVals.concat([0]));
+    var niceMax = maxVal <= 0 ? 1 : maxVal * 1.25;
+    var niceMin = minVal >= 0 ? 0 : minVal * 1.25;
+    var range = niceMax - niceMin;
+    var baseY = padTop + plotH * (niceMax / range);
+
+    function yFor(v) { return padTop + plotH * (1 - (v - niceMin) / range); }
+
+    var svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" width="' + width + '" height="' + height + '" style="width:100%;height:' + height + 'px;display:block;" preserveAspectRatio="none">';
+
+    [0, 0.5, 1].forEach(function (f) {
+      var gy = padTop + plotH * f;
+      svg += '<line class="gridline" x1="0" y1="' + gy + '" x2="' + width + '" y2="' + gy + '"/>';
+    });
+    svg += '<line class="baseline-l" x1="0" y1="' + baseY + '" x2="' + width + '" y2="' + baseY + '"/>';
+
+    var bars = [];
+    data.forEach(function (d, i) {
+      var groupX = groupGap + i * (groupWidth + groupGap);
+      d.values.forEach(function (v, si) {
+        var bx = groupX + si * (barThick + barGapInGroup);
+        var by = yFor(Math.max(v, 0));
+        var byNeg = yFor(Math.min(v, 0));
+        var h = Math.abs(yFor(v) - baseY);
+        var top = v >= 0 ? by : baseY;
+        var r = 4;
+        var color = colors[si] || colors[0];
+        var id = "bar-" + containerId + "-" + i + "-" + si;
+        var barDelay = (i * seriesCount + si) * 60;
+        svg += '<rect class="bar-rect" id="' + id + '" style="animation-delay:' + barDelay + 'ms" x="' + bx + '" y="' + top + '" width="' + barThick + '" height="' + Math.max(h, 1) + '" rx="' + r + '" ry="' + r + '" fill="' + color + '"/>';
+        var labelY = v >= 0 ? (top - 8) : (top + h + 16);
+        if (si === 0 || seriesCount > 1) {
+          var valueText = opts.valueLabel ? opts.valueLabel(v) : fmt(v, unit);
+          var valueMaxW = barThick * 2.3;
+          var valueSize = fitFontSize(valueText, valueMaxW, 12.5, 9);
+          svg += '<text class="bar-value" style="font-size:' + valueSize + 'px" x="' + (bx + barThick / 2) + '" y="' + labelY + '" text-anchor="middle">' + valueText + '</text>';
+        }
+        bars.push({ id: id, text: d.label + ": " + (opts.valueLabel ? opts.valueLabel(v) : fmt(v, unit)) });
+      });
+      var labelX = groupX + groupWidth / 2;
+      var catMaxW = groupWidth + groupGap * 0.7;
+      var catSize = fitFontSize(d.label, catMaxW, 11.5, 9.5);
+      var catLines = wrapLabel(d.label, catMaxW, catSize);
+      if (catLines.length > 1) {
+        svg += '<text class="bar-label" style="font-size:' + catSize + 'px" x="' + labelX + '" y="' + (height - 20) + '" text-anchor="middle">' +
+          '<tspan x="' + labelX + '" dy="0">' + catLines[0] + '</tspan>' +
+          '<tspan x="' + labelX + '" dy="1.15em">' + catLines[1] + '</tspan></text>';
+      } else {
+        svg += '<text class="bar-label" style="font-size:' + catSize + 'px" x="' + labelX + '" y="' + (height - 12) + '" text-anchor="middle">' + d.label + '</text>';
+      }
+    });
+
+    svg += "</svg>";
+    el.innerHTML = svg;
+
+    bars.forEach(function (b) {
+      var node = document.getElementById(b.id);
+      if (!node) return;
+      node.addEventListener("mousemove", function (evt) { showTooltip(evt, el, b.text); });
+      node.addEventListener("mouseleave", hideTooltip);
+      node.addEventListener("touchstart", function (evt) { showTooltip(evt.touches[0], el, b.text); }, { passive: true });
+    });
+  }
+
+  function renderAllCharts() {
+    // PIB real vs nominal
+    renderBarChart("chart-pib", [
+      { label: "PIB real", values: [29223] },
+      { label: "PIB nominal", values: [32789] }
+    ], { colors: ["var(--series-1)"], valueLabel: function (v) { return "$" + Math.round(v).toLocaleString("es-EC") + "M"; } });
+
+    // Componentes del gasto
+    renderBarChart("chart-gasto", [
+      { label: "Consumo hogares", values: [3.9] },
+      { label: "FBKF", values: [12.8] },
+      { label: "Exportaciones", values: [1.7] },
+      { label: "Importaciones", values: [11.1] },
+      { label: "Gasto Gobierno", values: [-3.8] }
+    ], { colors: ["var(--series-1)"] });
+
+    // Actividades con mayor crecimiento
+    renderBarChart("chart-industrias", [
+      { label: "Financieras", values: [12.0] },
+      { label: "Alojamiento", values: [11.8] },
+      { label: "Refinados", values: [9.4] },
+      { label: "Salud", values: [6.4] },
+      { label: "Información", values: [4.9] },
+      { label: "Profesionales", values: [4.5] }
+    ], { colors: ["var(--series-1)"] });
+  }
+
+  renderAllCharts();
+
+  // ---------- Count-up animation for hero stat figures ----------
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function animateCount(el) {
+    var target = parseFloat(el.getAttribute("data-target"));
+    var decimals = parseInt(el.getAttribute("data-decimals"), 10) || 0;
+    if (isNaN(target)) return;
+    if (reduceMotion) {
+      el.textContent = target.toLocaleString("es-EC", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      return;
+    }
+    var duration = 1400;
+    var start = null;
+    function tick(ts) {
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var value = target * easeOutCubic(progress);
+      el.textContent = value.toLocaleString("es-EC", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll(".hero-stat .count").forEach(function (el, i) {
+    setTimeout(function () { animateCount(el); }, i * 150);
+  });
+
+  // ---------- Chart entrance animation (bars grow in on scroll) ----------
+  var chartObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        chartObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3, rootMargin: "0px 0px -10% 0px" });
+  document.querySelectorAll(".chart-svg-wrap").forEach(function (el) { chartObserver.observe(el); });
+
+  // ---------- Nav: mobile toggle + scroll spy ----------
+  var menuBtn = document.getElementById("menuBtn");
+  var navLinks = document.getElementById("navLinks");
+  menuBtn.addEventListener("click", function () { navLinks.classList.toggle("open"); });
+  navLinks.querySelectorAll("a").forEach(function (a) {
+    a.addEventListener("click", function () { navLinks.classList.remove("open"); });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section[id], footer[id]"));
+  var linkMap = {};
+  navLinks.querySelectorAll("a").forEach(function (a) { linkMap[a.getAttribute("href").slice(1)] = a; });
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      var link = linkMap[entry.target.id];
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navLinks.querySelectorAll("a.active").forEach(function (a) { a.classList.remove("active"); });
+        link.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });
+  sections.forEach(function (s) { observer.observe(s); });
+
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(renderAllCharts, 150);
+  });
+})();
+</script>
+
+</body>
+</html>

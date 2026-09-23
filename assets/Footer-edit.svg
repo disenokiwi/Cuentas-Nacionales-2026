@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1920 149.59">
+  <!-- Generator: Adobe Illustrator 30.8.1, SVG Export Plug-In . SVG Version: 2.1.4 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        fill: #050505;
+      }
+
+      .st2 {
+        fill: url(#Orchid_6);
+      }
+
+      .st3 {
+        fill: url(#Orchid_5);
+      }
+
+      .st4 {
+        fill: url(#Orchid_61);
+      }
+
+      .st5 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="st0" x="-49.53" y="-1.79" width="1158.21" height="151.38"/>
+    </clipPath>
+    <linearGradient id="Orchid_6" data-name="Orchid 6" x1="7643.41" y1="3888.94" x2="7909.94" y2="3888.94" gradientTransform="translate(-3532.9938 7927.271) rotate(-90)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#af1dc2"/>
+      <stop offset=".49" stop-color="#af1dc2" stop-opacity=".47"/>
+      <stop offset=".84" stop-color="#af1dc2" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#af1dc2" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="Orchid_61" data-name="Orchid 6" x1="7669.7" y1="4192.58" x2="7731.83" y2="4192.58" gradientTransform="translate(-3836.6349 7820.7475) rotate(-90)" xlink:href="#Orchid_6"/>
+    <linearGradient id="Orchid_5" data-name="Orchid 5" x1="7452.77" y1="4192.58" x2="7887.53" y2="4192.58" gradientTransform="translate(-3836.6349 7820.7475) rotate(-90)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b029c2"/>
+      <stop offset=".49" stop-color="#b029c2" stop-opacity=".47"/>
+      <stop offset=".84" stop-color="#b029c2" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#b029c2" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect class="st1" x="0" y="0" width="1921.08" height="151.38"/>
+  <g class="st5">
+    <g>
+      <circle class="st2" cx="355.95" cy="150.6" r="133.26"/>
+      <path class="st4" d="M293.82,151.05c0-34.31,27.81-62.13,62.13-62.13s62.13,27.81,62.13,62.13"/>
+      <path class="st3" d="M138.57,150.6c0,120.05,97.32,217.38,217.38,217.38s217.38-97.32,217.38-217.38-97.32-217.38-217.38-217.38S138.57,30.54,138.57,150.6ZM487.89,150.6c0,72.87-59.07,131.94-131.94,131.94s-131.94-59.07-131.94-131.94S283.08,18.66,355.95,18.66s131.94,59.07,131.94,131.94Z"/>
+    </g>
+  </g>
+</svg>
