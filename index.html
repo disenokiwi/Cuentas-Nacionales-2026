@@ -152,6 +152,8 @@
   }
   .section-text { font-size: 16px; line-height: 1.65; color: var(--text-secondary); max-width: 72ch; margin: 0 0 36px; }
   .section-text + .section-text { margin-top: -20px; }
+  .plain-list { margin: 0 0 36px; padding-left: 1.2em; max-width: 72ch; color: var(--text-secondary); font-size: 16px; line-height: 1.65; }
+  .plain-list li { margin-bottom: 8px; }
 
   /* ---------- Stat tiles ---------- */
   .tiles { display: flex; flex-wrap: wrap; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--card-radius); overflow: hidden; margin-bottom: 40px; }
@@ -265,9 +267,10 @@
       <img class="brand-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
     </a>
     <nav class="links" id="navLinks">
-      <a href="#crecimiento">01 · Crecimiento general</a>
-      <a href="#factores">02 · Factores del crecimiento</a>
-      <a href="#industrias">03 · Crecimiento por industria</a>
+      <a href="#evolucion">01 · Evolución del PIB</a>
+      <a href="#componentes">02 · Componentes del PIB</a>
+      <a href="#industrias">03 · Análisis del PIB por industria</a>
+      <a href="#conclusiones">04 · Conclusiones</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
       <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -278,134 +281,90 @@
 <section class="hero">
   <div class="hero-art" id="heroArt"></div>
   <div class="wrap">
-    <span class="eyebrow">Banco Central del Ecuador · Primer trimestre de 2026</span>
     <h1>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h1>
     <p class="lede">El Banco Central del Ecuador (BCE) presentó las cifras preliminares del comportamiento económico del Ecuador del primer trimestre de 2026.</p>
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="value"><span class="count" data-target="2.1" data-decimals="1">0</span><small>%</small></div>
-        <div class="label">Crecimiento interanual frente al primer trimestre de 2025</div>
+        <div class="label">Entre el primer trimestre de 2025 y el mismo periodo de 2026</div>
       </div>
       <div class="hero-stat">
         <div class="value"><span class="count" data-target="1.0" data-decimals="1">0</span><small>%</small></div>
-        <div class="label">Crecimiento trimestral frente al cuarto trimestre de 2025</div>
+        <div class="label">En términos trimestrales</div>
       </div>
       <div class="hero-stat">
         <div class="value">$<span class="count" data-target="29223" data-decimals="0">0</span><small>M</small></div>
-        <div class="label">PIB real del primer trimestre de 2026</div>
+        <div class="label">PIB Real</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="crecimiento">
+<section id="evolucion">
   <div class="wrap">
-    <div class="kicker">01 · Crecimiento general</div>
-    <h2>La economía creció 2,1% interanual y 1,0% trimestral</h2>
+    <div class="kicker">01 · Evolución del PIB</div>
     <p class="section-text">Entre el primer trimestre de 2025 y el mismo periodo de 2026, la economía ecuatoriana creció en 2,1%.</p>
     <p class="section-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó USD 29.223 millones, mientras que, en términos nominales, totalizó USD 32.789 millones.</p>
-
-    <div class="tiles">
-      <div class="tile">
-        <div class="tile-value">2,1%</div>
-        <div class="tile-label">Crecimiento interanual — primer trimestre de 2026 frente al mismo periodo de 2025</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">1,0%</div>
-        <div class="tile-label">Crecimiento trimestral — frente al cuarto trimestre de 2025</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">$29.223M</div>
-        <div class="tile-label">PIB real — primer trimestre de 2026</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">$32.789M</div>
-        <div class="tile-label">PIB nominal — primer trimestre de 2026</div>
-      </div>
-    </div>
+    <p class="section-text">En términos trimestrales, el PIB registró un crecimiento del 1,0% frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó 12,8% en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
 
     <div class="chart-card">
       <div class="chart-head">
-        <div class="chart-title">PIB del primer trimestre de 2026</div>
+        <div class="chart-title">PIB REAL / PIB NOMINAL</div>
         <div class="chart-unit">USD millones</div>
       </div>
       <div class="chart-svg-wrap" id="chart-pib"></div>
     </div>
-
-    <div class="subsection" id="trimestral">
-    <h3 class="subhead">Variación trimestral</h3>
-    <p class="section-text">En términos trimestrales, el PIB registró un crecimiento del 1,0% frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó 12,8% en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
-    </div>
   </div>
 </section>
 
-<section id="factores">
+<section id="componentes">
   <div class="wrap">
-    <div class="kicker">02 · Factores del crecimiento</div>
-    <h2>Consumo de los hogares e inversión impulsan la demanda interna</h2>
+    <div class="kicker">02 · Componentes del PIB</div>
     <p class="section-text">Según el informe del BCE, el crecimiento de la economía en el primer trimestre de 2026 respondió principalmente al dinamismo del consumo de los hogares y de la inversión, a través de la demanda interna:</p>
-
-    <div class="tiles">
-      <div class="tile">
-        <div class="tile-value">+3,9%</div>
-        <div class="tile-label">El consumo final de los hogares aumentó 3,9%, explicado por una mayor demanda de productos alimenticios y servicios.</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">+12,8%</div>
-        <div class="tile-label">La formación bruta de capital fijo (FBKF) creció 12,8%, impulsada por la industria de la construcción y por mayores importaciones de maquinaria, vehículos y equipo de transporte.</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">+1,7%</div>
-        <div class="tile-label">Las exportaciones crecieron 1,7%, impulsadas por mayores ventas de camarón elaborado y minerales.</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">+11,1%</div>
-        <div class="tile-label">En contraste, las importaciones aumentaron 11,1%, principalmente por mayores compras externas de materias primas y bienes de capital.</div>
-      </div>
-      <div class="tile">
-        <div class="tile-value">-3,8%</div>
-        <div class="tile-label">El gasto de consumo final del Gobierno General se contrajo 3,8%.</div>
-      </div>
-    </div>
+    <ul class="plain-list">
+      <li>El consumo final de los hogares aumentó 3,9%, explicado por una mayor demanda de productos alimenticios y servicios.</li>
+      <li>La formación bruta de capital fijo (FBKF) creció 12,8%, impulsada por la industria de la construcción y por mayores importaciones de maquinaria, vehículos y equipo de transporte.</li>
+      <li>Las exportaciones crecieron 1,7%, impulsadas por mayores ventas de camarón elaborado y minerales.</li>
+      <li>En contraste, las importaciones aumentaron 11,1%, principalmente por mayores compras externas de materias primas y bienes de capital, mientras que el gasto de consumo final del Gobierno General se contrajo 3,8%.</li>
+    </ul>
 
     <div class="chart-card">
       <div class="chart-head">
-        <div class="chart-title">Componentes del gasto, primer trimestre de 2026</div>
-        <div class="chart-unit">Variación interanual, %</div>
+        <div class="chart-title"></div>
+        <div class="chart-unit">%</div>
       </div>
       <div class="chart-svg-wrap" id="chart-gasto"></div>
-    </div>
-
-    <div class="subsection" id="perspectiva-gasto">
-    <h3 class="subhead">Perspectiva del gasto</h3>
-    <p class="section-text">Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p>
-    <p class="section-text">En términos trimestrales se registró una variación de 1,0%. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p>
     </div>
   </div>
 </section>
 
 <section id="industrias">
   <div class="wrap">
-    <div class="kicker">03 · Crecimiento por industria</div>
-    <h2>16 de las 20 actividades económicas registraron crecimiento</h2>
+    <div class="kicker">03 · Análisis del PIB por industria</div>
     <p class="section-text">En el primer trimestre de 2026, 16 de las 20 actividades económicas registraron crecimiento frente al mismo período de 2025. Las mayores tasas de variación se observaron en actividades financieras y de seguros (+12,0%), alojamiento y comidas (+11,8%), refinados de petróleo (+9,4%), salud y asistencia social (+6,4%), información y comunicación (+4,9%) y actividades profesionales y técnicas (+4,5%).</p>
 
     <div class="chart-card">
       <div class="chart-head">
-        <div class="chart-title">Actividades con mayor crecimiento</div>
-        <div class="chart-unit">Variación interanual, %</div>
+        <div class="chart-title"></div>
+        <div class="chart-unit">%</div>
       </div>
       <div class="chart-svg-wrap" id="chart-industrias"></div>
     </div>
+  </div>
+</section>
 
+<section id="conclusiones">
+  <div class="wrap">
+    <div class="kicker">04 · Conclusiones</div>
     <p class="section-text">La economía ecuatoriana creció 2,1% en el primer trimestre de 2026 respecto al mismo período de 2025. El crecimiento se sustentó en el desempeño de 16 de las 20 industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</p>
+    <p class="section-text">Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p>
+    <p class="section-text">En términos trimestrales se registró una variación de 1,0%. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p>
   </div>
 </section>
 
 <footer id="fuente">
   <div class="wrap">
-    <div class="source">Fuente: Banco Central del Ecuador (BCE), cifras preliminares del primer trimestre de 2026.</div>
-    <div class="fineprint">La economía ecuatoriana · Primer trimestre de 2026</div>
+    <div class="source">Fuente: Banco Central del Ecuador (BCE)</div>
   </div>
 </footer>
 
