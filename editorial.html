@@ -45,7 +45,8 @@
   }
   @media (min-width: 1000px) { .side { padding: 32px 32px 26px; } }
   @media (min-width: 1000px) { .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; } }
-  @media (min-width: 1000px) { .side-nav { margin-top: 0; } }
+  .side-top-space { display: none; }
+  @media (min-width: 1000px) { .side-top-space { display: block; flex: 1; } }
 
   /* Mobile/tablet: compact numbered stepper, all 4 steps reachable without scrolling */
   .side-nav { position: relative; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
@@ -195,6 +196,7 @@
 
 <div class="shell">
   <aside class="side" id="side" style="--stat-c:#1375f6">
+    <div class="side-top-space" aria-hidden="true"></div>
     <nav class="side-nav" id="sideNav">
       <a href="#evolucion" data-c="#1375f6"><span class="n">01</span><span class="nlbl">Evolución del PIB</span></a>
       <a href="#componentes" data-c="#ffbf5e"><span class="n">02</span><span class="nlbl">Componentes del PIB</span></a>
