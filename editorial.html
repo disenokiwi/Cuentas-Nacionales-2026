@@ -729,6 +729,17 @@
   window.addEventListener("resize", updateProgress);
   updateProgress();
 
+  // ---- resize embedded charts to their real content height ----
+  window.addEventListener("message", function (e) {
+    var d = e.data;
+    if (!d || d.type !== "chart-height") return;
+    document.querySelectorAll("iframe.embed-chart").forEach(function (f) {
+      if (f.getAttribute("data-chart") === d.src && e.source === f.contentWindow) {
+        f.style.height = Math.ceil(d.height) + "px";
+      }
+    });
+  });
+
   // ---- sidebar: active chapter + rotating headline stat ----
   var chapters = {
     evolucion:   { c: "#1375f6", big: "2,1<small>%</small>", cap: "Crecimiento interanual del PIB, primer trimestre de 2026." },
