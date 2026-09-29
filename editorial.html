@@ -41,23 +41,52 @@
   @media (min-width: 1000px) { .shell { display: grid; grid-template-columns: var(--side-w) 1fr; align-items: start; } }
 
   .side {
-    background: var(--night); color: #fff; padding: 32px 32px 26px;
+    background: var(--night); color: #fff; padding: 18px 20px 16px;
   }
+  @media (min-width: 1000px) { .side { padding: 32px 32px 26px; } }
   @media (min-width: 1000px) { .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; } }
-  .side-logo { height: 22px; width: auto; margin-bottom: 40px; }
-  @media (min-width: 1000px) { .side-logo { margin-bottom: auto; } }
+  .side-logo { height: 20px; width: auto; margin-bottom: 16px; }
+  @media (min-width: 1000px) { .side-logo { height: 22px; margin-bottom: auto; } }
 
-  .side-nav { display: flex; flex-direction: row; gap: 4px; margin-bottom: 28px; overflow-x: auto; }
-  @media (min-width: 1000px) { .side-nav { flex-direction: column; gap: 2px; margin-bottom: 0; overflow: visible; } }
-  .side-nav a {
-    text-decoration: none; color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 700;
-    padding: 10px 12px; border-radius: 8px; white-space: nowrap; transition: color .2s, background .2s;
-    display: flex; align-items: center; gap: 8px;
+  /* Mobile/tablet: compact numbered stepper, all 4 steps reachable without scrolling */
+  .side-nav { position: relative; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
+  .side-nav::before {
+    content: ""; position: absolute; left: 15px; right: 15px; top: 15px; height: 1px;
+    background: rgba(255,255,255,0.16); z-index: 0;
   }
-  .side-nav a .n { font-variant-numeric: tabular-nums; opacity: 0.7; }
-  .side-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
-  .side-nav a.active { color: #fff; background: rgba(255,255,255,0.09); }
-  .side-nav a.active .n { color: var(--stat-c, var(--blue)); opacity: 1; }
+  .side-nav a {
+    position: relative; z-index: 1; text-decoration: none; color: rgba(255,255,255,0.55);
+    display: flex; flex-direction: column; align-items: center; gap: 0; padding: 0; background: none;
+  }
+  .side-nav a .n {
+    font-variant-numeric: tabular-nums; font-size: 12px; font-weight: 700;
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--night); border: 1.5px solid rgba(255,255,255,0.28); color: rgba(255,255,255,0.65);
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .side-nav a.active .n { color: #fff; background: var(--stat-c, var(--blue)); border-color: var(--stat-c, var(--blue)); }
+  .side-nav .nlbl { display: none; }
+  .side-current {
+    font-size: 13px; font-weight: 700; color: #fff; margin-top: 12px; min-height: 1.3em;
+  }
+  @media (min-width: 1000px) {
+    .side-nav { display: flex; flex-direction: column; gap: 2px; margin-bottom: 0; }
+    .side-nav::before { display: none; }
+    .side-nav a {
+      flex-direction: row; align-items: center; gap: 8px; text-decoration: none; color: rgba(255,255,255,0.5);
+      font-size: 13px; font-weight: 700; padding: 10px 12px; border-radius: 8px; white-space: nowrap;
+      transition: color .2s, background .2s;
+    }
+    .side-nav a .n {
+      width: auto; height: auto; border-radius: 0; border: none; background: none; padding: 0;
+      font-variant-numeric: tabular-nums; opacity: 0.7; color: inherit;
+    }
+    .side-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .side-nav a.active { color: #fff; background: rgba(255,255,255,0.09); }
+    .side-nav a.active .n { color: var(--stat-c, var(--blue)); opacity: 1; background: none; border: none; }
+    .side-nav .nlbl { display: inline; }
+    .side-current { display: none; }
+  }
 
   .side-stat { display: none; margin: 8px 0 0; }
   @media (min-width: 1000px) { .side-stat { display: block; margin-top: 34px; } }
@@ -162,11 +191,12 @@
   <aside class="side" id="side" style="--stat-c:#1375f6">
     <img class="side-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
     <nav class="side-nav" id="sideNav">
-      <a href="#evolucion" data-c="#1375f6"><span class="n">01</span> Evolución del PIB</a>
-      <a href="#componentes" data-c="#cdb0ff"><span class="n">02</span> Componentes del PIB</a>
-      <a href="#industrias" data-c="#890abf"><span class="n">03</span> Análisis por industria</a>
-      <a href="#conclusiones" data-c="#ddf086"><span class="n">04</span> Conclusiones del BCE</a>
+      <a href="#evolucion" data-c="#1375f6"><span class="n">01</span><span class="nlbl">Evolución del PIB</span></a>
+      <a href="#componentes" data-c="#cdb0ff"><span class="n">02</span><span class="nlbl">Componentes del PIB</span></a>
+      <a href="#industrias" data-c="#890abf"><span class="n">03</span><span class="nlbl">Análisis por industria</span></a>
+      <a href="#conclusiones" data-c="#ddf086"><span class="n">04</span><span class="nlbl">Conclusiones del BCE</span></a>
     </nav>
+    <div class="side-current" id="sideCurrent">Evolución del PIB</div>
     <div class="side-stat">
       <div class="lbl">Cifra del capítulo</div>
       <div class="big" id="sideBig">2,1<small>%</small></div>
@@ -749,14 +779,15 @@
 
   // ---- sidebar: active chapter + rotating headline stat ----
   var chapters = {
-    evolucion:   { c: "#1375f6", big: "2,1<small>%</small>", cap: "Crecimiento interanual del PIB, primer trimestre de 2026." },
-    componentes: { c: "#890abf", big: "12,8<small>%</small>", cap: "Formación Bruta de Capital Fijo (FBKF), el componente que más creció." },
-    industrias:  { c: "#890abf", big: "12,0<small>%</small>", cap: "Actividades financieras y de seguros, la industria con mayor crecimiento." },
-    conclusiones:{ c: "#7a26bc", big: "16<small>/20</small>", cap: "Industrias en terreno positivo en el primer trimestre de 2026." }
+    evolucion:   { c: "#1375f6", label: "Evolución del PIB", big: "2,1<small>%</small>", cap: "Crecimiento interanual del PIB, primer trimestre de 2026." },
+    componentes: { c: "#890abf", label: "Componentes del PIB", big: "12,8<small>%</small>", cap: "Formación Bruta de Capital Fijo (FBKF), el componente que más creció." },
+    industrias:  { c: "#890abf", label: "Análisis por industria", big: "12,0<small>%</small>", cap: "Actividades financieras y de seguros, la industria con mayor crecimiento." },
+    conclusiones:{ c: "#7a26bc", label: "Conclusiones del BCE", big: "16<small>/20</small>", cap: "Industrias en terreno positivo en el primer trimestre de 2026." }
   };
   var side = document.getElementById("side");
   var sideBig = document.getElementById("sideBig");
   var sideCap = document.getElementById("sideCap");
+  var sideCurrent = document.getElementById("sideCurrent");
   var navLinks = {};
   document.querySelectorAll("#sideNav a").forEach(function (a) { navLinks[a.getAttribute("href").slice(1)] = a; });
 
@@ -765,6 +796,7 @@
     side.style.setProperty("--stat-c", d.c);
     sideBig.innerHTML = d.big;
     sideCap.textContent = d.cap;
+    if (sideCurrent) sideCurrent.textContent = d.label;
     Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.toggle("active", k === id); });
   }
 
