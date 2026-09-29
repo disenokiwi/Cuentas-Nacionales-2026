@@ -48,23 +48,14 @@
   .side-deco { display: none; }
   @media (min-width: 1000px) {
     .side-deco { display: block; flex: 1; position: relative; overflow: visible; min-height: 120px; }
-    .side-deco .orb {
-      position: absolute;
-      background: radial-gradient(circle at 34% 100%, var(--o-hi), var(--o-lo) 78%);
-      box-shadow: 0 18px 36px -10px rgba(19,117,246,0.22);
-      animation: orbFloat var(--o-dur, 9s) ease-in-out var(--o-delay, 0s) infinite alternate;
+    .side-deco svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .side-deco .peak-line {
+      fill: none; stroke: #bcd6ff; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round;
+      stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke;
+      animation: peakDraw 2.6s cubic-bezier(.4,0,.2,1) .3s both;
     }
-    /* Each orb is exactly twice as wide as it is tall, with a corner
-       radius equal to its own height on the rounded side - the only
-       combination that yields a true (non-egg-shaped) half-circle. */
-    .orb.o1 { width: 170px; height: 85px; border-radius: 85px 85px 0 0; left: -34px; top: 20%;   --o-hi:#5f9bfa; --o-lo:#1375f6; --o-dur: 10s; }
-    .orb.o2 { width: 104px; height: 52px; border-radius: 0 0 52px 52px; right: 6px;  top: 48%;  --o-hi:#cdb0ff; --o-lo:#7a5be0; --o-dur: 8s;  --o-delay: -2.5s; }
-    .orb.o3 { width: 70px;  height: 35px; border-radius: 0 0 35px 35px; left: 40px;  bottom: 12%; --o-hi:#8fb8fb; --o-lo:#201061; --o-dur: 11s; --o-delay: -5s; }
-    @keyframes orbFloat {
-      from { transform: translateY(0) translateX(0); }
-      to   { transform: translateY(-22px) translateX(8px); }
-    }
-    @media (prefers-reduced-motion: reduce) { .side-deco .orb { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .side-deco .peak-line { animation: none; stroke-dashoffset: 0; } }
+    @keyframes peakDraw { to { stroke-dashoffset: 0; } }
   }
   .side-logo { display: none; height: 20px; width: auto; margin-bottom: 16px; }
   @media (min-width: 1000px) { .side-logo { display: block; height: 22px; margin-bottom: 0; } }
@@ -218,11 +209,7 @@
 <div class="shell">
   <aside class="side" id="side" style="--stat-c:#1375f6">
     <img class="side-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
-    <div class="side-deco" aria-hidden="true">
-      <span class="orb o1"></span>
-      <span class="orb o2"></span>
-      <span class="orb o3"></span>
-    </div>
+    <div class="side-deco" id="sideDeco" aria-hidden="true"></div>
     <nav class="side-nav" id="sideNav">
       <a href="#evolucion" data-c="#1375f6"><span class="n">01</span><span class="nlbl">Evolución del PIB</span></a>
       <a href="#componentes" data-c="#ffbf5e"><span class="n">02</span><span class="nlbl">Componentes del PIB</span></a>
@@ -827,6 +814,48 @@
   document.querySelectorAll(".ticker .count").forEach(function (el, i) {
     setTimeout(function () { animateCount(el); }, i * 150);
   });
+
+  // ---- sidebar decoration: Andes silhouette traced from the real PIB growth series ----
+  (function () {
+    var mount = document.getElementById("sideDeco");
+    if (!mount) return;
+    var yoy = [
+      -2.5398645859892377, 19.346945384136326, 12.395984742422872, 10.360979300555773,
+      8.983731520121484, 5.246491105474793, 5.420167929952191, 3.986561868857086,
+      2.088911180976316, 5.128180699086182, -0.2620389874608442, 0.4469130543548028,
+      -0.6015483073715244, -4.5130602577225565, -1.640985214963342, -0.9502785870602937,
+      3.420330170377195, 3.5219972288117463, 2.9592500031820235, 4.99399649415786,
+      2.0639903117922964
+    ];
+    var W = 400, H = 220, base = 208;
+    var min = Math.min.apply(null, yoy), max = Math.max.apply(null, yoy);
+    function xAt(i) { return (i / (yoy.length - 1)) * W; }
+    function yAt(v, amp, topPad) { return base - topPad - ((v - min) / (max - min)) * amp; }
+
+    var frontPts = yoy.map(function (v, i) { return [xAt(i), yAt(v, 150, 8)]; });
+    var backPts = yoy.map(function (v, i) { return [xAt(i) + 14, yAt(v, 84, 54)]; });
+
+    function ptsToStr(pts) { return pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" "); }
+    function fillPath(pts) { return "M" + ptsToStr(pts) + " L" + W + "," + base + " L0," + base + " Z"; }
+    function linePath(pts) { return "M" + ptsToStr(pts); }
+
+    mount.innerHTML =
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax meet">' +
+        '<defs>' +
+          '<linearGradient id="peakBack" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0%" stop-color="#7a5be0" stop-opacity="0.45"/>' +
+            '<stop offset="100%" stop-color="#201061" stop-opacity="0.45"/>' +
+          '</linearGradient>' +
+          '<linearGradient id="peakFront" x1="0" y1="0" x2="0" y2="1">' +
+            '<stop offset="0%" stop-color="#5f9bfa"/>' +
+            '<stop offset="100%" stop-color="#0d4fc4"/>' +
+          '</linearGradient>' +
+        '</defs>' +
+        '<path d="' + fillPath(backPts) + '" fill="url(#peakBack)"/>' +
+        '<path d="' + fillPath(frontPts) + '" fill="url(#peakFront)"/>' +
+        '<path class="peak-line" d="' + linePath(frontPts) + '" pathLength="1"/>' +
+      "</svg>";
+  })();
 
   // ---- resize embedded charts to their real content height ----
   window.addEventListener("message", function (e) {
