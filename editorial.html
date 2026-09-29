@@ -45,8 +45,27 @@
   }
   @media (min-width: 1000px) { .side { padding: 32px 32px 26px; } }
   @media (min-width: 1000px) { .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; } }
+  .side-deco { display: none; }
+  @media (min-width: 1000px) {
+    .side-deco { display: block; flex: 1; position: relative; overflow: hidden; min-height: 120px; }
+    .side-deco .orb {
+      position: absolute; border-radius: 100% 100% 0 0 / 100% 100% 0 0;
+      background: radial-gradient(circle at 34% 100%, var(--o-hi), var(--o-lo) 78%);
+      box-shadow: 0 26px 44px -14px rgba(19,117,246,0.4);
+      animation: orbFloat var(--o-dur, 9s) ease-in-out var(--o-delay, 0s) infinite alternate;
+    }
+    .orb.o1 { width: 170px; height: 85px;  left: -34px; top: 20%;   --o-hi:#5f9bfa; --o-lo:#1375f6; --o-dur: 10s; }
+    .orb.o2 { width: 104px; height: 52px;  right: 6px;  top: 48%;  --o-hi:#cdb0ff; --o-lo:#7a5be0; --o-dur: 8s;  --o-delay: -2.5s; }
+    .orb.o3 { width: 70px;  height: 35px;  left: 40px;  bottom: 12%; --o-hi:#8fb8fb; --o-lo:#201061; --o-dur: 11s; --o-delay: -5s; }
+    .orb.o2, .orb.o3 { transform: rotate(180deg); }
+    @keyframes orbFloat {
+      from { transform: translateY(0) translateX(0); }
+      to   { transform: translateY(-22px) translateX(8px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .side-deco .orb { animation: none; } }
+  }
   .side-logo { display: none; height: 20px; width: auto; margin-bottom: 16px; }
-  @media (min-width: 1000px) { .side-logo { display: block; height: 22px; margin-bottom: auto; } }
+  @media (min-width: 1000px) { .side-logo { display: block; height: 22px; margin-bottom: 0; } }
 
   /* Mobile/tablet: compact numbered stepper, all 4 steps reachable without scrolling */
   .side-nav { position: relative; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
@@ -197,6 +216,11 @@
 <div class="shell">
   <aside class="side" id="side" style="--stat-c:#1375f6">
     <img class="side-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
+    <div class="side-deco" aria-hidden="true">
+      <span class="orb o1"></span>
+      <span class="orb o2"></span>
+      <span class="orb o3"></span>
+    </div>
     <nav class="side-nav" id="sideNav">
       <a href="#evolucion" data-c="#1375f6"><span class="n">01</span><span class="nlbl">Evolución del PIB</span></a>
       <a href="#componentes" data-c="#ffbf5e"><span class="n">02</span><span class="nlbl">Componentes del PIB</span></a>
@@ -225,9 +249,9 @@
       <h1>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h1>
       <p class="lede">El Banco Central del Ecuador (BCE) presentó las cifras preliminares del comportamiento económico del Ecuador del primer trimestre de 2026.</p>
       <div class="ticker">
-        <div class="t-item"><div class="t-val">2,1<small>%</small></div><div class="t-lbl">Entre el primer trimestre de 2025 y el mismo periodo de 2026</div></div>
-        <div class="t-item"><div class="t-val">1,0<small>%</small></div><div class="t-lbl">En términos trimestrales</div></div>
-        <div class="t-item"><div class="t-val">$29.223<small>M</small></div><div class="t-lbl">PIB Real, primer trimestre de 2026</div></div>
+        <div class="t-item"><div class="t-val"><span class="count" data-target="2.1" data-decimals="1">0</span><small>%</small></div><div class="t-lbl">Entre el primer trimestre de 2025 y el mismo periodo de 2026</div></div>
+        <div class="t-item"><div class="t-val"><span class="count" data-target="1.0" data-decimals="1">0</span><small>%</small></div><div class="t-lbl">En términos trimestrales</div></div>
+        <div class="t-item"><div class="t-val">$<span class="count" data-target="29223" data-decimals="0">0</span><small>M</small></div><div class="t-lbl">PIB Real, primer trimestre de 2026</div></div>
       </div>
     </section>
 
@@ -777,6 +801,30 @@
   window.addEventListener("scroll", updateProgress, { passive: true });
   window.addEventListener("resize", updateProgress);
   updateProgress();
+
+  // ---- count-up animation for the opening ticker figures ----
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function animateCount(el) {
+    var target = parseFloat(el.getAttribute("data-target"));
+    var decimals = parseInt(el.getAttribute("data-decimals"), 10) || 0;
+    if (isNaN(target)) return;
+    if (reduceMotion) {
+      el.textContent = target.toLocaleString("es-EC", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      return;
+    }
+    var duration = 1400, start = null;
+    function tick(ts) {
+      if (start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      el.textContent = (target * easeOutCubic(progress)).toLocaleString("es-EC", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll(".ticker .count").forEach(function (el, i) {
+    setTimeout(function () { animateCount(el); }, i * 150);
+  });
 
   // ---- resize embedded charts to their real content height ----
   window.addEventListener("message", function (e) {
