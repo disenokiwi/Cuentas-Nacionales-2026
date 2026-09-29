@@ -49,15 +49,17 @@
   @media (min-width: 1000px) {
     .side-deco { display: block; flex: 1; position: relative; overflow: hidden; min-height: 120px; }
     .side-deco .orb {
-      position: absolute; border-radius: 100% 100% 0 0 / 100% 100% 0 0;
+      position: absolute;
       background: radial-gradient(circle at 34% 100%, var(--o-hi), var(--o-lo) 78%);
       box-shadow: 0 26px 44px -14px rgba(19,117,246,0.4);
       animation: orbFloat var(--o-dur, 9s) ease-in-out var(--o-delay, 0s) infinite alternate;
     }
-    .orb.o1 { width: 170px; height: 85px;  left: -34px; top: 20%;   --o-hi:#5f9bfa; --o-lo:#1375f6; --o-dur: 10s; }
-    .orb.o2 { width: 104px; height: 52px;  right: 6px;  top: 48%;  --o-hi:#cdb0ff; --o-lo:#7a5be0; --o-dur: 8s;  --o-delay: -2.5s; }
-    .orb.o3 { width: 70px;  height: 35px;  left: 40px;  bottom: 12%; --o-hi:#8fb8fb; --o-lo:#201061; --o-dur: 11s; --o-delay: -5s; }
-    .orb.o2, .orb.o3 { transform: rotate(180deg); }
+    /* Each orb is exactly twice as wide as it is tall, with a corner
+       radius equal to its own height on the rounded side - the only
+       combination that yields a true (non-egg-shaped) half-circle. */
+    .orb.o1 { width: 170px; height: 85px; border-radius: 85px 85px 0 0; left: -34px; top: 20%;   --o-hi:#5f9bfa; --o-lo:#1375f6; --o-dur: 10s; }
+    .orb.o2 { width: 104px; height: 52px; border-radius: 0 0 52px 52px; right: 6px;  top: 48%;  --o-hi:#cdb0ff; --o-lo:#7a5be0; --o-dur: 8s;  --o-delay: -2.5s; }
+    .orb.o3 { width: 70px;  height: 35px; border-radius: 0 0 35px 35px; left: 40px;  bottom: 12%; --o-hi:#8fb8fb; --o-lo:#201061; --o-dur: 11s; --o-delay: -5s; }
     @keyframes orbFloat {
       from { transform: translateY(0) translateX(0); }
       to   { transform: translateY(-22px) translateX(8px); }
