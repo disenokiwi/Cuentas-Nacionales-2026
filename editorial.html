@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La economía ecuatoriana en el 1T 2026 · Edición editorial</title>
+<meta name="description" content="La economía ecuatoriana creció 2,1% en el primer trimestre de 2026: cifras preliminares del Banco Central del Ecuador (BCE).">
+<link rel="icon" href="data:,">
+<link rel="preload" href="assets/fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/figtree.css">
+<style>
+  :root {
+    color-scheme: light;
+    --night: #18191f;
+    --dknight: #050505;
+    --dblue: #201061;
+    --blue: #1375f6;
+    --magenta: #890abf;
+    --lavender: #cdb0ff;
+    --olive: #ddf086;
+    --paper: #faf9f6;
+    --ink: #18191f;
+    --ink-soft: #55575f;
+    --ink-mute: #8a8b92;
+    --line: rgba(24,25,31,0.12);
+    --side-w: 400px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 200; background: var(--blue); transform: scaleX(0); transform-origin: left center; pointer-events: none; }
+
+  /* ============ Shell: sticky editorial sidebar + scrolling story ============ */
+  .shell { display: block; }
+  @media (min-width: 1000px) { .shell { display: grid; grid-template-columns: var(--side-w) 1fr; align-items: start; } }
+
+  .side {
+    background: var(--night); color: #fff; padding: 32px 32px 26px;
+  }
+  @media (min-width: 1000px) { .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; } }
+  .side-logo { height: 22px; width: auto; margin-bottom: 40px; }
+  @media (min-width: 1000px) { .side-logo { margin-bottom: auto; } }
+
+  .side-nav { display: flex; flex-direction: row; gap: 4px; margin-bottom: 28px; overflow-x: auto; }
+  @media (min-width: 1000px) { .side-nav { flex-direction: column; gap: 2px; margin-bottom: 0; overflow: visible; } }
+  .side-nav a {
+    text-decoration: none; color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 700;
+    padding: 10px 12px; border-radius: 8px; white-space: nowrap; transition: color .2s, background .2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .side-nav a .n { font-variant-numeric: tabular-nums; opacity: 0.7; }
+  .side-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .side-nav a.active { color: #fff; background: rgba(255,255,255,0.09); }
+  .side-nav a.active .n { color: var(--stat-c, var(--blue)); opacity: 1; }
+
+  .side-stat { margin: 8px 0 0; }
+  @media (min-width: 1000px) { .side-stat { margin-top: 34px; } }
+  .side-stat .lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+  .side-stat .big { font-size: clamp(46px, 5.4vw, 64px); font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: var(--stat-c, var(--blue)); transition: color .4s ease; }
+  .side-stat .big small { font-size: 0.42em; font-weight: 700; margin-left: 2px; }
+  .side-stat .cap { font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,0.7); margin-top: 10px; max-width: 30ch; }
+
+  .side-spark { margin-top: 28px; }
+  .side-spark svg { width: 100%; height: 54px; overflow: visible; }
+  .side-spark .ln { fill: none; stroke: var(--stat-c, var(--blue)); stroke-width: 2; transition: stroke .4s ease; }
+  .side-spark .dt { fill: var(--stat-c, var(--blue)); transition: fill .4s ease; }
+
+  .side-foot { display: none; }
+  @media (min-width: 1000px) { .side-foot { display: block; font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12); } }
+
+  /* ============ Main story column ============ */
+  .story { min-width: 0; }
+
+  .opening { padding: 76px 7vw 64px; max-width: 920px; }
+  .opening .kick { font-size: 12.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--magenta); margin-bottom: 18px; }
+  .opening h1 { font-size: clamp(34px, 5.6vw, 68px); line-height: 1.02; letter-spacing: -0.02em; font-weight: 800; margin: 0 0 26px; }
+  .opening .lede { font-size: clamp(17px, 1.6vw, 21px); line-height: 1.55; color: var(--ink-soft); max-width: 62ch; margin: 0 0 40px; }
+  .ticker { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line); }
+  .ticker .t-item { flex: 1 1 180px; padding: 22px 26px 0 0; }
+  .ticker .t-item + .t-item { border-left: 1px solid var(--line); padding-left: 26px; }
+  .ticker .t-val { font-size: clamp(30px, 3.4vw, 42px); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+  .ticker .t-val small { font-size: 0.5em; font-weight: 700; color: var(--ink-mute); }
+  .ticker .t-lbl { font-size: 12.5px; color: var(--ink-mute); margin-top: 6px; max-width: 26ch; }
+
+  /* ---- chapters ---- */
+  .chapter { position: relative; padding: 64px 7vw 72px; border-top: 1px solid var(--line); scroll-margin-top: 24px; overflow: hidden; }
+  .chapter .num-bg {
+    position: absolute; top: -0.16em; right: 3vw; font-size: clamp(120px, 16vw, 240px); font-weight: 800;
+    color: var(--stat-c, var(--blue)); opacity: 0.08; line-height: 1; letter-spacing: -0.04em; pointer-events: none; z-index: 0; user-select: none;
+  }
+  .chapter > * { position: relative; z-index: 1; }
+  .chapter .kick { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stat-c, var(--blue)); margin-bottom: 16px; }
+  .chapter .lead-text { font-size: clamp(18px, 2vw, 23px); line-height: 1.5; max-width: 66ch; color: var(--ink); font-weight: 500; margin: 0 0 18px; }
+  .chapter .body-text { font-size: 16px; line-height: 1.7; max-width: 66ch; color: var(--ink-soft); margin: 0 0 18px; }
+  .stat { color: var(--stat-c, var(--blue)); font-weight: 800; }
+
+  .chart-frame {
+    margin: 40px 0 8px; background: #fff; border-radius: 20px; border: 1px solid var(--line);
+    box-shadow: 0 24px 48px -20px rgba(24,25,31,0.28); transform: rotate(var(--tilt, -0.6deg));
+    padding: 8px 10px 2px; max-width: 880px;
+  }
+  .chart-frame .embed-chart { display: block; width: 100%; border: 0; margin: 0; }
+  .chart-cap { font-size: 12.5px; color: var(--ink-mute); margin: 14px 2px 0; max-width: 880px; }
+
+  /* ---- section 02: stat rows instead of cards ---- */
+  .stat-rows { margin-top: 8px; }
+  .stat-row { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: start; padding: 26px 0; border-top: 1px solid var(--line); }
+  @media (min-width: 720px) { .stat-row { grid-template-columns: 200px 1fr; gap: 28px; } }
+  .stat-row:last-child { border-bottom: 1px solid var(--line); }
+  .stat-row .sr-figure { display: flex; align-items: center; gap: 14px; }
+  .stat-row .sr-icon { width: 34px; height: 34px; flex: none; color: var(--row-c); }
+  .stat-row .sr-icon svg { width: 100%; height: 100%; }
+  .stat-row .sr-num { font-size: clamp(34px, 3.6vw, 46px); font-weight: 800; letter-spacing: -0.02em; color: var(--row-c); }
+  .stat-row .sr-text { font-size: 16px; line-height: 1.65; color: var(--ink-soft); padding-top: 4px; }
+
+  /* ---- section 04: alternating gallery ---- */
+  .gallery { margin-top: 12px; }
+  .g-row { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; padding: 30px 0; border-top: 1px solid var(--line); }
+  @media (min-width: 780px) { .g-row { grid-template-columns: 1fr 1fr; gap: 40px; } .g-row.rev .g-photo { order: 2; } }
+  .g-photo { aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; background: var(--line); box-shadow: 0 20px 40px -22px rgba(24,25,31,0.3); }
+  .g-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .g-text { display: flex; align-items: flex-start; gap: 14px; }
+  .g-mark { flex: none; width: 26px; height: 26px; margin-top: 2px; background: var(--stat-c, var(--blue)); -webkit-mask: url('assets/asterisco.svg') center / contain no-repeat; mask: url('assets/asterisco.svg') center / contain no-repeat; }
+  .g-text p { margin: 0; font-size: 16.5px; line-height: 1.65; color: var(--ink); }
+
+  .source-note { font-size: 13px; color: var(--ink-mute); padding-top: 18px; border-top: 1px solid var(--line); margin-top: 32px; max-width: 66ch; }
+
+  /* ---- footer ---- */
+  footer.ed-foot { background: var(--dknight); color: #fff; padding: 34px 7vw; }
+  .ed-foot .wrap { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .ed-foot .brand-block img { height: 24px; margin-bottom: 8px; }
+  .ed-foot .brand-block .nm { font-size: 14px; font-weight: 700; }
+  .ed-foot .contact { text-align: right; font-size: 13px; color: rgba(255,255,255,0.75); }
+  .ed-foot .contact img { height: 24px; margin-left: auto; margin-bottom: 8px; }
+  .ed-foot .contact a { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); }
+  @media (max-width: 640px) { .ed-foot .wrap { flex-direction: column; align-items: flex-start; } .ed-foot .contact { text-align: left; } .ed-foot .contact img { margin-left: 0; } }
+
+  /* ---- reveal ---- */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<div class="shell">
+  <aside class="side" id="side" style="--stat-c:#1375f6">
+    <img class="side-logo" src="assets/LogoKeyword-blanco.svg" alt="Keyword">
+    <nav class="side-nav" id="sideNav">
+      <a href="#evolucion" data-c="#1375f6"><span class="n">01</span> Evolución del PIB</a>
+      <a href="#componentes" data-c="#cdb0ff"><span class="n">02</span> Componentes del PIB</a>
+      <a href="#industrias" data-c="#890abf"><span class="n">03</span> Análisis por industria</a>
+      <a href="#conclusiones" data-c="#ddf086"><span class="n">04</span> Conclusiones del BCE</a>
+    </nav>
+    <div class="side-stat">
+      <div class="lbl">Cifra del capítulo</div>
+      <div class="big" id="sideBig">2,1<small>%</small></div>
+      <div class="cap" id="sideCap">Crecimiento interanual del PIB, primer trimestre de 2026.</div>
+    </div>
+    <div class="side-spark" id="sideSpark"></div>
+    <div class="side-foot">Cuentas Nacionales Trimestrales · BCE · 1T 2026</div>
+  </aside>
+
+  <main class="story">
+
+    <section class="opening">
+      <div class="kick">Informe trimestral · Cuentas Nacionales</div>
+      <h1>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h1>
+      <p class="lede">El Banco Central del Ecuador (BCE) presentó las cifras preliminares del comportamiento económico del Ecuador del primer trimestre de 2026.</p>
+      <div class="ticker">
+        <div class="t-item"><div class="t-val">2,1<small>%</small></div><div class="t-lbl">Entre el primer trimestre de 2025 y el mismo periodo de 2026</div></div>
+        <div class="t-item"><div class="t-val">1,0<small>%</small></div><div class="t-lbl">En términos trimestrales</div></div>
+        <div class="t-item"><div class="t-val">$29.223<small>M</small></div><div class="t-lbl">PIB Real, primer trimestre de 2026</div></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="evolucion" style="--stat-c:#1375f6">
+      <div class="num-bg">01</div>
+      <div class="kick">01 · Evolución del PIB</div>
+      <p class="lead-text">Entre el primer trimestre de 2025 y el mismo periodo de 2026, la economía ecuatoriana creció en <strong class="stat">2,1%</strong>.</p>
+      <p class="body-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó <strong class="stat">USD 29.223 millones</strong>, mientras que, en términos nominales, totalizó <strong class="stat">USD 32.789 millones</strong>.</p>
+      <p class="body-text">En términos trimestrales, el PIB registró un crecimiento del <strong class="stat">1,0%</strong> frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó <strong class="stat">12,8%</strong> en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
+      <div class="chart-frame" style="--tilt:-0.7deg">
+        <iframe class="embed-chart" id="chartInteranual" data-chart="01_crecimiento_interanual" src="assets/01_crecimiento_interanual.html" title="Crecimiento interanual del PIB, por trimestre" loading="lazy" scrolling="no"></iframe>
+      </div>
+      <div class="chart-frame" style="--tilt:0.5deg">
+        <iframe class="embed-chart" data-chart="02_pib_real" src="assets/02_pib_real.html" title="PIB Real" loading="lazy" scrolling="no"></iframe>
+      </div>
+      <div class="chart-frame" style="--tilt:-0.4deg">
+        <iframe class="embed-chart" data-chart="03_pib_nominal" src="assets/03_pib_nominal.html" title="PIB Nominal" loading="lazy" scrolling="no"></iframe>
+      </div>
+    </section>
+
+    <section class="chapter" id="componentes" style="--stat-c:#890abf">
+      <div class="num-bg">02</div>
+      <div class="kick">02 · Componentes del PIB</div>
+      <p class="lead-text">Según el informe del BCE, el crecimiento de la economía en el primer trimestre de 2026 respondió principalmente al dinamismo del consumo de los hogares y de la inversión, a través de la demanda interna:</p>
+      <div class="stat-rows">
+        <div class="stat-row" style="--row-c:#1375f6">
+          <div class="sr-figure"><span class="sr-icon"><svg class="icon-svg" viewBox="0 0 682.66669 682.66669" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><defs
+     id="defs4759"><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4785"><path
+         d="M 0,512 H 512 V 0 H 0 Z"
+         id="path4783" /></clipPath></defs><g
+     id="g4761"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"><g
+       id="g4763"
+       transform="translate(207.9033,332.9819)"><path
+         d="M 0,0 V 112.226 H 80.161 V 0"
+         style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path4765" /></g><g
+       id="g4767"
+       transform="translate(239.9678,413.1431)"><path
+         d="M 0,0 H 16.032"
+         style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path4769" /></g><g
+       id="g4771"
+       transform="translate(207.9033,381.0786)"><path
+         d="M 0,0 H 80.161"
+         style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path4773" /></g><g
+       id="g4775"
+       transform="translate(288.0645,413.1431)"><path
+         d="M 0,0 H 48.097"
+         style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path4777" /></g><g
+       id="g4779"><g
+         id="g4781"
+         clip-path="url(#clipPath4785)"><g
+           id="g4787"
+           transform="translate(132.0312,332.9902)"><path
+             d="m 0,0 c -10.944,31.35 -4.29,71.278 -4.29,71.278 l -11.787,35.362 c -2.344,7.033 1.457,14.635 8.491,16.98 6.452,2.151 13.494,-0.865 16.391,-7.019 L 48.629,31.973"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4789" /></g><g
+           id="g4791"
+           transform="translate(123.7441,420.5405)"><path
+             d="M 0,0 23.742,10.396"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4793" /></g><g
+           id="g4795"
+           transform="translate(162.6978,404.4995)"><path
+             d="M 0,0 C 3.337,23.631 11.874,43.543 11.874,43.543 L 8.825,80.692 c -0.606,7.39 4.892,13.871 12.281,14.477 6.779,0.557 12.903,-4.045 14.254,-10.712 l 9.846,-52.624"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4797" /></g><g
+           id="g4799"
+           transform="translate(174.5542,464.7983)"><path
+             d="M 0,0 25.532,4.458"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4801" /></g><g
+           id="g4803"
+           transform="translate(400.2905,332.9819)"><path
+             d="m 0,0 v 73.521 c 0,4.251 -1.689,8.33 -4.696,11.336 l -6.641,6.641 c -3.006,3.006 -4.695,7.085 -4.695,11.336 v 25.424 c 0,4.427 -3.59,8.016 -8.017,8.016 h -16.032 c -4.427,0 -8.016,-3.589 -8.016,-8.016 v -25.424 c 0,-4.251 -1.689,-8.33 -4.695,-11.336 l -6.642,-6.641 c -3.006,-3.006 -4.695,-7.085 -4.695,-11.336 V 0"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4805" /></g><g
+           id="g4807"
+           transform="translate(352.1934,437.1914)"><path
+             d="M 0,0 H 32.065"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4809" /></g><g
+           id="g4811"
+           transform="translate(460.6548,332.9819)"><path
+             d="M 0,0 10.824,30.182 C 16.802,46.852 8.135,65.211 -8.534,71.188 -25.203,77.167 -43.563,68.5 -49.541,51.831 L -60.364,21.648"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4813" /></g><g
+           id="g4815"
+           transform="translate(471.479,363.1641)"><path
+             d="M 0,0 -15.091,5.412"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4817" /></g><g
+           id="g4819"
+           transform="translate(408.4082,377.2666)"><path
+             d="M 0,0 15.091,-5.412"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4821" /></g><g
+           id="g4823"
+           transform="translate(452.1206,404.1704)"><path
+             d="M 0,0 24.354,67.911"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4825" /></g><g
+           id="g4827"
+           transform="translate(443.0142,450.0166)"><path
+             d="M 0,0 1.561,-43.14"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4829" /></g><g
+           id="g4831"
+           transform="translate(488.2876,433.7808)"><path
+             d="M 0,0 -28.621,-32.316"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4833" /></g><g
+           id="g4835"
+           transform="translate(336.1611,381.0786)"><path
+             d="m 0,0 h 16.032 c 8.855,0 16.032,-7.178 16.032,-16.032 v -32.065"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4837" /></g><g
+           id="g4839"
+           transform="translate(98.5039,284.8164)"><path
+             d="m 0,0 43.079,-112.667 c 10.667,-27.898 39.181,-44.738 68.762,-40.611 l 259.614,36.225 c 19.803,2.764 34.541,19.701 34.541,39.697 V 48.09 h -422.85"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4841" /></g><g
+           id="g4843"
+           transform="translate(7.5,397.0352)"><path
+             d="m 0,0 h 26.028 c 13.291,0 25.204,-8.199 29.95,-20.613 l 22.809,-59.653"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4845" /></g><g
+           id="g4847"
+           transform="translate(159.8066,44.3501)"><path
+             d="m 0,0 c 0,-17.708 -14.356,-32.064 -32.065,-32.064 -17.708,0 -32.064,14.356 -32.064,32.064 0,17.709 14.356,32.064 32.064,32.064 C -14.356,32.064 0,17.709 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4849" /></g><g
+           id="g4851"
+           transform="translate(127.7417,44.3501)"><path
+             d="M 0,0 H 0.081"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4853" /></g><g
+           id="g4855"
+           transform="translate(504.5,44.3501)"><path
+             d="m 0,0 c 0,-17.708 -14.356,-32.064 -32.064,-32.064 -17.709,0 -32.065,14.356 -32.065,32.064 0,17.709 14.356,32.064 32.065,32.064 C -14.356,32.064 0,17.709 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4857" /></g><g
+           id="g4859"
+           transform="translate(472.4355,44.3501)"><path
+             d="M 0,0 H 0.08"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4861" /></g><g
+           id="g4863"
+           transform="translate(159.8066,44.3501)"><path
+             d="M 0,0 H 248.5"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4865" /></g><g
+           id="g4867"
+           transform="translate(141.1021,76.4146)"><path
+             d="M 0,0 26.721,64.129"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4869" /></g><g
+           id="g4871"
+           transform="translate(160.5903,300.8418)"><path
+             d="M 0,0 37.768,-137.617"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4873" /></g><g
+           id="g4875"
+           transform="translate(407.3042,191.5366)"><path
+             d="M 0,0 V 109.305"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4877" /></g><g
+           id="g4879"
+           transform="translate(229.2617,300.8418)"><path
+             d="M 0,0 21.802,-131.247"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4881" /></g><g
+           id="g4883"
+           transform="translate(356.2017,184.8252)"><path
+             d="M 0,0 V 116.017"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4885" /></g><g
+           id="g4887"
+           transform="translate(297.9331,300.8418)"><path
+             d="M 0,0 7.147,-123.709"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4889" /></g><g
+           id="g4891"
+           transform="translate(456.4033,300.8662)"><path
+             d="M 0,0 V -100.487"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path4893" /></g></g></g></g></svg></span><span class="sr-num">3,9%</span></div>
+          <p class="sr-text">El consumo final de los hogares aumentó 3,9%, explicado por una mayor demanda de productos alimenticios y servicios.</p>
+        </div>
+        <div class="stat-row" style="--row-c:#7a26bc">
+          <div class="sr-figure"><span class="sr-icon"><svg class="icon-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<g>
+	<g>
+			<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="395.18" y1="17.873" x2="395.18" y2="78.036"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M194.058,426.386v38.831h94.162V298.72h-33.443c-2.761,0-5,2.239-5,5v42.617h-50.719c-2.761,0-5,2.239-5,5v40.049"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M377.68,465.217V233.343H293.22c-2.761,0-5,2.239-5,5v226.874H377.68z"/>
+		<g>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="321.138" y1="269.62" x2="318.138" y2="269.62"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="321.138" y1="299.438" x2="318.138" y2="299.438"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="321.138" y1="329.256" x2="318.138" y2="329.256"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="321.138" y1="359.074" x2="318.138" y2="359.074"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="321.138" y1="388.892" x2="318.138" y2="388.892"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="321.138" y1="418.71" x2="318.138" y2="418.71"/>
+		</g>
+		<g>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="350.138" y1="269.62" x2="347.138" y2="269.62"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="350.138" y1="299.438" x2="347.138" y2="299.438"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="350.138" y1="329.256" x2="347.138" y2="329.256"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="350.138" y1="359.074" x2="347.138" y2="359.074"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="350.138" y1="388.892" x2="347.138" y2="388.892"/>
+				<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="350.138" y1="418.71" x2="347.138" y2="418.71"/>
+		</g>
+			<polyline style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" points="&#10;&#9;&#9;&#9;261.767,100.051 171.977,100.051 171.977,135.051 365.655,135.051 365.655,100.051 296.767,100.051 &#9;&#9;"/>
+			<rect x="424.705" y="100.051" style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" width="50.744" height="35"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M171.977,100.051l221.348-83.57c1.125-0.425,2.396-0.136,3.228,0.733l78.898,82.484"/>
+		<g>
+				<polyline style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" points="&#10;&#9;&#9;&#9;&#9;156.796,185.654 156.796,147.076 128.107,147.076 128.107,185.654 &#9;&#9;&#9;"/>
+			<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;M165.642,282.575c0,13.297-11.192,23.981-24.67,23.144c-11.549-0.717-20.948-10.116-21.665-21.665&#10;&#9;&#9;&#9;&#9;c-0.693-11.167,6.522-20.765,16.581-23.728c3.846-1.133,6.563-4.553,6.563-8.562v-24.705"/>
+		</g>
+			<rect x="377.68" y="155.051" style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" width="35" height="310.165"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M166.977,147.076h-49.05c-2.761,0-5-2.239-5-5v-49.05c0-2.761,2.239-5,5-5h49.05c2.761,0,5,2.239,5,5v49.05&#10;&#9;&#9;&#9;C171.977,144.838,169.738,147.076,166.977,147.076z"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M499.5,147.076h-19.05c-2.761,0-5-2.239-5-5v-49.05c0-2.761,2.239-5,5-5h19.05c2.761,0,5,2.239,5,5v49.05&#10;&#9;&#9;&#9;C504.5,144.838,502.261,147.076,499.5,147.076z"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M419.705,155.051h-49.05c-2.761,0-5-2.239-5-5v-65c0-2.761,2.239-5,5-5h49.05c2.761,0,5,2.239,5,5v65&#10;&#9;&#9;&#9;C424.705,152.813,422.467,155.051,419.705,155.051z"/>
+			<circle style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" cx="142.451" cy="203.869" r="23.19"/>
+			<rect x="97.921" y="421.883" style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" width="63.091" height="43.333"/>
+			<rect x="34.83" y="421.883" style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" width="63.091" height="43.333"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M424.981,465.217H12.5c-2.761,0-5,2.239-5,5v20.495c0,2.761,2.239,5,5,5h487c2.761,0,5-2.239,5-5v-20.495c0-2.761-2.239-5-5-5&#10;&#9;&#9;&#9;h-39.519"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M39.83,335.217h53.091c2.761,0,5,2.239,5,5v38.333H34.83v-38.333C34.83,337.455,37.069,335.217,39.83,335.217z"/>
+			<rect x="34.83" y="378.55" style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" width="63.091" height="43.333"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M97.921,378.55h58.091c2.761,0,5,2.239,5,5v38.333H97.921V378.55z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg></span><span class="sr-num">12,8%</span></div>
+          <p class="sr-text">La formación bruta de capital fijo (FBKF) creció 12,8%, impulsada por la industria de la construcción y por mayores importaciones de maquinaria, vehículos y equipo de transporte.</p>
+        </div>
+        <div class="stat-row" style="--row-c:#890abf">
+          <div class="sr-figure"><span class="sr-icon"><svg class="icon-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<g>
+	<g>
+		<g>
+			<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;M298.693,125.654H172.763c0.989,4.921,1.514,10.01,1.514,15.222c0,31.725-19.226,58.955-46.659,70.689v18.554h176.078v-99.463&#10;&#9;&#9;&#9;&#9;C303.695,127.893,301.456,125.654,298.693,125.654z"/>
+			<g>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="166.73" y1="176.35" x2="166.73" y2="203.422"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="201.551" y1="152.35" x2="201.551" y2="203.422"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="236.373" y1="152.35" x2="236.373" y2="203.422"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="271.195" y1="152.35" x2="271.195" y2="203.422"/>
+			</g>
+		</g>
+		<g>
+			<g>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="391.91" y1="69.939" x2="391.91" y2="103.1"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="358.249" y1="82.618" x2="358.249" y2="103.1"/>
+			</g>
+			<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;M445.564,198.362l-29.076-91.771c-0.659-2.079-2.588-3.491-4.768-3.491h-69.363c-2.762,0-5.002,2.239-5.002,5.002v122.017"/>
+				<polygon style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" points="&#10;&#9;&#9;&#9;&#9;438.867,177.225 337.356,177.225 337.356,141.605 427.582,141.605 &#9;&#9;&#9;"/>
+		</g>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M416.613,278.869h3.154V235.12c0-2.762-2.239-5.002-5.002-5.002h-157.5v87.617"/>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M309.627,266.267v19.015c0,2.762,2.239,5.002,5.002,5.002h47.775c2.762,0,5.002-2.239,5.002-5.002v-19.015&#10;&#9;&#9;&#9;c0-2.762-2.239-5.002-5.002-5.002h-47.775C311.867,261.265,309.627,263.504,309.627,266.267z"/>
+		<g>
+			<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;M147.221,278.869c3.381,0,6.534,1.708,8.38,4.541l19.412,29.784c1.846,2.833,4.999,4.541,8.38,4.541h73.872v-87.617H127.617&#10;&#9;&#9;&#9;&#9;v48.75H147.221z"/>
+			<g>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="155.122" y1="256.815" x2="155.122" y2="280.562"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="189.944" y1="256.815" x2="189.944" y2="307.887"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="224.766" y1="256.815" x2="224.766" y2="307.887"/>
+			</g>
+		</g>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M340.5,317.735H183.394c-3.381,0-6.534-1.708-8.38-4.541l-19.412-29.784c-1.846-2.833-4.999-4.541-8.38-4.541h-19.604v33.887&#10;&#9;&#9;&#9;c0,1.446,1.172,2.619,2.619,2.619h13.946c2.439,0,3.554,3.041,1.692,4.617l-46.761,39.587c-0.977,0.827-2.408,0.827-3.384,0&#10;&#9;&#9;&#9;l-46.761-39.587c-1.862-1.576-0.747-4.617,1.692-4.617h13.947c1.446,0,2.619-1.172,2.619-2.619v-33.887H12.508&#10;&#9;&#9;&#9;c-3.689,0-6.108,3.857-4.503,7.178l46.32,95.842c2.991-1.918,6.581-3.198,11.37-3.198c19.127,0,19.127,20.403,38.253,20.403&#10;&#9;&#9;&#9;c19.127,0,19.127-20.403,38.254-20.403c19.128,0,19.128,20.403,38.256,20.403c19.124,0,19.124-20.403,38.248-20.403&#10;&#9;&#9;&#9;c19.126,0,19.126,20.403,38.252,20.403c19.126,0,19.126-20.403,38.253-20.403c19.129,0,19.129,20.403,38.257,20.403&#10;&#9;&#9;&#9;c19.129,0,19.129-20.403,38.258-20.403c19.13,0,19.13,20.403,38.26,20.403c19.129,0,19.129-20.403,38.259-20.403&#10;&#9;&#9;&#9;c7.482,0,12.035,3.124,15.953,6.924l39.147-74.235c0.758-1.438,1.155-3.04,1.155-4.666v-22.843c0-2.762-2.239-5.002-5.002-5.002&#10;&#9;&#9;&#9;h-82.885c-4.05,0-7.701,2.442-9.246,6.186l-10.938,26.494c-1.546,3.744-5.196,6.186-9.246,6.186H375.5"/>
+		<g>
+			<g>
+				<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;&#9;M486.509,399.095c-19.132,0-19.132-20.403-38.264-20.403c-19.129,0-19.129,20.403-38.259,20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.13,0-19.13-20.403-38.26-20.403c-19.129,0-19.129,20.403-38.258,20.403c-19.129,0-19.129-20.403-38.257-20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.126,0-19.126,20.403-38.253,20.403c-19.126,0-19.126-20.403-38.252-20.403c-19.124,0-19.124,20.403-38.248,20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.128,0-19.128-20.403-38.256-20.403c-19.127,0-19.127,20.403-38.254,20.403c-19.127,0-19.127-20.403-38.253-20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.126,0-19.126,20.403-38.252,20.403"/>
+			</g>
+			<g>
+				<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;&#9;M486.509,447.979c-19.132,0-19.132-20.403-38.264-20.403c-19.129,0-19.129,20.403-38.259,20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.13,0-19.13-20.403-38.26-20.403c-19.129,0-19.129,20.403-38.258,20.403c-19.129,0-19.129-20.403-38.257-20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.126,0-19.126,20.403-38.253,20.403c-19.126,0-19.126-20.403-38.252-20.403c-19.124,0-19.124,20.403-38.248,20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.128,0-19.128-20.403-38.256-20.403c-19.127,0-19.127,20.403-38.254,20.403c-19.127,0-19.127-20.403-38.253-20.403&#10;&#9;&#9;&#9;&#9;&#9;c-19.126,0-19.126,20.403-38.252,20.403"/>
+			</g>
+		</g>
+	</g>
+	<g>
+		<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;M144.182,315.375h-13.946c-1.446,0-2.619-1.172-2.619-2.619V211.564c-9.27,3.965-19.475,6.166-30.196,6.166&#10;&#9;&#9;&#9;c-10.721,0-20.925-2.201-30.195-6.166v101.192c0,1.446-1.172,2.619-2.619,2.619H50.661c-2.439,0-3.554,3.041-1.692,4.617&#10;&#9;&#9;&#9;l46.761,39.587c0.977,0.827,2.408,0.827,3.384,0l46.761-39.587C147.736,318.417,146.621,315.375,144.182,315.375z"/>
+		<g>
+			<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;M142.013,78.3c-12.577-8.979-27.961-14.279-44.592-14.279c-42.446,0-76.855,34.409-76.855,76.855&#10;&#9;&#9;&#9;&#9;c0,42.446,34.409,76.855,76.855,76.855c42.446,0,76.855-34.409,76.855-76.855c0-13.114-3.292-25.456-9.084-36.258"/>
+			<g>
+				<path style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" d="&#10;&#9;&#9;&#9;&#9;&#9;M121.823,122.198L121.823,122.198c0-7.986-6.474-14.461-14.461-14.461H87.48c-7.986,0-14.461,6.474-14.461,14.461v4.218&#10;&#9;&#9;&#9;&#9;&#9;c0,7.986,6.474,14.461,14.461,14.461h19.883c7.986,0,14.461,6.474,14.461,14.461v4.218c0,7.986-6.474,14.461-14.461,14.461&#10;&#9;&#9;&#9;&#9;&#9;H87.48c-7.986,0-14.461-6.474-14.461-14.461v0"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="97.421" y1="94.482" x2="97.421" y2="107.737"/>
+					<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="97.421" y1="174.015" x2="97.421" y2="187.27"/>
+			</g>
+		</g>
+	</g>
+		<line style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="469.877" y1="275.1" x2="456.141" y2="231.744"/>
+</g>
+</svg></span><span class="sr-num">1,7%</span></div>
+          <p class="sr-text">Las exportaciones crecieron 1,7%, impulsadas por mayores ventas de camarón elaborado y minerales.</p>
+        </div>
+        <div class="stat-row" style="--row-c:#55575f">
+          <div class="sr-figure"><span class="sr-icon"><svg class="icon-svg" viewBox="0 0 682.66669 682.66669" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><defs
+     id="defs1141"><clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1151"><path
+         d="M 0,512 H 512 V 0 H 0 Z"
+         id="path1149" /></clipPath></defs><g
+     id="g1143"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)"><g
+       id="g1145"><g
+         id="g1147"
+         clip-path="url(#clipPath1151)"><g
+           id="g1153"
+           transform="translate(232.5933,52.3379)"><path
+             d="m 0,0 h 223.522 c 12.296,0 22.264,9.968 22.264,22.264 v 86.309"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1155" /></g><g
+           id="g1157"
+           transform="translate(208.9111,504.5)"><path
+             d="M 0,0 H -60.689 C -72.985,0 -82.953,-9.968 -82.953,-22.264 V -169.66"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1159" /></g><g
+           id="g1161"
+           transform="translate(478.3789,195.0889)"><path
+             d="m 0,0 v 287.147 c 0,12.296 -9.968,22.264 -22.264,22.264 H -235.29"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1163" /></g><path
+           d="M 435.2,377.006 H 169.138 v 73.718 H 435.2 Z"
+           style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path1165" /><g
+           id="g1167"
+           transform="translate(244.5381,321.7915)"><path
+             d="m 0,0 c 2.481,4.265 7.101,7.131 12.391,7.131 h 18.57 c 7.912,0 14.326,-6.414 14.326,-14.326 0,-7.912 -6.414,-14.326 -14.326,-14.326 h -12.57"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1169" /></g><g
+           id="g1171"
+           transform="translate(347.4092,300.27)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.414 -14.326,14.326 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.414 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1173" /></g><g
+           id="g1175"
+           transform="translate(419.3193,300.27)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.414 -14.326,14.326 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.414 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1177" /></g><g
+           id="g1179"
+           transform="translate(260.9287,255.9956)"><path
+             d="m 0,0 h 14.57 c 7.912,0 14.326,-6.414 14.326,-14.326 0,-7.912 -6.414,-14.326 -14.326,-14.326 H -4 c -7.912,0 -14.326,6.414 -14.326,14.326"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1181" /></g><g
+           id="g1183"
+           transform="translate(347.4092,227.3433)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.414 -14.326,14.326 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.414 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1185" /></g><g
+           id="g1187"
+           transform="translate(419.3193,227.3433)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.414 -14.326,14.326 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.414 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1189" /></g><g
+           id="g1191"
+           transform="translate(242.6025,183.0688)"><path
+             d="m 0,0 v 0 c 0,7.912 6.414,14.326 14.326,14.326 h 18.57 c 7.913,0 14.327,-6.414 14.327,-14.326 0,-7.912 -6.414,-14.327 -14.327,-14.327 h -16.57"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1193" /></g><g
+           id="g1195"
+           transform="translate(347.4092,168.7422)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.415 -14.326,14.327 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.415 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1197" /></g><g
+           id="g1199"
+           transform="translate(419.3193,168.7422)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.415 -14.326,14.327 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.415 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1201" /></g><g
+           id="g1203"
+           transform="translate(262.9287,138.7944)"><path
+             d="m 0,0 h 12.57 c 7.912,0 14.326,-6.414 14.326,-14.326 0,-7.912 -6.414,-14.327 -14.326,-14.327 H -4"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1205" /></g><g
+           id="g1207"
+           transform="translate(347.4092,110.1416)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.415 -14.326,14.327 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.415 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1209" /></g><g
+           id="g1211"
+           transform="translate(419.3193,110.1416)"><path
+             d="m 0,0 h -18.57 c -7.912,0 -14.326,6.415 -14.326,14.327 0,7.912 6.414,14.326 14.326,14.326 H 0 c 7.912,0 14.326,-6.414 14.326,-14.326 C 14.326,6.415 7.912,0 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1213" /></g><g
+           id="g1215"
+           transform="translate(33.6206,81.8857)"><path
+             d="M 0,0 V -41.878 C 0,-57.686 34.533,-70.855 80.291,-73.779"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1217" /></g><g
+           id="g1219"
+           transform="translate(148.0889,7.8667)"><path
+             d="M 0,0 C 47.836,2.361 84.504,15.852 84.504,32.141 V 74.019"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1221" /></g><g
+           id="g1223"
+           transform="translate(226.6216,93.0044)"><path
+             d="m 0,0 c 3.864,-3.469 5.972,-7.213 5.972,-11.119 0,-17.953 -44.542,-32.507 -99.487,-32.507 -54.944,0 -99.486,14.554 -99.486,32.507 0,9.681 12.95,18.373 33.498,24.328"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1225" /></g><g
+           id="g1227"
+           transform="translate(61.8916,160.7329)"><path
+             d="m 0,0 v -41.878 c 0,-17.954 44.542,-32.507 99.486,-32.507 54.945,0 99.487,14.553 99.487,32.507 V 0"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1229" /></g><g
+           id="g1231"
+           transform="translate(226.978,185.1729)"><path
+             d="m 0,0 c 20.773,-5.958 33.886,-14.698 33.886,-24.44 0,-17.953 -44.542,-32.507 -99.486,-32.507 -54.945,0 -99.486,14.554 -99.486,32.507 0,3.962 2.169,7.759 6.141,11.27"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1233" /></g><g
+           id="g1235"
+           transform="translate(33.6206,239.5806)"><path
+             d="m 0,0 v -41.878 c 0,-17.954 44.542,-32.508 99.486,-32.508 54.945,0 99.487,14.554 99.487,32.508 v 38.554"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1237" /></g><g
+           id="g1239"
+           transform="translate(232.0796,236.2568)"><path
+             d="m 0,0 c -5.095,-16.392 -47.462,-29.184 -98.973,-29.184 -54.944,0 -99.486,14.554 -99.486,32.508 0,8.343 9.618,15.951 25.429,21.707"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1241" /></g><g
+           id="g1243"
+           transform="translate(61.8916,302.332)"><path
+             d="m 0,0 v -41.878 c 0,-17.954 44.542,-32.508 99.486,-32.508 54.945,0 99.487,14.554 99.487,32.508 V 0"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1245" /></g><g
+           id="g1247"
+           transform="translate(260.8643,302.332)"><path
+             d="m 0,0 c 0,-17.953 -44.542,-32.507 -99.486,-32.507 -54.945,0 -99.487,14.554 -99.487,32.507 0,17.954 44.542,32.508 99.487,32.508 C -44.542,32.508 0,17.954 0,0 Z"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1249" /></g><g
+           id="g1251"
+           transform="translate(68.8145,356.4258)"><path
+             d="M 0,0 H 25.358"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1253" /></g><g
+           id="g1255"
+           transform="translate(68.8145,379.6665)"><path
+             d="M 0,0 H 25.358"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1257" /></g><g
+           id="g1259"
+           transform="translate(94.2222,405.4502)"><path
+             d="M 0,0 H -0.1"
+             style="fill:none;stroke:currentColor;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path1261" /></g></g></g></g></svg></span><span class="sr-num">11,1%</span></div>
+          <p class="sr-text">En contraste, las importaciones aumentaron 11,1%, principalmente por mayores compras externas de materias primas y bienes de capital, mientras que el gasto de consumo final del Gobierno General se contrajo 3,8%.</p>
+        </div>
+      </div>
+      <div class="chart-frame" style="--tilt:-0.5deg">
+        <iframe class="embed-chart" data-chart="05_componentes_pib" src="assets/05_componentes_pib.html" title="Crecimiento interanual del PIB por componentes del gasto" loading="lazy" scrolling="no"></iframe>
+      </div>
+    </section>
+
+    <section class="chapter" id="industrias" style="--stat-c:#890abf">
+      <div class="num-bg">03</div>
+      <div class="kick">03 · Análisis del PIB por industria</div>
+      <p class="lead-text">En el primer trimestre de 2026, <strong class="stat">16 de las 20</strong> actividades económicas registraron crecimiento frente al mismo período de 2025.</p>
+      <p class="body-text">Las mayores tasas de variación se observaron en actividades financieras y de seguros (<strong class="stat">+12,0%</strong>), alojamiento y comidas (<strong class="stat">+11,8%</strong>), refinados de petróleo (<strong class="stat">+9,4%</strong>), salud y asistencia social (<strong class="stat">+6,4%</strong>), información y comunicación (<strong class="stat">+4,9%</strong>) y actividades profesionales y técnicas (<strong class="stat">+4,5%</strong>).</p>
+      <div class="chart-frame" style="--tilt:0.6deg">
+        <iframe class="embed-chart" data-chart="04_industrias" src="assets/04_industrias.html" title="Crecimiento interanual del PIB por industria" loading="lazy" scrolling="no"></iframe>
+      </div>
+    </section>
+
+    <section class="chapter" id="conclusiones" style="--stat-c:#7a26bc">
+      <div class="num-bg">04</div>
+      <div class="kick">04 · Conclusiones del BCE</div>
+      <div class="gallery">
+        <div class="g-row">
+          <div class="g-photo"><img src="assets/photos/conclusion-1.jpg" alt="Vista de la ciudad de Quito" loading="lazy" style="object-position:50% 40%"></div>
+          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>La economía ecuatoriana creció <strong class="stat">2,1%</strong> en el primer trimestre de 2026 respecto al mismo período de 2025.</p></div>
+        </div>
+        <div class="g-row rev">
+          <div class="g-photo"><img src="assets/photos/conclusion-2.jpg" alt="Mujer usando una tableta" loading="lazy" style="object-position:30% 30%"></div>
+          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>El crecimiento se sustentó en el desempeño de <strong class="stat">16 de las 20</strong> industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</p></div>
+        </div>
+        <div class="g-row">
+          <div class="g-photo"><img src="assets/photos/conclusion-3.jpg" alt="Persona escribiendo en un portapapeles" loading="lazy" style="object-position:35% 50%"></div>
+          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p></div>
+        </div>
+        <div class="g-row rev">
+          <div class="g-photo"><img src="assets/photos/conclusion-4.jpg" alt="Pago con teléfono en una tienda" loading="lazy" style="object-position:55% 55%"></div>
+          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>En términos trimestrales se registró una variación de <strong class="stat">1,0%</strong>. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p></div>
+        </div>
+      </div>
+      <p class="source-note">Fuente: Banco Central del Ecuador (BCE)</p>
+    </section>
+
+    <footer class="ed-foot">
+      <div class="wrap">
+        <div class="brand-block">
+          <img src="assets/LogoKeyeconomics2-blanco.svg" alt="KeyEconomics">
+          <div class="nm">Cuentas Nacionales</div>
+        </div>
+        <div class="contact">
+          <img src="assets/LogoKeyword-blanco.svg" alt="Keyword">
+          <p style="margin:0">© Todos los derechos reservados</p>
+          <a href="mailto:info@keyword.com.ec">info@keyword.com.ec</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- reading progress ----
+  var bar = document.getElementById("progress");
+  function updateProgress() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = "scaleX(" + (max > 0 ? Math.min(window.scrollY / max, 1) : 0) + ")";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+
+  // ---- sidebar: active chapter + rotating headline stat ----
+  var chapters = {
+    evolucion:   { c: "#1375f6", big: "2,1<small>%</small>", cap: "Crecimiento interanual del PIB, primer trimestre de 2026." },
+    componentes: { c: "#890abf", big: "12,8<small>%</small>", cap: "Formación Bruta de Capital Fijo (FBKF), el componente que más creció." },
+    industrias:  { c: "#890abf", big: "12,0<small>%</small>", cap: "Actividades financieras y de seguros, la industria con mayor crecimiento." },
+    conclusiones:{ c: "#7a26bc", big: "16<small>/20</small>", cap: "Industrias en terreno positivo en el primer trimestre de 2026." }
+  };
+  var side = document.getElementById("side");
+  var sideBig = document.getElementById("sideBig");
+  var sideCap = document.getElementById("sideCap");
+  var navLinks = {};
+  document.querySelectorAll("#sideNav a").forEach(function (a) { navLinks[a.getAttribute("href").slice(1)] = a; });
+
+  function setActive(id) {
+    var d = chapters[id]; if (!d) return;
+    side.style.setProperty("--stat-c", d.c);
+    sideBig.innerHTML = d.big;
+    sideCap.textContent = d.cap;
+    Object.keys(navLinks).forEach(function (k) { navLinks[k].classList.toggle("active", k === id); });
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) setActive(e.target.id);
+    });
+  }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+  Object.keys(chapters).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+
+  // ---- mini sparkline (real interanual series) ----
+  var yoy = [
+    -2.5398645859892377, 19.346945384136326, 12.395984742422872, 10.360979300555773,
+    8.983731520121484, 5.246491105474793, 5.420167929952191, 3.986561868857086,
+    2.088911180976316, 5.128180699086182, -0.2620389874608442, 0.4469130543548028,
+    -0.6015483073715244, -4.5130602577225565, -1.640985214963342, -0.9502785870602937,
+    3.420330170377195, 3.5219972288117463, 2.9592500031820235, 4.99399649415786,
+    2.0639903117922964
+  ];
+  (function () {
+    var w = 320, h = 54, pad = 4;
+    var min = Math.min.apply(null, yoy), max = Math.max.apply(null, yoy);
+    function x(i) { return pad + (i / (yoy.length - 1)) * (w - pad * 2); }
+    function y(v) { return h - pad - ((v - min) / (max - min)) * (h - pad * 2); }
+    var d = yoy.map(function (v, i) { return (i === 0 ? "M" : "L") + x(i).toFixed(1) + "," + y(v).toFixed(1); }).join(" ");
+    var lastX = x(yoy.length - 1).toFixed(1), lastY = y(yoy[yoy.length - 1]).toFixed(1);
+    document.getElementById("sideSpark").innerHTML =
+      '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+      '<path class="ln" d="' + d + '"/>' +
+      '<circle class="dt" cx="' + lastX + '" cy="' + lastY + '" r="3.4"/>' +
+      "</svg>";
+  })();
+
+  // ---- reveal on scroll ----
+  document.querySelectorAll(".chapter .kick, .chapter .lead-text, .chapter .body-text, .chart-frame, .stat-row, .g-row, .opening .kick, .opening h1, .opening .lede, .ticker").forEach(function (el) {
+    el.classList.add("reveal");
+  });
+  var io2 = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io2.unobserve(e.target); }
+    });
+  }, { threshold: 0.14, rootMargin: "0px 0px -6% 0px" });
+  document.querySelectorAll(".reveal").forEach(function (el) { io2.observe(el); });
+})();
+</script>
+
+</body>
+</html>
