@@ -41,7 +41,12 @@
   @media (min-width: 1000px) { .shell { display: grid; grid-template-columns: var(--side-w) 1fr; align-items: start; } }
 
   .side {
-    background: var(--night); color: #fff; padding: 18px 20px 16px;
+    position: relative; background: var(--night); color: #fff; padding: 18px 20px 16px;
+  }
+  .side::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: url('assets/fondo-ejecutivo.jpg') center / cover no-repeat;
+    opacity: 0.2;
   }
   @media (min-width: 1000px) { .side { padding: 32px 32px 26px; } }
   @media (min-width: 1000px) { .side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; } }
@@ -107,9 +112,9 @@
   @media (min-width: 1000px) { .side-foot { display: block; font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12); } }
 
   /* ============ Main story column ============ */
-  .story { min-width: 0; }
+  .story { min-width: 0; position: relative; }
 
-  .opening { position: relative; padding: 76px 7vw 64px; max-width: 920px; }
+  .opening { padding: 76px 7vw 64px; max-width: 920px; }
   .opening-logos { position: absolute; top: 28px; right: 7vw; display: flex; align-items: center; gap: 14px; }
   .opening-logos img { display: block; height: 20px; width: auto; }
   .opening-logos .div { width: 1px; height: 18px; background: var(--line); }
@@ -152,10 +157,11 @@
     padding: 8px 10px 2px; max-width: 880px;
   }
   .chart-frame .embed-chart { display: block; width: 100%; border: 0; margin: 0; }
+  .chart-frame + .body-text, .chart-frame + .lead-text, .chart-frame + .e-terms, .chart-frame + .annual-divider { margin-top: 32px; }
   .chart-cap { font-size: 12.5px; color: var(--ink-mute); margin: 14px 2px 0; max-width: 880px; }
 
   /* ---- definition cards (PIB Real / Nominal, etc.) ---- */
-  .e-terms { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 4px 0 32px; max-width: 880px; }
+  .e-terms { display: grid; grid-template-columns: 1fr; align-items: start; gap: 12px; margin: 4px 0 32px; max-width: 880px; }
   @media (min-width: 720px) { .e-terms { grid-template-columns: 1fr 1fr; } }
   .e-term { border: 1px solid var(--line); border-radius: 14px; background: #fff; overflow: hidden; }
   .e-term summary {
@@ -173,6 +179,13 @@
   .e-term p { margin: 0; padding: 0 20px 18px; font-size: 15px; line-height: 1.65; color: var(--ink-soft); }
   .e-term strong { color: var(--ink); }
 
+  /* ---- annual 2025 context blocks (supplementary to the 1T 2026 quarterly data) ---- */
+  .annual-divider { display: flex; align-items: center; gap: 14px; margin: 48px 0 18px; max-width: 880px; }
+  .annual-divider .ad-line { flex: 1; height: 1px; background: var(--line); }
+  .annual-divider .ad-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap; }
+  .annual-intro { font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); max-width: 66ch; margin: 0 0 20px; }
+  .annual-intro strong { color: var(--ink); }
+
   /* ---- section 02: stat rows instead of cards ---- */
   .stat-rows { margin-top: 8px; }
   .stat-row { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: start; padding: 26px 0; border-top: 1px solid var(--line); }
@@ -184,18 +197,56 @@
   .stat-row .sr-num { font-size: clamp(34px, 3.6vw, 46px); font-weight: 800; letter-spacing: -0.02em; color: var(--row-c); }
   .stat-row .sr-text { font-size: 16px; line-height: 1.65; color: var(--ink-soft); padding-top: 4px; }
 
-  /* ---- section 04: alternating gallery ---- */
-  .gallery { margin-top: 12px; }
-  .g-row { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; padding: 30px 0; border-top: 1px solid var(--line); }
-  .g-row:first-child { border-top: none; padding-top: 0; }
-  @media (min-width: 780px) { .g-row { grid-template-columns: 1fr 1fr; gap: 40px; } .g-row.rev .g-photo { order: 2; } }
-  .g-photo { aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; background: var(--line); box-shadow: 0 20px 40px -22px rgba(24,25,31,0.3); }
-  .g-photo img { width: 100%; height: 100%; object-fit: cover; }
-  .g-text { display: flex; align-items: flex-start; gap: 14px; }
-  .g-mark { flex: none; width: 26px; height: 26px; margin-top: 2px; background: var(--stat-c, var(--blue)); -webkit-mask: url('assets/asterisco.svg') center / contain no-repeat; mask: url('assets/asterisco.svg') center / contain no-repeat; }
-  .g-text p { margin: 0; font-size: 16.5px; line-height: 1.65; color: var(--ink); }
+  /* ---- section 04: closing takeaways — big numbered editorial statements, no photos ---- */
+  .concl-stack { margin-top: 18px; }
+  .concl-item {
+    display: grid; grid-template-columns: 1fr; gap: 10px;
+    padding: 32px 2px; border-bottom: 1px solid var(--line);
+  }
+  .concl-item:last-child { border-bottom: none; }
+  @media (min-width: 780px) { .concl-item { grid-template-columns: 150px 1fr; gap: 38px; align-items: center; padding: 38px 2px; } }
+  .concl-item .ci-num {
+    font-size: clamp(44px, 5.4vw, 72px); font-weight: 800; letter-spacing: -0.03em; line-height: 1;
+    color: var(--stat-c, var(--blue));
+  }
+  .concl-item .ci-text { display: flex; align-items: flex-start; gap: 14px; }
+  .concl-item .ci-mark { flex: none; width: 22px; height: 22px; margin-top: 4px; background: var(--stat-c, var(--blue)); -webkit-mask: url('assets/asterisco.svg') center / contain no-repeat; mask: url('assets/asterisco.svg') center / contain no-repeat; animation: markSpin 14s linear infinite; }
+  @media (prefers-reduced-motion: reduce) { .concl-item .ci-mark { animation: none; } }
+  .concl-item p { margin: 0; font-size: clamp(18px, 1.9vw, 22px); line-height: 1.52; color: var(--ink); font-weight: 500; max-width: 60ch; }
+  .concl-item p .stat { color: var(--stat-c, var(--blue)); font-weight: 800; }
 
   .source-note { font-size: 13px; color: var(--ink-mute); padding-top: 18px; border-top: 1px solid var(--line); margin-top: 32px; max-width: 66ch; }
+
+  /* ---- section 03: industry editorial spread (alternating photo + text, no cards) ---- */
+  .ind-gallery { margin-top: 8px; }
+  .ind-row { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; padding: 38px 0; border-top: 1px solid var(--line); }
+  .ind-row:first-child { border-top: none; padding-top: 6px; }
+  @media (min-width: 780px) { .ind-row { grid-template-columns: 0.86fr 1.14fr; gap: 46px; } .ind-row.rev .ind-photo { order: 2; } }
+  .ind-photo {
+    position: relative; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden;
+    background-color: color-mix(in srgb, var(--ind-c, var(--blue)) 14%, #fff 86%);
+    background-size: cover; background-position: center;
+    box-shadow: 0 20px 40px -22px rgba(24,25,31,0.3);
+  }
+  .ind-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(200deg, transparent 45%, color-mix(in srgb, var(--ind-c, var(--blue)) 60%, #000 40%) 145%);
+    opacity: 0.55; mix-blend-mode: multiply;
+  }
+  .ind-photo .ind-photo-num { position: absolute; left: 16px; bottom: 14px; z-index: 1; font-size: 13px; font-weight: 800; color: #fff; letter-spacing: 0.04em; }
+  .ind-eyebrow { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ind-c, var(--blue)); margin-bottom: 8px; }
+  .ind-stat { font-size: clamp(32px, 3.6vw, 44px); font-weight: 800; letter-spacing: -0.02em; color: var(--ind-c, var(--blue)); line-height: 1; margin-bottom: 12px; }
+  .ind-stat small { font-size: 0.48em; font-weight: 700; margin-left: 2px; color: var(--ink-mute); }
+  .ind-body { font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); margin: 0 0 14px; max-width: 52ch; }
+  .ind-body strong { color: var(--ink); }
+  .ind-facts { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 0; padding: 0; list-style: none; }
+  .ind-facts li {
+    font-size: 12.5px; line-height: 1.4; color: var(--ink-soft);
+    background: color-mix(in srgb, var(--ind-c, var(--blue)) 8%, #fff 92%);
+    border: 1px solid color-mix(in srgb, var(--ind-c, var(--blue)) 26%, var(--line) 74%);
+    padding: 5px 11px; border-radius: 100px;
+  }
+  .ind-facts li strong { color: var(--ind-c, var(--blue)); }
 
   /* ---- footer ---- */
   footer.ed-foot { background: var(--dknight); color: #fff; padding: 34px 7vw; }
@@ -745,6 +796,32 @@
       <div class="chart-frame" style="--tilt:-0.5deg">
         <iframe class="embed-chart" data-chart="05_componentes_pib" src="assets/05_componentes_pib.html" title="Crecimiento interanual del PIB por componentes del gasto" loading="lazy" scrolling="no"></iframe>
       </div>
+
+      <div class="annual-divider"><span class="ad-line"></span><span class="ad-label">Contexto anual · Cuentas Nacionales 2025</span><span class="ad-line"></span></div>
+      <p class="annual-intro">Más allá del dato trimestral, el informe anual de Cuentas Nacionales del BCE confirma la misma tendencia: en 2025 el PIB creció <strong>3,7%</strong> frente a 2024, impulsado por el desempeño positivo de la mayoría de los componentes del gasto. A continuación, el detalle de cada componente en el año:</p>
+      <div class="e-terms">
+        <details class="e-term">
+          <summary>Consumo de los hogares · +2,7% (2025)<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Aportó <strong>1,7 puntos porcentuales</strong> al crecimiento del PIB en 2025, impulsado por el mayor acceso al crédito, el incremento en el flujo de remesas y el dinamismo del comercio minorista. Las ventas del comercio minorista crecieron <strong>10,8%</strong>, las de vehículos <strong>15,0%</strong>, las importaciones de bienes de consumo <strong>14,5%</strong> en volumen (duraderos: <strong>17,7%</strong>) y las transacciones con tarjetas de crédito, débito y prepago aumentaron <strong>12,4%</strong>.</p>
+        </details>
+        <details class="e-term">
+          <summary>Gasto del Gobierno General · +0,04% (2025)<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Registró una variación marginal, asociada al desempeño de las industrias vinculadas al sector público: administración pública (<strong>+0,8%</strong>), enseñanza (<strong>+3,6%</strong>) y salud y asistencia social (<strong>+3,6%</strong>). El número de servidores públicos del Presupuesto General del Estado creció <strong>0,7%</strong>, con incrementos en educación (<strong>0,8%</strong>) y salud (<strong>0,2%</strong>).</p>
+        </details>
+        <details class="e-term">
+          <summary>Formación Bruta de Capital Fijo · +5,6% (2025)<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Aportó <strong>1,1 puntos porcentuales</strong> al crecimiento del PIB, impulsada por la mayor demanda de insumos vinculados a la inversión, particularmente en construcción, maquinaria y equipo, y vehículos. Las importaciones de bienes de capital crecieron <strong>31,6%</strong> en volumen y las de materias primas <strong>23,3%</strong>; las compras de vehículos y equipos de transporte aumentaron <strong>42,4%</strong> y las de maquinaria e informática <strong>22,8%</strong>.</p>
+        </details>
+        <details class="e-term">
+          <summary>Exportaciones de bienes y servicios · +6,4% (2025)<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Principal motor de la economía en 2025, con un aporte de <strong>2,0 puntos porcentuales</strong> al crecimiento del PIB, por mayores volúmenes y condiciones favorables de precios internacionales. Los productos con mayor contribución fueron plantas para preparar bebidas —cacao— (<strong>+28,9%</strong>), minerales metálicos y no metálicos (<strong>+22,4%</strong>), camarón elaborado (<strong>+15,2%</strong>), banano (<strong>+6,9%</strong>) y pescado elaborado y conservas (<strong>+2,2%</strong>). El crecimiento petrolero estuvo limitado por dificultades operativas en producción y refinación.</p>
+        </details>
+        <details class="e-term">
+          <summary>Importaciones de bienes y servicios · +3,9% (2025)<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Representaron una contribución negativa de <strong>−1,1 puntos porcentuales</strong> al PIB, atenuando parcialmente el impulso del resto de componentes, reflejo del dinamismo de la inversión y del consumo. Destacan los incrementos en volumen de vehículos y equipos de transporte (<strong>+42,4%</strong>), metales comunes y elaborados (<strong>+36,0%</strong>), vidrio, cerámica y cemento (<strong>+30,2%</strong>), maquinaria e informática (<strong>+22,8%</strong>), aceites crudos y refinados (<strong>+21,0%</strong>), químicos y farmacéuticos (<strong>+15,8%</strong>) y refinados de petróleo (<strong>+8,1%</strong>).</p>
+        </details>
+      </div>
+      <p class="source-note">Fuente: BCE, Cuentas Nacionales Anuales 2025 (términos reales, base 2018) y registros administrativos del SRI.</p>
     </section>
 
     <section class="chapter" id="industrias" style="--stat-c:color-mix(in srgb, #cde368 60%, #000000 40%)">
@@ -755,27 +832,144 @@
       <div class="chart-frame" style="--tilt:0.6deg">
         <iframe class="embed-chart" data-chart="04_industrias" src="assets/04_industrias.html" title="Crecimiento interanual del PIB por industria" loading="lazy" scrolling="no"></iframe>
       </div>
+
+      <div class="annual-divider"><span class="ad-line"></span><span class="ad-label">Contexto anual · Cuentas Nacionales 2025</span><span class="ad-line"></span></div>
+      <p class="annual-intro">El informe anual del BCE confirma la misma tendencia observada en el trimestre: en 2025, <strong>16 de las 20</strong> actividades económicas registraron crecimiento, liderado por actividades financieras y de seguros (<strong>+9,8%</strong>), agricultura, ganadería y silvicultura (<strong>+8,6%</strong>), manufactura de productos alimenticios (<strong>+8,5%</strong>), comercio (<strong>+5,2%</strong>) y actividades profesionales y técnicas (<strong>+4,4%</strong>). A continuación, el desempeño de las industrias con mayor relevancia para la actividad empresarial del país en 2025:</p>
+
+      <div class="ind-gallery">
+        <div class="ind-row" style="--ind-c:#1375f6">
+          <div class="ind-photo" style="background-image:url('assets/sec-Comercio.jpg')"><span class="ind-photo-num">01 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Comercio</span>
+            <div class="ind-stat">+5,2<small>%</small></div>
+            <p class="ind-body">Se consolidó como el sector con <strong>mayor contribución al PIB</strong> en 2025, aportando 0,8 puntos porcentuales al crecimiento, asociado al aumento de los márgenes comerciales en pesca y acuicultura, manufactura de alimentos, textiles y maquinaria.</p>
+            <ul class="ind-facts">
+              <li><strong>+10,8%</strong> ventas del sector (SRI)</li>
+              <li>Mayor impulso: supermercados, combustibles y venta de vehículos</li>
+              <li>Dinamismo en todos los tamaños de empresa</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ind-row rev" style="--ind-c:#7a26bc">
+          <div class="ind-photo" style="background-image:url('assets/sec-Actividades financieras.jpg')"><span class="ind-photo-num">02 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Actividades financieras y de seguros</span>
+            <div class="ind-stat">+9,8<small>%</small></div>
+            <p class="ind-body">El de <strong>mayor crecimiento relativo</strong> entre las industrias de servicios en 2025, con un aporte de 0,4 puntos porcentuales al PIB, asociado a la expansión de la intermediación financiera.</p>
+            <ul class="ind-facts">
+              <li><strong>+8,1%</strong> cartera de préstamos</li>
+              <li><strong>+15,6%</strong> depósitos</li>
+              <li><strong>+13,7%</strong> operaciones activas</li>
+              <li><strong>+6,2%</strong> ventas del sector (SRI)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ind-row" style="--ind-c:#890abf">
+          <div class="ind-photo" style="background-image:url('assets/sec-manufactura alimentos.jpg')"><span class="ind-photo-num">03 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Manufactura de productos alimenticios</span>
+            <div class="ind-stat">+8,5<small>%</small></div>
+            <p class="ind-body">Contribuyó con 0,6 puntos porcentuales al PIB, de la mano de la elaboración de <strong>cacao, chocolate y confitería</strong>, productos lácteos y el procesamiento de camarón, con exportaciones que crecieron hacia Estados Unidos, China, España y Francia.</p>
+            <ul class="ind-facts">
+              <li><strong>+23,8%</strong> cacao, chocolate y confitería</li>
+              <li><strong>+17,8%</strong> productos lácteos</li>
+              <li><strong>+14,6%</strong> procesamiento de camarón</li>
+              <li><strong>+7,5%</strong> ventas del sector (SRI)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ind-row rev" style="--ind-c:color-mix(in srgb, #cde368 55%, #000000 45%)">
+          <div class="ind-photo" style="background-image:url('assets/sec-agricultura.jpg')"><span class="ind-photo-num">04 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Agricultura, ganadería y silvicultura</span>
+            <div class="ind-stat">+8,6<small>%</small></div>
+            <p class="ind-body">Uno de los sectores más dinámicos del año, con un aporte de 0,7 puntos porcentuales al PIB, impulsado por el <strong>cacao</strong>, favorecido por un déficit de oferta global, y por la mayor demanda externa de flores y banano.</p>
+            <ul class="ind-facts">
+              <li><strong>+16,8%</strong> cacao y cultivos para bebidas</li>
+              <li><strong>+7,2%</strong> flores naturales (EE. UU., Países Bajos, Polonia)</li>
+              <li><strong>+4,7%</strong> banano y otras frutas (Rusia, Turquía, Grecia)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ind-row" style="--ind-c:color-mix(in srgb, #ffbf5e 60%, #000000 40%)">
+          <div class="ind-photo" style="background-image:url('assets/sec-manufactura productos no alimenticios.jpg')"><span class="ind-photo-num">05 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Manufactura de productos no alimenticios</span>
+            <div class="ind-stat">+4,2<small>%</small></div>
+            <p class="ind-body">Aportó 0,2 puntos porcentuales al PIB, respaldada por el dinamismo de la <strong>construcción</strong> y la mayor demanda de bienes duraderos, con la fabricación de muebles como rama más dinámica.</p>
+            <ul class="ind-facts">
+              <li><strong>+21,0%</strong> fabricación de muebles</li>
+              <li><strong>+10,5%</strong> maquinaria y equipo</li>
+              <li><strong>+11,1%</strong> minerales no metálicos</li>
+              <li><strong>+8,3%</strong> ventas del sector (SRI)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ind-row rev" style="--ind-c:#55575f">
+          <div class="ind-photo" style="background-image:url('assets/sec-construcción.jpg')"><span class="ind-photo-num">06 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Construcción</span>
+            <div class="ind-stat">+2,7<small>%</small></div>
+            <p class="ind-body">Retomó una trayectoria positiva en 2025, con un aporte de 0,1 puntos porcentuales al PIB, de la mano de mayores <strong>despachos de cemento</strong> e importaciones de hierro y acero.</p>
+            <ul class="ind-facts">
+              <li><strong>+9,6%</strong> producción de cemento</li>
+              <li><strong>+48,2%</strong> importaciones de hierro y acero</li>
+              <li><strong>+4,7%</strong> empleo en construcción</li>
+              <li><strong>+8,8%</strong> ventas del sector (SRI)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="ind-row" style="--ind-c:#4A5876">
+          <div class="ind-photo" style="background-image:url('assets/sec-transporte.jpg')"><span class="ind-photo-num">07 / 07</span></div>
+          <div class="ind-text">
+            <span class="ind-eyebrow">Transporte y almacenamiento</span>
+            <div class="ind-stat">+1,8<small>%</small></div>
+            <p class="ind-body">Creció de forma moderada, con un aporte de 0,1 puntos porcentuales al PIB, en un sector con un <strong>rol transversal</strong> para la distribución, el abastecimiento y la conexión con mercados internos y externos, asociado al mayor dinamismo del comercio y las exportaciones.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="body-text">El desempeño de las actividades económicas en 2025 evidencia una <strong class="stat">recuperación heterogénea</strong>, en la que destacan los sectores vinculados al comercio exterior, la inversión y el sistema financiero, aunque aún con diferencias en la velocidad de reactivación entre sectores y dependencia de condiciones externas y financieras. El principal factor de arrastre negativo fue el sector petrolero, afectado por dificultades operativas en producción y refinación.</p>
+      <p class="source-note">Fuente: BCE, Cuentas Nacionales Anuales 2025 (Valor Agregado Bruto por industria, términos reales) y registros administrativos del SRI.</p>
     </section>
 
     <section class="chapter" id="conclusiones" style="--stat-c:#7a26bc">
       <div class="num-bg">04</div>
       <div class="kick">04 · Conclusiones del BCE</div>
-      <div class="gallery">
-        <div class="g-row">
-          <div class="g-photo"><img src="assets/photos/conclusion-1.jpg" alt="Vista de la ciudad de Quito" loading="lazy" style="object-position:50% 40%"></div>
-          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>La economía ecuatoriana creció <strong class="stat">2,1%</strong> en el primer trimestre de 2026 respecto al mismo período de 2025.</p></div>
+      <div class="concl-stack">
+        <div class="concl-item" style="--stat-c:#1375f6">
+          <span class="ci-num">01</span>
+          <div class="ci-text">
+            <span class="ci-mark" aria-hidden="true"></span>
+            <p>La economía ecuatoriana creció <strong class="stat">2,1%</strong> en el primer trimestre de 2026 respecto al mismo período de 2025.</p>
+          </div>
         </div>
-        <div class="g-row rev">
-          <div class="g-photo"><img src="assets/photos/conclusion-2.jpg" alt="Mujer usando una tableta" loading="lazy" style="object-position:30% 30%"></div>
-          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>El crecimiento se sustentó en el desempeño de <strong class="stat">16 de las 20</strong> industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</p></div>
+        <div class="concl-item" style="--stat-c:color-mix(in srgb, #cde368 55%, #000000 45%)">
+          <span class="ci-num">02</span>
+          <div class="ci-text">
+            <span class="ci-mark" aria-hidden="true"></span>
+            <p>El crecimiento se sustentó en el desempeño de <strong class="stat">16 de las 20</strong> industrias. Entre las actividades con mayor aporte a este resultado se encuentran los servicios financieros, comercio, manufactura de productos alimenticios, petróleo y minas, actividades profesionales y de salud y asistencia social.</p>
+          </div>
         </div>
-        <div class="g-row">
-          <div class="g-photo"><img src="assets/photos/conclusion-3.jpg" alt="Persona escribiendo en un portapapeles" loading="lazy" style="object-position:35% 50%"></div>
-          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p></div>
+        <div class="concl-item" style="--stat-c:color-mix(in srgb, #ffbf5e 60%, #000000 40%)">
+          <span class="ci-num">03</span>
+          <div class="ci-text">
+            <span class="ci-mark" aria-hidden="true"></span>
+            <p>Desde la perspectiva del gasto, el crecimiento estuvo explicado principalmente por el consumo de los hogares, la formación bruta de capital fijo y las exportaciones, evidenciando una estructura de demanda diversificada.</p>
+          </div>
         </div>
-        <div class="g-row rev">
-          <div class="g-photo"><img src="assets/photos/conclusion-4.jpg" alt="Pago con teléfono en una tienda" loading="lazy" style="object-position:55% 55%"></div>
-          <div class="g-text"><span class="g-mark" aria-hidden="true"></span><p>En términos trimestrales se registró una variación de <strong class="stat">1,0%</strong>. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p></div>
+        <div class="concl-item" style="--stat-c:#7a26bc">
+          <span class="ci-num">04</span>
+          <div class="ci-text">
+            <span class="ci-mark" aria-hidden="true"></span>
+            <p>En términos trimestrales se registró una variación de <strong class="stat">1,0%</strong>. Este resultado estuvo sustentado principalmente en la inversión y el consumo de los hogares, componentes que compensaron la contribución negativa del sector externo.</p>
+          </div>
         </div>
       </div>
       <p class="source-note">Fuente: Banco Central del Ecuador (BCE)</p>
@@ -881,7 +1075,7 @@
   });
 
   // ---- reveal on scroll ----
-  document.querySelectorAll(".chapter .kick, .chapter .lead-text, .chapter .body-text, .chart-frame, .stat-row, .g-row, .opening .kick, .opening h1, .opening .lede, .ticker").forEach(function (el) {
+  document.querySelectorAll(".chapter .kick, .chapter .lead-text, .chapter .body-text, .chart-frame, .stat-row, .ind-row, .concl-item, .opening .kick, .opening h1, .opening .lede, .ticker").forEach(function (el) {
     el.classList.add("reveal");
   });
   var io2 = new IntersectionObserver(function (entries) {
