@@ -48,18 +48,6 @@
   .side-top-space { display: none; }
   @media (min-width: 1000px) { .side-top-space { display: block; flex: 1; } }
 
-  .side-video { display: none; }
-  @media (min-width: 1000px) {
-    .side-video {
-      display: block; position: relative; height: 190px; overflow: hidden;
-      margin: -32px -32px 0; width: calc(100% + 64px); flex: none;
-    }
-    .side-video::after {
-      content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24,25,31,0) 55%, var(--night) 100%);
-    }
-    .side-video video { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
-  }
-
   /* Mobile/tablet: compact numbered stepper, all 4 steps reachable without scrolling */
   .side-nav { position: relative; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
   .side-nav::before {
@@ -140,6 +128,8 @@
     .ticker .t-item { flex: 1 1 180px; padding: 22px 26px 0 0; border-bottom: none; }
     .ticker .t-item + .t-item { border-left: 1px solid var(--line); padding-left: 26px; }
   }
+  .ticker .t-icon { display: block; width: 26px; height: 26px; color: var(--blue); margin-bottom: 12px; }
+  .ticker .t-icon svg { width: 100%; height: 100%; }
   .ticker .t-val { font-size: clamp(30px, 3.4vw, 42px); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
   .ticker .t-val small { font-size: 0.5em; font-weight: 700; color: var(--ink-mute); }
   .ticker .t-lbl { font-size: 12.5px; color: var(--ink-mute); margin-top: 6px; max-width: 26ch; }
@@ -164,6 +154,25 @@
   .chart-frame .embed-chart { display: block; width: 100%; border: 0; margin: 0; }
   .chart-cap { font-size: 12.5px; color: var(--ink-mute); margin: 14px 2px 0; max-width: 880px; }
 
+  /* ---- definition cards (PIB Real / Nominal, etc.) ---- */
+  .e-terms { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 4px 0 32px; max-width: 880px; }
+  @media (min-width: 720px) { .e-terms { grid-template-columns: 1fr 1fr; } }
+  .e-term { border: 1px solid var(--line); border-radius: 14px; background: #fff; overflow: hidden; }
+  .e-term summary {
+    list-style: none; cursor: pointer; padding: 16px 20px; font-weight: 800; font-size: 13px;
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--stat-c, var(--blue));
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .e-term summary::-webkit-details-marker { display: none; }
+  .e-term-tog { flex: none; width: 20px; height: 20px; position: relative; transition: transform .2s; }
+  .e-term-tog::before, .e-term-tog::after { content: ""; position: absolute; top: 50%; left: 50%; background: var(--ink-mute); transform: translate(-50%, -50%); }
+  .e-term-tog::before { width: 12px; height: 2px; }
+  .e-term-tog::after { width: 2px; height: 12px; }
+  .e-term[open] .e-term-tog { transform: rotate(45deg); }
+  .e-term summary:hover { background: rgba(24,25,31,0.03); }
+  .e-term p { margin: 0; padding: 0 20px 18px; font-size: 15px; line-height: 1.65; color: var(--ink-soft); }
+  .e-term strong { color: var(--ink); }
+
   /* ---- section 02: stat rows instead of cards ---- */
   .stat-rows { margin-top: 8px; }
   .stat-row { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: start; padding: 26px 0; border-top: 1px solid var(--line); }
@@ -178,6 +187,7 @@
   /* ---- section 04: alternating gallery ---- */
   .gallery { margin-top: 12px; }
   .g-row { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; padding: 30px 0; border-top: 1px solid var(--line); }
+  .g-row:first-child { border-top: none; padding-top: 0; }
   @media (min-width: 780px) { .g-row { grid-template-columns: 1fr 1fr; gap: 40px; } .g-row.rev .g-photo { order: 2; } }
   .g-photo { aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; background: var(--line); box-shadow: 0 20px 40px -22px rgba(24,25,31,0.3); }
   .g-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -210,9 +220,6 @@
 
 <div class="shell">
   <aside class="side" id="side" style="--stat-c:#1375f6">
-    <div class="side-video" aria-hidden="true">
-      <video src="assets/fondo%20animado.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline preload="none"></video>
-    </div>
     <div class="side-top-space" aria-hidden="true"></div>
     <nav class="side-nav" id="sideNav">
       <a href="#evolucion" data-c="#1375f6"><span class="n">01</span><span class="nlbl">Evolución del PIB</span></a>
@@ -242,9 +249,9 @@
       <h1>La economía ecuatoriana creció 2,1% en el primer trimestre de 2026</h1>
       <p class="lede">El Banco Central del Ecuador (BCE) presentó las cifras preliminares del comportamiento económico del Ecuador del primer trimestre de 2026.</p>
       <div class="ticker">
-        <div class="t-item"><div class="t-val"><span class="count" data-target="2.1" data-decimals="1">0</span><small>%</small></div><div class="t-lbl">Entre el primer trimestre de 2025 y el mismo periodo de 2026</div></div>
-        <div class="t-item"><div class="t-val"><span class="count" data-target="1.0" data-decimals="1">0</span><small>%</small></div><div class="t-lbl">En términos trimestrales</div></div>
-        <div class="t-item"><div class="t-val">$<span class="count" data-target="29223" data-decimals="0">0</span><small>M</small></div><div class="t-lbl">PIB Real, primer trimestre de 2026</div></div>
+        <div class="t-item"><span class="t-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></span><div class="t-val"><span class="count" data-target="2.1" data-decimals="1">0</span><small>%</small></div><div class="t-lbl">Entre el primer trimestre de 2025 y el mismo periodo de 2026</div></div>
+        <div class="t-item"><span class="t-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.9-4"/><polyline points="5 3 5 7 9 7"/><path d="M4 13a8 8 0 0 0 14.9 4"/><polyline points="19 21 19 17 15 17"/></svg></span><div class="t-val"><span class="count" data-target="1.0" data-decimals="1">0</span><small>%</small></div><div class="t-lbl">En términos trimestrales</div></div>
+        <div class="t-item"><span class="t-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="21" x2="5" y2="13"/><line x1="12" y1="21" x2="12" y2="7"/><line x1="19" y1="21" x2="19" y2="11"/></svg></span><div class="t-val">$<span class="count" data-target="29223" data-decimals="0">0</span><small>M</small></div><div class="t-lbl">PIB Real, primer trimestre de 2026</div></div>
       </div>
     </section>
 
@@ -252,10 +259,20 @@
       <div class="num-bg">01</div>
       <div class="kick">01 · Evolución del PIB</div>
       <p class="lead-text">Entre el primer trimestre de 2025 y el mismo periodo de 2026, la economía ecuatoriana creció en <strong class="stat">2,1%</strong>.</p>
-      <p class="body-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó <strong class="stat">USD 29.223 millones</strong>, mientras que, en términos nominales, totalizó <strong class="stat">USD 32.789 millones</strong>.</p>
-      <p class="body-text">En términos trimestrales, el PIB registró un crecimiento del <strong class="stat">1,0%</strong> frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó <strong class="stat">12,8%</strong> en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
       <div class="chart-frame" style="--tilt:-0.7deg">
         <iframe class="embed-chart" id="chartInteranual" data-chart="01_crecimiento_interanual" src="assets/01_crecimiento_interanual.html" title="Crecimiento interanual del PIB, por trimestre" loading="lazy" scrolling="no"></iframe>
+      </div>
+      <p class="body-text">Según la información presentada por el BCE, en el primer trimestre de 2026, el PIB Real alcanzó <strong class="stat">USD 29.223 millones</strong>, mientras que, en términos nominales, totalizó <strong class="stat">USD 32.789 millones</strong>.</p>
+      <p class="body-text">En términos trimestrales, el PIB registró un crecimiento del <strong class="stat">1,0%</strong> frente al cuarto trimestre de 2025. Este resultado estuvo asociado principalmente al dinamismo de la formación bruta de capital fijo (FBKF), que avanzó <strong class="stat">12,8%</strong> en términos interanuales, y al crecimiento del consumo de los hogares, en un contexto en que las importaciones también se aceleraron de forma significativa.</p>
+      <div class="e-terms">
+        <details class="e-term">
+          <summary>PIB Real<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Mide el valor total de los bienes y servicios finales producidos en un período determinado, <strong>ajustado por inflación</strong>. En Ecuador, este cálculo se realiza utilizando <strong>precios constantes del año base 2018</strong>, lo que permite hacer comparaciones entre años y evaluar si ha habido crecimiento económico en términos reales (cantidad de producción), sin que los resultados estén influenciados por las variaciones en los precios.</p>
+        </details>
+        <details class="e-term">
+          <summary>PIB Nominal<span class="e-term-tog" aria-hidden="true"></span></summary>
+          <p>Es el valor monetario total de los bienes y servicios finales producidos en el país durante un período determinado, calculado a <strong>precios corrientes del mismo año</strong>. Refleja el tamaño absoluto de la economía, incluyendo el efecto de la inflación o deflación sobre los precios. En consecuencia, un aumento del PIB nominal puede deberse tanto a un incremento en la producción real como a un aumento generalizado de precios.</p>
+        </details>
       </div>
       <div class="chart-frame" style="--tilt:0.5deg">
         <iframe class="embed-chart" data-chart="02_pib_real" src="assets/02_pib_real.html" title="PIB Real" loading="lazy" scrolling="no"></iframe>
