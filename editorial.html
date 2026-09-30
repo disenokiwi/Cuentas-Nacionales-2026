@@ -48,6 +48,18 @@
   .side-top-space { display: none; }
   @media (min-width: 1000px) { .side-top-space { display: block; flex: 1; } }
 
+  .side-video { display: none; }
+  @media (min-width: 1000px) {
+    .side-video {
+      display: block; position: relative; height: 190px; overflow: hidden;
+      margin: -32px -32px 0; width: calc(100% + 64px); flex: none;
+    }
+    .side-video::after {
+      content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(24,25,31,0) 55%, var(--night) 100%);
+    }
+    .side-video video { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
+  }
+
   /* Mobile/tablet: compact numbered stepper, all 4 steps reachable without scrolling */
   .side-nav { position: relative; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
   .side-nav::before {
@@ -198,6 +210,9 @@
 
 <div class="shell">
   <aside class="side" id="side" style="--stat-c:#1375f6">
+    <div class="side-video" aria-hidden="true">
+      <video src="assets/fondo%20animado.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline preload="none"></video>
+    </div>
     <div class="side-top-space" aria-hidden="true"></div>
     <nav class="side-nav" id="sideNav">
       <a href="#evolucion" data-c="#1375f6"><span class="n">01</span><span class="nlbl">Evolución del PIB</span></a>
